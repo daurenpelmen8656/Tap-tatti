@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Индивидуальный заказ тортов любой сложности в кондитерской Тап Тәтті в Астане.">
+
+    <meta name="author" content="Имя Фамилия">
+
+    <title>Тап Тәтті — Торты на заказ</title>
+</head>
+
+<body>
+
+    <!-- author: Имя Фамилия -->
+
+    <header>
+
+        <h1>Индивидуальное изготовление тортов</h1>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html">Главная</a>
+                </li>
+
+                <li>
+                    <a href="menu.html">Меню</a>
+                </li>
+
+                <li>
+                    <a href="order.html">Заказ</a>
+                </li>
+
+                <li>
+                    <a href="reviews.html">Отзывы</a>
+                </li>
+
+                <li>
+                    <a href="custom-cakes.html">Торты на заказ</a>
+                </li>
+
+                <li>
+                    <a href="colophon.html">О сайте</a>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <section>
+
+            <h2>Спецзаказы к вашим праздникам</h2>
+
+            <p>
+                Кондитерская
+                <strong>Тап Тәтті</strong>
+                принимает заявки на изготовление эксклюзивных
+                тортов для юбилеев, свадеб и корпоративных мероприятий.
+                Вы можете выбрать уникальный дизайн и начинку.
+            </p>
+
+            <h3>Порядок оформления спецзаказа:</h3>
+
+            <ol start="1">
+                <li>Согласование внешнего вида и начинки.</li>
+                <li>Расчет точного веса изделия.</li>
+                <li>Внесение предоплаты и фиксация даты.</li>
+            </ol>
+
+        </section>
+
+
+        <section id="custom-form-section">
+
+            <h2>Форма заявки на индивидуальный торт</h2>
+
+            <p>
+                Заполните параметры ниже, чтобы менеджер рассчитал
+                точную стоимость вашего торта.
+            </p>
+
+            <!--
+                Комментарий:
+                Данная форма пока не отправляет данные на сервер,
+                так как серверный обработчик не подключен.
+            -->
+
+            <form action="custom-cakes.html" method="post">
+
+                <fieldset>
+
+                    <legend>Информация о клиенте</legend>
+
+                    <p>
+                        <label for="client-name">
+                            ФИО заказчика:
+                        </label>
+                        <br>
+
+                        <input
+                            type="text"
+                            id="client-name"
+                            name="client-name"
+                            placeholder="Даурен Ерланов"
+                            required
+                        >
+                    </p>
+
+
+                    <p>
+                        <label for="client-email">
+                            Email для связи:
+                        </label>
+                        <br>
+
+                        <input
+                            type="email"
+                            id="client-email"
+                            name="client-email"
+                            placeholder="client@example.com"
+                            required
+                        >
+                    </p>
+
+
+                    <p>
+                        <label for="client-phone">
+                            Номер телефона:
+                        </label>
+                        <br>
+
+                        <input
+                            type="tel"
+                            id="client-phone"
+                            name="client-phone"
+                            placeholder="+7 (777) 000-00-00"
+                            required
+                        >
+                    </p>
+
+                </fieldset>
+
+
+                <fieldset>
+
+                    <legend>Детали эксклюзивного торта</legend>
+
+                    <p>
+                        <label for="event-date">
+                            Дата мероприятия:
+                        </label>
+                        <br>
+
+                        <input
+                            type="date"
+                            id="event-date"
+                            name="event-date"
+                            required
+                        >
+                    </p>
+
+
+                    <p>
+                        <label for="cake-weight">
+                            Примерный вес (в кг):
+                        </label>
+                        <br>
+
+                        <input
+                            type="number"
+                            id="cake-weight"
+                            name="cake-weight"
+                            min="2"
+                            max="15"
+                            value="2"
+                            required
+                        >
+                    </p>
+
+
+                    <p>
+                        <label for="filling-select">
+                            Основная начинка:
+                        </label>
+                        <br>
+
+                        <select
+                            id="filling-select"
+                            name="filling-select"
+                        >
+                            <option value="honey">
+                                Медово-карамельная
+                            </option>
+
+                            <option value="berry">
+                                Ягодный мусс
+                            </option>
+
+                            <option value="chocolate">
+                                Тёмный шоколад
+                            </option>
+                        </select>
+                    </p>
+
+
+                    <p>
+                        Ярусность торта:
+                        <br>
+
+                        <input
+                            type="radio"
+                            id="tier1"
+                            name="tiers"
+                            value="1"
+                            checked
+                        >
+
+                        <label for="tier1">
+                            1 ярус
+                        </label>
+
+                        <br>
+
+                        <input
+                            type="radio"
+                            id="tier2"
+                            name="tiers"
+                            value="2"
+                        >
+
+                        <label for="tier2">
+                            2 яруса
+                        </label>
+
+                        <br>
+
+                        <input
+                            type="radio"
+                            id="tier3"
+                            name="tiers"
+                            value="3"
+                        >
+
+                        <label for="tier3">
+                            3 яруса
+                        </label>
+                    </p>
+
+
+                    <p>
+                        <input
+                            type="checkbox"
+                            id="topper"
+                            name="topper"
+                            value="yes"
+                        >
+
+                        <label for="topper">
+                            Нужен индивидуальный топпер с надписью
+                        </label>
+                    </p>
+
+
+                    <p>
+                        <label for="design-descr">
+                            Описание желаемого дизайна:
+                        </label>
+                        <br>
+
+                        <textarea
+                            id="design-descr"
+                            name="design-descr"
+                            rows="4"
+                            cols="35"
+                            placeholder="Укажите цветовую гамму, надписи или персонажей"
+                        ></textarea>
+                    </p>
+
+                </fieldset>
+
+
+                <p>
+                    <input
+                        type="submit"
+                        value="Рассчитать стоимость"
+                    >
+
+                    <input
+                        type="reset"
+                        value="Очистить форму"
+                    >
+                </p>
+
+            </form>
+
+        </section>
+
+
+        <aside>
+
+            <h3>Полезный совет</h3>
+
+            <p>
+                Рекомендуем делать заказ минимум за
+                <mark>3 дня</mark>
+                до даты вашего мероприятия.
+            </p>
+
+        </aside>
+
+
+        <figure>
+
+            <img
+                src="images/photo5.jpg"
+                alt="Трехъярусный праздничный торт на заказ"
+            >
+
+            <figcaption>
+                Пример выполненного индивидуального заказа на юбилей
+            </figcaption>
+
+        </figure>
+
+
+        <p>
+            <a href="#custom-form-section">
+                К началу формы заявки
+            </a>
+        </p>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Контакты:
+            <a href="tel:+77070000000">
+                +7 (707) 000-00-00
+            </a>
+
+            |
+
+            Email:
+            <a href="mailto:info@taptatti.kz">
+                info@taptatti.kz
+            </a>
+        </p>
+
+        <p>
+            &copy; 2026 Кондитерская Тап Тәтті
+            &reg; &trade;
+        </p>
+
+    </footer>
+
+</body>
+</html>
