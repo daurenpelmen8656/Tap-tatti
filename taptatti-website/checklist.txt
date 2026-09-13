@@ -62,6 +62,33 @@ menu.html:
 &lt; - line 94
 &gt; - line 94
 
+custom-cakes.html:
+<header> - line 12
+<h1> - line 13
+<main> - line 25
+<section> - line 27
+<h2> - line 28
+<article> - line 32
+<figure> - line 36
+<img> - line 37
+<figcaption> - line 38
+<ul> - line 42
+<li> - line 43
+<footer> - line 55
+
+reviews.html:
+<header> - line 12
+<h1> - line 13
+<main> - line 25
+<section> - line 27
+<h2> - line 28
+<article> - line 31
+<blockquote cite> - line 35
+<p> - line 36
+<cite> - line 38
+<time datetime> - line 39
+<footer> - line 50
+
 order.html:
 <form action method> - line 27
 <fieldset> - line 28
