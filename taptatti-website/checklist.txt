@@ -1,0 +1,91 @@
+Tag Checklist for Assignment 1:
+Student: Alizhan R.
+
+index.html:
+<!DOCTYPE html> - line 1
+<html lang> - line 2
+<head> - line 3
+<meta charset> - line 4
+<meta viewport> - line 5
+<meta description> - line 6
+<meta author> - line 7
+<title> - line 8
+<!-- comment --> - line 11
+<header> - line 12
+<h1> - line 13
+<nav> - line 14
+<ul> - line 15
+<li> - line 16
+<a> - line 16
+<main> - line 25
+<section> - line 27
+<h2> - line 28
+<p> - line 29
+<strong> - line 29
+<em> - line 29
+<b> - line 29
+<mark> - line 30
+<article> - line 34
+<figure> - line 38
+<img> - line 39
+<figcaption> - line 40
+<blockquote cite> - line 43
+<q> - line 44
+<cite> - line 46
+<aside> - line 49
+<h3> - line 50
+<small> - line 51
+<sub> - line 52
+<footer> - line 56
+<a href="tel:"> - line 57
+<a href="mailto:"> - line 57
+<a target="_blank" rel=""> - line 58
+&copy; - line 59
+&reg; - line 59
+&trade; - line 59
+&emsp; - line 59
+
+menu.html:
+<table border> - line 26
+<caption> - line 27
+<thead> - line 28
+<tbody> - line 37
+<th scope> - line 30
+<tr> - line 29
+<td> - line 38
+<ol start> - line 69
+<dl> - line 77
+<dt> - line 78
+<dd> - line 79
+<a href="#id"> - line 88
+&amp; - line 94
+&lt; - line 94
+&gt; - line 94
+
+order.html:
+<form action method> - line 27
+<fieldset> - line 28
+<legend> - line 29
+<label for> - line 31
+<input type="text"> - line 32
+<input type="email"> - line 36
+<input type="tel"> - line 40
+<input type="number"> - line 54
+<input type="date"> - line 58
+<input type="radio"> - line 62
+<input type="checkbox"> - line 68
+<select> - line 47
+<option> - line 48
+<textarea> - line 73
+<input type="submit"> - line 78
+<input type="reset"> - line 79
+
+colophon.html:
+<abbr title> - line 26
+<div id> - line 30
+<span> - line 31
+<hr> - line 34
+<kbd> - line 37
+<code> - line 40
+<pre> - line 40
+<samp> - line 46
