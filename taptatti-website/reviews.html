@@ -3,114 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="Отзывы гостей и постоянных клиентов кондитерской Тап Тәтті в Астане.">
-
-    <meta name="author" content="Y.Dauren">
-
+    <meta name="description" content="Отзывы гостей и постоянных клиентов кондитерской Тап Тәтті в Астане.">
+    <meta name="author" content="Alizhan R.">
     <title>Тап Тәтті — Отзывы гостей</title>
+    <!-- Cascade order: base.css first, personal stylesheet second -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/alizhan.css">
 </head>
-
 <body>
-
     <!-- author: Y.Dauren -->
-
     <header>
         <h1>Отзывы о кондитерской Тап Тәтті</h1>
-
         <nav>
             <ul>
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="menu.html">Меню</a></li>
                 <li><a href="order.html">Заказ</a></li>
+                <li><a href="custom-cakes.html">Торты на заказ</a></li>
                 <li><a href="reviews.html">Отзывы</a></li>
-                <li>
-                    <a href="custom-cakes.html">Торты на заказ</a>
-                </li>
                 <li><a href="colophon.html">О сайте</a></li>
             </ul>
         </nav>
     </header>
 
-
     <main>
-
-        <!-- Отзывы клиентов -->
-        <section id="customer-reviews">
-
-            <h2>Впечатления наших посетителей</h2>
-
-            <p>
-                Мы собираем обратную связь от каждого гостя,
-                чтобы ежедневно улучшать качество наших десертов
-                и сервиса в Астане.
-            </p>
-
+        <!-- Отзывы клиентов (Flex-контейнер для отзывов) -->
+        <!-- ID #customer-reviews используется 1 раз для якоря с нижней ссылки -->
+        <section id="customer-reviews" class="reviews-section">
+            <h2 class="section-title">Впечатления наших посетителей</h2>
+            <p class="reviews-intro">Мы собираем обратную связь от каждого гостя, чтобы ежедневно улучшать качество наших десертов и сервиса в Астане.</p>
 
             <!-- Первый отзыв -->
-            <article>
-
+            <article class="review-card">
                 <h3>Отзыв о заказе</h3>
-
                 <blockquote cite="https://taptatti.kz/reviews">
-                    <p>
-                        <q>
-                            Постоянно покупаю здесь выпечку и торт, всё всегда качественно и вкусно.
-                        </q>
-                    </p>
+                    <p><q>Постоянно покупаю здесь выпечку и торт, всё всегда качественно и вкусно.</q></p>
                 </blockquote>
-
-                <p>
-                    —
-                    <cite>
-                        Аяулым А., отзыв 2gis
-                        (15 августа 2026 года)
-                    </cite>
-                </p>
-
+                <p class="review-author">— <cite>Аяулым А., отзыв 2gis (15 августа 2026 года)</cite></p>
             </article>
-
 
             <!-- Второй отзыв -->
-            <article>
-
+            <article class="review-card">
                 <h3>Отзыв о свежей выпечке</h3>
-
                 <blockquote cite="https://taptatti.kz/reviews">
-                    <p>
-                        <q>
-                            Каждое утро беру здесь хрустящий круассан
-                            и капучино перед работой.
-                            Качество стабильно высокое!
-                        </q>
-                    </p>
+                    <p><q>Каждое утро беру здесь хрустящий круассан и капучино перед работой. Качество стабильно высокое!</q></p>
                 </blockquote>
-
-                <p>
-                    —
-                    <cite>
-                        Арман К., постоянный гость
-                        (2 сентября 2026 года)
-                    </cite>
-                </p>
-
+                <p class="review-author">— <cite>Арман К., постоянный гость (2 сентября 2026 года)</cite></p>
             </article>
-
         </section>
 
-
-        <!-- Статистика -->
-        <section>
-
+        <!-- Статистика в виде аккуратной стилизованной таблицы -->
+        <section class="stats-section">
             <h2>Статистика оценок по категориям</h2>
 
-            <table border="1">
-
-                <caption>
-                    Оценки сервиса и продукции за 2026 год
-                </caption>
-
+            <table class="ratings-table">
+                <caption>Оценки сервиса и продукции за 2026 год</caption>
                 <thead>
                     <tr>
                         <th scope="col">Категория</th>
@@ -118,106 +65,53 @@
                         <th scope="col">Средний балл</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
                     <tr>
                         <td>Праздничные торты</td>
                         <td>120</td>
                         <td>4.9 / 5.0</td>
                     </tr>
-
                     <tr>
                         <td>Порционные десерты</td>
                         <td>310</td>
                         <td>4.8 / 5.0</td>
                     </tr>
-
                     <tr>
                         <td>Свежая выпечка</td>
                         <td>450</td>
                         <td>5.0 / 5.0</td>
                     </tr>
-
                 </tbody>
-
             </table>
-
         </section>
-
 
         <!-- Часто упоминаемые термины -->
-        <section>
-
+        <section class="terms-section">
             <h2>Часто упоминаемые термины</h2>
 
-            <dl>
-
+            <dl class="terms-list">
                 <dt>Свежесть</dt>
-
-                <dd>
-                    Вся выпечка готовится в день продажи
-                    с 08:00 утра.
-                </dd>
-
+                <dd>Вся выпечка готовится в день продажи с 08:00 утра.</dd>
 
                 <dt>Натуральность</dt>
-
-                <dd>
-                    Использование настоящего фермерского масла
-                    и ягод без искусственных добавок.
-                </dd>
-
+                <dd>Использование настоящего фермерского масла и ягод без искусственных добавок.</dd>
             </dl>
-
         </section>
 
-
         <!-- Фотография -->
-        <figure>
-
-            <img
-                src="images/photo4.jpg"
-                alt="Довольные гости за столом в кондитерской Тап Тәтті"
-            >
-
-            <figcaption>
-                Наши счастливые гости наслаждаются десертами
-            </figcaption>
-
+        <figure class="reviews-figure">
+            <img src="images/photo4.jpg" alt="Довольные гости за столом в кондитерской Тап Тәтті">
+            <figcaption>Наши счастливые гости наслаждаются десертами</figcaption>
         </figure>
 
-
-        <!-- Ссылка внутри страницы -->
-        <p>
-            <a href="#customer-reviews">
-                Вернуться к первому отзыву
-            </a>
+        <p class="top-link-p">
+            <a href="#customer-reviews">Вернуться к первому отзыву</a>
         </p>
-
     </main>
 
-
     <footer>
-
-        <p>
-            Контакты:
-            <a href="tel:+77057551910">
-                +7 (705) 755-19-10
-            </a>
-            |
-            Email:
-            <a href="mailto:info@taptatti.kz">
-                info@taptatti.kz
-            </a>
-        </p>
-
-        <p>
-            &copy; 2026 Кондитерская Тап Тәтті.
-            Все права защищены.
-        </p>
-
+        <p>Контакты: <a href="tel:+77057551910">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz">info@taptatti.kz</a></p>
+        <p>&copy; 2026 Кондитерская Тап Тәтті. Все права защищены &reg; &trade;</p>
     </footer>
-
 </body>
 </html>

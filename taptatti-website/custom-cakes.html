@@ -1,366 +1,146 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="Индивидуальный заказ тортов любой сложности в кондитерской Тап Тәтті в Астане.">
-
-    <meta name="author" content="Y.Dauren">
-
+    <meta name="description" content="Индивидуальный заказ тортов любой сложности в кондитерской Тап Тәтті в Астане.">
+    <meta name="author" content="Alizhan R.">
     <title>Тап Тәтті — Торты на заказ</title>
+    <!-- Подключение CSS файлов согласно требованию cascade и load order -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/alizhan.css">
 </head>
-
 <body>
-
     <!-- author: Y.Dauren -->
-
     <header>
-
         <h1>Индивидуальное изготовление тортов</h1>
-
         <nav>
             <ul>
-                <li>
-                    <a href="index.html">Главная</a>
-                </li>
-
-                <li>
-                    <a href="menu.html">Меню</a>
-                </li>
-
-                <li>
-                    <a href="order.html">Заказ</a>
-                </li>
-
-                <li>
-                    <a href="reviews.html">Отзывы</a>
-                </li>
-
-                <li>
-                    <a href="custom-cakes.html">Торты на заказ</a>
-                </li>
-
-                <li>
-                    <a href="colophon.html">О сайте</a>
-                </li>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="order.html">Заказ</a></li>
+                <li><a href="custom-cakes.html">Торты на заказ</a></li>
+                <li><a href="reviews.html">Отзывы</a></li>
+                <li><a href="colophon.html">О сайте</a></li>
             </ul>
         </nav>
-
     </header>
 
-
     <main>
-
-        <section>
-
+        <section class="custom-intro-section">
             <h2>Спецзаказы к вашим праздникам</h2>
-
-            <p>
-                Кондитерская
-                <strong>Тап Тәтті</strong>
-                принимает заявки на изготовление эксклюзивных
-                тортов для юбилеев, свадеб и корпоративных мероприятий.
-                Вы можете выбрать уникальный дизайн и начинку.
-            </p>
+            <p>Кондитерская <strong>Тап Тәтті</strong> принимает заявки на изготовление эксклюзивных тортов для юбилеев, свадеб и корпоративных мероприятий. Вы можете выбрать уникальный дизайн и начинку.</p>
 
             <h3>Порядок оформления спецзаказа:</h3>
-
-            <ol start="1">
+            <ol start="1" class="order-steps-list">
                 <li>Согласование внешнего вида и начинки.</li>
                 <li>Расчет точного веса изделия.</li>
                 <li>Внесение предоплаты и фиксация даты.</li>
             </ol>
-
         </section>
 
-
-        <section id="custom-form-section">
-
+        <!-- ID #custom-form-section используется ровно один раз для якорной ссылки и стилизации секции заказа -->
+        <section id="custom-form-section" class="custom-form-container">
             <h2>Форма заявки на индивидуальный торт</h2>
+            <p class="form-description">Заполните параметры ниже, чтобы менеджер рассчитал точную стоимость вашего торта.</p>
 
-            <p>
-                Заполните параметры ниже, чтобы менеджер рассчитал
-                точную стоимость вашего торта.
-            </p>
-
-            <!--
-                Комментарий:
-                Данная форма пока не отправляет данные на сервер,
-                так как серверный обработчик не подключен.
-            -->
-
-            <form action="custom-cakes.html" method="post">
-
-                <fieldset>
-
+            <form action="custom-cakes.html" method="post" class="custom-cake-form">
+                <fieldset class="form-fieldset">
                     <legend>Информация о клиенте</legend>
 
-                    <p>
-                        <label for="client-name">
-                            ФИО заказчика:
-                        </label>
-                        <br>
-
-                        <input
-                            type="text"
-                            id="client-name"
-                            name="client-name"
-                            placeholder="Даурен Ерланов"
-                            required
-                        >
+                    <p class="field-item">
+                        <label for="client-name">ФИО заказчика:</label>
+                        <input type="text" id="client-name" name="client-name" placeholder="Даурен Ерланов" required>
                     </p>
 
-
-                    <p>
-                        <label for="client-email">
-                            Email для связи:
-                        </label>
-                        <br>
-
-                        <input
-                            type="email"
-                            id="client-email"
-                            name="client-email"
-                            placeholder="client@example.com"
-                            required
-                        >
+                    <p class="field-item">
+                        <label for="client-email">Email для связи:</label>
+                        <input type="email" id="client-email" name="client-email" placeholder="client@example.com" required>
                     </p>
 
-
-                    <p>
-                        <label for="client-phone">
-                            Номер телефона:
-                        </label>
-                        <br>
-
-                        <input
-                            type="tel"
-                            id="client-phone"
-                            name="client-phone"
-                            placeholder="+7 (777) 000-00-00"
-                            required
-                        >
+                    <p class="field-item">
+                        <label for="client-phone">Номер телефона:</label>
+                        <input type="tel" id="client-phone" name="client-phone" placeholder="+7 (705) 755-19-10" required>
                     </p>
-
                 </fieldset>
 
-
-                <fieldset>
-
+                <fieldset class="form-fieldset">
                     <legend>Детали эксклюзивного торта</legend>
 
-                    <p>
-                        <label for="event-date">
-                            Дата мероприятия:
-                        </label>
-                        <br>
-
-                        <input
-                            type="date"
-                            id="event-date"
-                            name="event-date"
-                            required
-                        >
+                    <p class="field-item">
+                        <label for="event-date">Дата мероприятия:</label>
+                        <input type="date" id="event-date" name="event-date" required>
                     </p>
 
-
-                    <p>
-                        <label for="cake-weight">
-                            Примерный вес (в кг):
-                        </label>
-                        <br>
-
-                        <input
-                            type="number"
-                            id="cake-weight"
-                            name="cake-weight"
-                            min="2"
-                            max="15"
-                            value="2"
-                            required
-                        >
+                    <p class="field-item">
+                        <label for="cake-weight">Примерный вес (в кг):</label>
+                        <input type="number" id="cake-weight" name="cake-weight" min="2" max="15" value="2" required>
                     </p>
 
-
-                    <p>
-                        <label for="filling-select">
-                            Основная начинка:
-                        </label>
-                        <br>
-
-                        <select
-                            id="filling-select"
-                            name="filling-select"
-                        >
-                            <option value="honey">
-                                Медово-карамельная
-                            </option>
-
-                            <option value="berry">
-                                Ягодный мусс
-                            </option>
-
-                            <option value="chocolate">
-                                Тёмный шоколад
-                            </option>
+                    <p class="field-item">
+                        <label for="filling-select">Основная начинка:</label>
+                        <select id="filling-select" name="filling-select">
+                            <option value="honey">Медово-карамельная</option>
+                            <option value="berry">Ягодный мусс</option>
+                            <option value="chocolate">Тёмный шоколад</option>
                         </select>
                     </p>
 
-
-                    <p>
-                        Ярусность торта:
-                        <br>
-
-                        <input
-                            type="radio"
-                            id="tier1"
-                            name="tiers"
-                            value="1"
-                            checked
-                        >
-
-                        <label for="tier1">
+                    <p class="field-item radio-group-item">
+                        <span class="group-title">Ярусность торта:</span>
+                        <label class="radio-label">
+                            <input type="radio" id="tier1" name="tiers" value="1" checked>
                             1 ярус
                         </label>
-
-                        <br>
-
-                        <input
-                            type="radio"
-                            id="tier2"
-                            name="tiers"
-                            value="2"
-                        >
-
-                        <label for="tier2">
+                        <label class="radio-label">
+                            <input type="radio" id="tier2" name="tiers" value="2">
                             2 яруса
                         </label>
-
-                        <br>
-
-                        <input
-                            type="radio"
-                            id="tier3"
-                            name="tiers"
-                            value="3"
-                        >
-
-                        <label for="tier3">
+                        <label class="radio-label">
+                            <input type="radio" id="tier3" name="tiers" value="3">
                             3 яруса
                         </label>
                     </p>
 
-
-                    <p>
-                        <input
-                            type="checkbox"
-                            id="topper"
-                            name="topper"
-                            value="yes"
-                        >
-
+                    <p class="field-item checkbox-item">
                         <label for="topper">
+                            <input type="checkbox" id="topper" name="topper" value="yes">
                             Нужен индивидуальный топпер с надписью
                         </label>
                     </p>
 
-
-                    <p>
-                        <label for="design-descr">
-                            Описание желаемого дизайна:
-                        </label>
-                        <br>
-
-                        <textarea
-                            id="design-descr"
-                            name="design-descr"
-                            rows="4"
-                            cols="35"
-                            placeholder="Укажите цветовую гамму, надписи или персонажей"
-                        ></textarea>
+                    <p class="field-item">
+                        <label for="design-descr">Описание желаемого дизайна:</label>
+                        <textarea id="design-descr" name="design-descr" rows="4" placeholder="Укажите цветовую гамму, надписи или персонажей"></textarea>
                     </p>
-
                 </fieldset>
 
-
-                <p>
-                    <input
-                        type="submit"
-                        value="Рассчитать стоимость"
-                    >
-
-                    <input
-                        type="reset"
-                        value="Очистить форму"
-                    >
+                <p class="form-actions-p">
+                    <input type="submit" value="Рассчитать стоимость" class="btn btn-primary">
+                    <input type="reset" value="Очистить форму" class="btn btn-secondary">
                 </p>
-
             </form>
-
         </section>
 
-
-        <aside>
-
+        <!-- Flex-контейнер для блока с полезным советом -->
+        <aside class="advice-card">
             <h3>Полезный совет</h3>
-
-            <p>
-                Рекомендуем делать заказ минимум за
-                <mark>3 дня</mark>
-                до даты вашего мероприятия.
-            </p>
-
+            <p>Рекомендуем делать заказ минимум за <mark>3 дня</mark> до даты вашего мероприятия.</p>
         </aside>
 
-
-        <figure>
-
-            <img
-                src="images/photo5.jpg"
-                alt="Трехъярусный праздничный торт на заказ"
-            >
-
-            <figcaption>
-                Пример выполненного индивидуального заказа на юбилей
-            </figcaption>
-
+        <figure class="custom-sample-figure">
+            <img src="images/photo5.jpg" alt="Трехъярусный праздничный торт на заказ">
+            <figcaption>Пример выполненного индивидуального заказа на юбилей</figcaption>
         </figure>
 
-
-        <p>
-            <a href="#custom-form-section">
-                К началу формы заявки
-            </a>
+        <p class="back-link-p">
+            <a href="#custom-form-section">К началу формы заявки</a>
         </p>
-
     </main>
 
-
     <footer>
-
-        <p>
-            Контакты:
-            <a href="tel:+77070000000">
-                +7 (707) 000-00-00
-            </a>
-
-            |
-
-            Email:
-            <a href="mailto:info@taptatti.kz">
-                info@taptatti.kz
-            </a>
-        </p>
-
-        <p>
-            &copy; 2026 Кондитерская Тап Тәтті
-            &reg; &trade;
-        </p>
-
+        <p>Контакты: <a href="tel:+77057551910">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz">info@taptatti.kz</a></p>
+        <p>&copy; 2026 Кондитерская Тап Тәтті &reg; &trade;</p>
     </footer>
-
 </body>
 </html>

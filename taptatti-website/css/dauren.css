@@ -1,0 +1,205 @@
+/* ==========================================
+   CUSTOM CAKES PAGE STYLES (custom-cakes.html)
+   ========================================== */
+
+.custom-intro-section {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 35px;
+}
+
+.order-steps-list {
+    margin: 15px 0 0 20px;
+    line-height: 1.8;
+}
+
+.custom-form-container {
+    max-width: 680px;
+    margin: 0 auto 40px auto; /* Centering technique: margin auto */
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #E2D0C1;
+}
+
+.custom-form-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.form-fieldset {
+    border: 1px solid #E2D0C1;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.form-fieldset legend {
+    font-weight: bold;
+    color: #4A2E2B;
+    padding: 0 8px;
+}
+
+.radio-group-item .group-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.form-actions-p {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.advice-card {
+    background-color: #FFF2E6;
+    border-left: 4px solid #D97724;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.custom-sample-figure {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.custom-sample-figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.back-link-p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+
+/* ==========================================
+   REVIEWS PAGE STYLES (reviews.html)
+   ========================================== */
+
+/* FLEXBOX REQUIREMENT FOR PAGE 2: flex container, flex-wrap, grow/shrink */
+.reviews-section {
+    display: flex;
+    flex-direction: row; /* flex-direction requirement */
+    flex-wrap: wrap;     /* flex-wrap requirement */
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.reviews-section h2,
+.reviews-section .reviews-intro {
+    width: 100%; /* Заголовок и вводный текст занимают всю ширину флекс-ряда */
+}
+
+/* Флекс-элементы с flex-grow и flex-shrink */
+.review-card {
+    flex: 1 1 300px; /* grow, shrink, basis */
+    background-color: #ffffff;
+    padding: 22px;
+    border-radius: 10px;
+    border: 1px solid #E2D0C1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.review-card h3 {
+    font-size: 1.15rem;
+    color: #4A2E2B;
+    margin-bottom: 10px;
+}
+
+.review-card blockquote {
+    font-style: italic;
+    margin: 10px 0;
+    color: #333333;
+}
+
+.review-author {
+    font-size: 0.88rem;
+    color: #666666;
+    margin-top: 10px;
+}
+
+/* Стилизация таблицы статистики */
+.stats-section {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 35px;
+    border: 1px solid #E2D0C1;
+}
+
+.ratings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.ratings-table caption {
+    caption-side: top;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4A2E2B;
+    text-align: left;
+}
+
+.ratings-table th, 
+.ratings-table td {
+    padding: 12px 15px;
+    border: 1px solid #E2D0C1;
+    text-align: left;
+}
+
+.ratings-table th {
+    background-color: #FFF2E6;
+    color: #4A2E2B;
+    font-weight: bold;
+}
+
+.ratings-table tbody tr:nth-child(even) {
+    background-color: #FAF4EE; /* pseudo-class :nth-child requirement demonstration */
+}
+
+/* Секция терминов */
+.terms-section {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 35px;
+}
+
+.terms-list dt {
+    font-weight: bold;
+    color: #D97724;
+    margin-top: 12px;
+}
+
+.terms-list dd {
+    margin-left: 15px;
+    color: #555555;
+}
+
+.reviews-figure {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.reviews-figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.top-link-p {
+    text-align: center;
+    margin-bottom: 20px;
+}
