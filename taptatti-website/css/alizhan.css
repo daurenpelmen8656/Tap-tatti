@@ -172,3 +172,95 @@ blockquote {
     font-weight: bold;
     display: block;
 }
+
+/*menu.html*/
+
+.menu-catalog-section h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-card-img {
+    margin: 0 0 12px 0;
+    text-align: center;
+    position: relative; 
+    overflow: hidden;
+}
+
+.menu-card-img img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
+
+.menu-card-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-card-details h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #222222;
+    margin: 0;
+}
+
+.price-tag {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.menu-info-section {
+    margin-top: 50px;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.categories-list {
+    margin: 15px 0 25px 20px;
+}
+
+.dessert-definitions dt {
+    font-weight: bold;
+    color: #D97724;
+    margin-top: 10px;
+}
+
+.dessert-definitions dd {
+    margin-left: 15px;
+    color: #555555;
+}
+
+/* Адаптив для маленьких экранов */
+@media (max-width: 900px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+}
