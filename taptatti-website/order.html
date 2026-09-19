@@ -6,9 +6,11 @@
     <meta name="description" content="Форма онлайн заказа десертов в Тап Тәтті.">
     <meta name="author" content="Alizhan R.">
     <title>Тап Тәтті — Заказ торта</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/alizhan.css">
 </head>
 <body>
-    <!--author: Alizhan R. -->
+    <!-- author: Alizhan R. -->
     <header>
         <h1>Форма бронирования и заказа</h1>
         <nav>
@@ -24,78 +26,87 @@
     </header>
 
     <main>
-        <section>
+        <section class="order-form-section">
             <h2>Онлайн заявка</h2>
-            <p>Заполните все поля формы ниже, чтобы оформить предварительный заказ на торт или выпечку.</p>
+            <p class="form-description">Заполните все поля формы ниже, чтобы оформить предварительный заказ на торт или выпечку.</p>
 
-            <!-- Комментарий: Данная форма пока не отправляет данные на сервер, так как серверный обработчик не подключен -->
-            <form action="order.html" method="post">
-                <fieldset>
+            <form action="order.html" method="post" class="order-form">
+                <fieldset class="form-group">
                     <legend>Контактные данные</legend>
-                    <p>
-                        <label for="username">Имя клиента:</label><br>
+                    <p class="field-item">
+                        <label for="username">Имя клиента:</label>
                         <input type="text" id="username" name="username" placeholder="Алижан" required>
                     </p>
-                    <p>
-                        <label for="useremail">Электронная почта:</label><br>
+                    <p class="field-item">
+                        <label for="useremail">Электронная почта:</label>
                         <input type="email" id="useremail" name="useremail" placeholder="example@mail.com" required>
                     </p>
-                    <p>
-                        <label for="userphone">Телефон:</label><br>
-                        <input type="tel" id="userphone" name="userphone" placeholder="+7 (700) 000-00-00" required>
+                    <p class="field-item">
+                        <label for="userphone">Телефон:</label>
+                        <input type="tel" id="userphone" name="userphone" placeholder="+7 (705) 755-19-10" required>
                     </p>
                 </fieldset>
 
-                <fieldset>
+                <fieldset class="form-group">
                     <legend>Параметры заказа</legend>
-                    <p>
-                        <label for="cake-select">Выберите десерт:</label><br>
+                    <p class="field-item">
+                        <label for="cake-select">Выберите десерт:</label>
                         <select id="cake-select" name="cake-select">
                             <option value="medovik">Медовик</option>
                             <option value="cheesecake">Чизкейк</option>
                             <option value="eclair">Эклеры</option>
                         </select>
                     </p>
-                    <p>
-                        <label for="cake-num">Количество (шт):</label><br>
+                    <p class="field-item">
+                        <label for="cake-num">Количество (шт):</label>
                         <input type="number" id="cake-num" name="cake-num" min="1" max="10" value="1" required>
                     </p>
-                    <p>
-                        <label for="delivery-date">Дата получения:</label><br>
+                    <p class="field-item">
+                        <label for="delivery-date">Дата получения:</label>
                         <input type="date" id="delivery-date" name="delivery-date" required>
                     </p>
-                    <p>Способ получения:<br>
-                        <input type="radio" id="pickup" name="deltype" value="pickup" checked>
-                        <label for="pickup">Самовывоз</label><br>
-                        <input type="radio" id="courier" name="deltype" value="courier">
-                        <label for="courier">Доставка</label>
+                    
+                    <p class="field-item">
+                        <span class="group-label">Способ получения:</span>
+                        <label class="radio-label">
+                            <input type="radio" id="pickup" name="deltype" value="pickup" checked>
+                            Самовывоз
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" id="courier" name="deltype" value="courier">
+                            Доставка
+                        </label>
                     </p>
-                    <p>
-                        <input type="checkbox" id="pack" name="pack" value="yes">
-                        <label for="pack">Подарочная коробка</label>
+
+                    <p class="field-item checkbox-item">
+                        <label for="pack">
+                            <input type="checkbox" id="pack" name="pack" value="yes">
+                            Подарочная коробка
+                        </label>
                     </p>
-                    <p>
-                        <label for="notes">Пожелавния к заказу:</label><br>
-                        <textarea id="notes" name="notes" rows="4" cols="35" placeholder="Надпись на торте или особенности упаковки"></textarea>
+
+                    <p class="field-item">
+                        <label for="notes">Пожелания к заказу:</label>
+                        <textarea id="notes" name="notes" rows="4" placeholder="Надпись на торте или особенности упаковки"></textarea>
                     </p>
                 </fieldset>
 
-                <p>
-                    <input type="submit" value="Отправить заявку">
-                    <input type="reset" value="Сбросить форму">
+                <p class="form-actions">
+                    <input type="submit" value="Отправить заявку" class="btn btn-primary">
+                    <input type="reset" value="Сбросить форму" class="btn btn-secondary">
                 </p>
             </form>
         </section>
 
-        <figure>
+        <figure class="order-location-image">
             <img src="images/photo6.jpg" alt="Интерьер кондитерской Тап Тәтті">
             <figcaption>Заберите ваш заказ в нашем заведении</figcaption>
         </figure>
     </main>
 
     <footer>
-        <p>Контакты: <a href="tel:+77070000000">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz">info@taptatti.kz</a></p>
-        <p>&copy; 2026 Кондитерская Тап Тәтті.</p>
+        <p>Контакты: <a href="tel:+77057551910">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz">info@taptatti.kz</a></p>
+        <p>&copy; 2026 Кондитерская Тап Тәтті. Все права защищены &reg;</p>
     </footer>
 </body>
 </html>

@@ -175,22 +175,29 @@ blockquote {
 
 /*menu.html*/
 
-.menu-catalog-section h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.menu-grid {
+.menu-catalog-section {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
     margin-top: 25px;
+}
+
+.menu-catalog-section h2,
+.menu-catalog-section p {
+    grid-column: 1 / -1;
+}
+.menu-card:first-child {
+    grid-column: span 2; 
 }
 
 .menu-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #E2D0C1;
 }
 
 .menu-card-img {
@@ -251,16 +258,128 @@ blockquote {
     margin-left: 15px;
     color: #555555;
 }
+/* ORDER.HTML */
 
-/* Адаптив для маленьких экранов */
-@media (max-width: 900px) {
-    .menu-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+
+.order-form-section {
+    max-width: 650px;
+    margin: 0 auto 40px auto; /* Centering Technique: margin auto */
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #E2D0C1;
 }
 
-@media (max-width: 600px) {
-    .menu-grid {
-        grid-template-columns: 1fr;
-    }
+.order-form-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.form-description {
+    color: #666666;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+.form-group {
+    border: 1px solid #E2D0C1;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.form-group legend {
+    font-weight: bold;
+    color: #4A2E2B;
+    padding: 0 8px;
+}
+
+.field-item {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.field-item label, .group-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333333;
+}
+
+.field-item input[type="text"],
+.field-item input[type="email"],
+.field-item input[type="tel"],
+.field-item input[type="number"],
+.field-item input[type="date"],
+.field-item select,
+.field-item textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+.field-item input:focus,
+.field-item select:focus,
+.field-item textarea:focus {
+    border-color: #D97724;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(217, 119, 36, 0.15);
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.checkbox-item label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+    cursor: pointer;
+}
+.form-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 0;
+}
+
+.btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #D97724;
+    color: #ffffff;
+}
+
+.btn-secondary {
+    background-color: #E2D0C1;
+    color: #4A2E2B;
+}
+
+.order-location-image {
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.order-location-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
