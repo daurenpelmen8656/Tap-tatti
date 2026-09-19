@@ -8,13 +8,19 @@
     <title>Тап Тәтті - Главная кондитерская в Астане</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/alizhan.css">
+
+    <style>
+        .hero-text h2 {
+            color: #3D231D; 
+        }
+    </style>
 </head>
 <body>
     <!-- author: Alizhan R. -->
-    <header>
-        <h1>Кондитерская Тап Тәтті</h1>
+    <header id="main-header">
+        <h1 class="brand-title">Кондитерская Тап Тәтті</h1>
         <!-- nav используется для главного меню навигации по сайту -->
-        <nav>
+        <nav class="main-nav">
             <ul>
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="menu.html">Меню</a></li>
@@ -26,7 +32,8 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content">
+
         <section class="hero-section">
             <div class="hero-text">
                 <h2>Добро пожаловать в <strong>Тап Тәтті</strong>!</h2>
@@ -34,15 +41,41 @@
                 <p>Мы работаем для того, чтобы каждый ваш праздник становился <mark>сладким и запоминающимся</mark>. Заходите к нам на чашку ароматного кофе с свежим круассаном.</p>
             </div>
             
-            <figure class="hero-image">
+            <figure class="hero-image">    
                 <img src="images/photo7.png" alt="Интерьер кондитерской и витрина с десертами Тап Тәтті">
-                <figcaption class="sr-only">Свежая выпечка и десерты на витрине Тап Тәтті</figcaption>
             </figure>
+
+        </section>
+
+        <section class="features-section">
+            <h2 class="section-title">Наша философия качества</h2>
+            
+            <div class="features-grid">
+                <article class="feature-card">
+                    <img src="images/image8.svg" alt="Собственное производство" class="feature-icon">
+                    <h3>Собственное производство</h3>
+                    <p>Единственная компания, которая производит и продает товары, учитывающие потребности и вкусы аудитории.</p>
+                </article>
+
+                <article class="feature-card">
+                    <img src="images/image9.svg" alt="Качество и доступность" class="feature-icon">
+                    <h3>Качество и доступность</h3>
+                    <p>Наша продукция отличается оптимальным соотношением качества и цены, удовлетворяя высокие требования клиентов.</p>
+                </article>
+
+                <article class="feature-card">
+                    <img src="images/image10.svg" alt="Натуральные продукты" class="feature-icon">
+                    <h3>Натуральные продукты</h3>
+                    <p>Мы используем только натуральные ингредиенты, без искусственных добавок и усилителей вкуса, заботясь о вашем здоровье и благополучии.</p>
+                </article>
+            </div>
         </section>
 
         <article class="philosophy-article">
-            <h2>Наша философия качества</h2>
-            <p>Каждое утро наши мастера создают шедевры кулинарного искусства. Вы можете заказать индивидуальный торт на день рождения или свадьбу.</p>
+            <h3>Мастерство наших кондитеров</h3>
+            <img src="images/photo1.jpg" alt="Мастер кондитер за работой" class="float-chef-img">
+            <p>Каждое утро наши мастера создают шедевры кулинарного искусства. Вы можете заказать индивидуальный торт на день рождения или свадьбу. Каждая деталь продумывается до мелочей, чтобы дарить вам искренние эмоции.</p>
+            <div class="clearfix-block"></div>
 
             <blockquote cite="https://taptatti.kz">
                 <p><q>Нашие свежие медовики выпекаются каждый день с утра.</q></p>
@@ -52,10 +85,20 @@
 
         <aside class="info-aside">
             <h3>Полезная информация</h3>
-            <p>При заказе от <small>10 000 ₸</small> доставка по городу — бесплатно!</p>
-            <p>Наши специальные рецепты самые вкусные!</p>
+            <div class="aside-cards-wrapper">
+                <div class="aside-card" style="background-color: #FFF2E6; /* Cascade demo: inline style overrides CSS file */">
+                    <p>При заказе от <small>10 000 ₸</small> доставка по городу — бесплатно!</p>
+                </div>
+                <div class="aside-card">
+                    <p>Наши специальные рецепты самые вкусные!</p>
+                </div>
+            </div>
         </aside>
     </main>
+
+    <div class="fixed-contact-btn">
+        <a href="tel:+77057551910">📞 Позвонить</a>
+    </div>
 
     <footer>
         <!-- footer содержит официальные контакты и копирайт -->

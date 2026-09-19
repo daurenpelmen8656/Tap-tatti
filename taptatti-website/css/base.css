@@ -1,11 +1,22 @@
+/* ==========================================================================
+   PALETTE DEFINITION (Maximum 5 colors used across the site):
+   1. #4A2E2B (RGB: 74, 46, 43)   - Primary Dark Brown: Used for main text & header/footer accents.
+   2. #FFF8F0 (RGB: 255, 248, 240) - Soft Cream Background: Provides a warm, bakery-like canvas.
+   3. #D97724 (RGB: 217, 119, 36)  - Warm Amber Accent: Highlights, hover states, and active elements.
+   4. wheat   (Named Color)       - Header Background: Light golden wheat tone representing pastries.
+   5. rgba(0, 0, 0, 0.08) (RGBA)  - Subtle Shadow Color: Used for card and image elevation effects.
+   ========================================================================== */
+
+/* Universal Selector (*) */
 * {
-    box-sizing: border-box;
+    box-sizing: border-box; /* Box Model: border-box prevents width calculation issues */
     margin: 0;
     padding: 0;
 }
 
+/* Base Body Styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Основной шрифт */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Full fallback stack 1 */
     font-size: 16px;
     line-height: 1.6;
     letter-spacing: 0.3px;
@@ -13,22 +24,24 @@ body {
     color: #4A2E2B;
 }
 
+/* Grouping Selector with Commas */
 h1, h2, h3 {
-    font-family: 'Georgia', 'Times New Roman', Times, serif; /* Вторичный шрифт для заголовков */
+    font-family: 'Georgia', 'Times New Roman', Times, serif; /* Full fallback stack 2 */
     font-weight: 700;
     line-height: 1.3;
     letter-spacing: 0.5px;
     color: #4A2E2B;
 }
 
+/* Header & Navigation Styling */
 header {
-    background-color: wheat;
+    background-color: wheat; /* Named Color */
     padding: 20px;
-    border-bottom: 3px solid #8B4513;
+    border-bottom: 3px solid #4A2E2B;
     text-align: center;
 }
 
-
+/* Flexbox Navigation: Flex Row with justify-content, align-items and gap */
 nav ul {
     display: flex;
     flex-direction: row;
@@ -39,14 +52,16 @@ nav ul {
     margin-top: 15px;
 }
 
+/* Centering Technique 1: Centering Navigation Links using Flexbox Alignment */
 nav a {
     text-decoration: none;
     color: #4A2E2B;
     font-weight: 600;
     padding: 8px 12px;
+    transition: color 0.2s ease-in-out;
 }
 
-
+/* Pseudo-classes :hover and :focus */
 nav a:hover {
     color: #D97724;
 }
@@ -55,22 +70,38 @@ nav a:focus {
     outline: 2px solid #D97724;
 }
 
+/* Centering Technique 2: Centering Main Layout Container using Margin Auto */
+/* Centering explanation: margin: 0 auto centers fixed max-width block horizontally */
 main {
     padding: 30px 20px;
     max-width: 1100px;
-    margin: 0 auto; 
+    margin: 0 auto;
 }
 
+/* Box Model Demonstration & Margin Collapse Comment */
+/* 
+   MARGIN COLLAPSE EXPLANATION:
+   When section and article have top/bottom margins, their vertical margins collapse 
+   into a single margin equal to the larger of the two instead of adding up.
+*/
+section, article {
+    margin-bottom: 40px;
+}
+
+/* Attribute Selector */
+a[target="_blank"] {
+    text-decoration: underline;
+}
+
+/* Footer Styling */
 footer {
     background-color: #4A2E2B;
     color: #FFF8F0;
     text-align: center;
-    padding: 20px;
-    margin-top: 40px;
+    padding: 25px 20px;
+    margin-top: 50px;
 }
 
 footer a {
     color: #FFF8F0;
 }
-
-
