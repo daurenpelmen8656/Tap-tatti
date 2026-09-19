@@ -1,0 +1,81 @@
+
+.hero-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 50%;
+}
+
+.hero-text h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    color: #222222;
+}
+
+.hero-text p {
+    font-size: 1.05rem;
+    color: #444444;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.hero-image {
+    flex: 1;
+    max-width: 50%;
+    margin: 0;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.philosophy-article {
+    margin-bottom: 40px;
+}
+
+.info-aside {
+    background-color: #FFF2E6;
+    padding: 20px;
+    border-left: 4px solid #D97724;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .hero-text, .hero-image {
+        max-width: 100%;
+    }
+
+    .hero-text h2 {
+        font-size: 1.75rem;
+    }
+}
