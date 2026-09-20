@@ -7,7 +7,7 @@ p {
 }
 
 mark {
-    background-color: #FFE082 !important; /* Forces highlight color across themes */
+    background-color: wheat !important; /* forces highlight color across themes */
     padding: 2px 4px;
 }
 
@@ -15,9 +15,8 @@ mark {
     color: #4A2E2B;
 }
 
-
 .features-section .section-title {
-    color: #222222;
+    color: #4A2E2B;
     text-align: center;
     margin-bottom: 25px;
 }
@@ -62,17 +61,19 @@ h2 + p {
 
 .badge-tag {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    /* centering technique 3: absolute positioning with transform */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #D97724;
-    color: #ffffff;
+    color: #FFF8F0;
     padding: 4px 10px;
     font-size: 0.8rem;
     font-weight: bold;
     border-radius: 15px;
 }
 
-/* festures-section */
+/* features-section */
 
 .features-grid {
     display: grid;
@@ -81,11 +82,11 @@ h2 + p {
 }
 
 .features-grid > article {
-    background-color: #ffffff;
+    background-color: #FFF8F0;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
-    border: 1px solid #E2D0C1;
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .feature-icon {
@@ -96,8 +97,9 @@ h2 + p {
 }
 
 .philosophy-article {
+    /* static is the default positioning, it keeps the element in the normal document flow */
     position: static; 
-    background: #ffffff;
+    background: #FFF8F0;
     padding: 20px;
     border-radius: 8px;
 }
@@ -113,6 +115,7 @@ h2 + p {
 }
 
 .clearfix-block {
+    /* without this clear property, the text below would wrap around the floating image and break the layout */
     clear: both;
 }
 
@@ -134,7 +137,7 @@ blockquote {
 }
 
 .info-aside {
-    background-color: #FFF2E6;
+    background-color: wheat;
     padding: 20px;
     border-radius: 8px;
 }
@@ -148,7 +151,7 @@ blockquote {
 
 .aside-card {
     flex: 1 1 180px; 
-    background-color: #ffffff;
+    background-color: #FFF8F0;
     padding: 12px;
     border-radius: 6px;
 }
@@ -165,7 +168,7 @@ blockquote {
 
 .fixed-contact-btn a {
     background-color: #D97724;
-    color: #ffffff;
+    color: #FFF8F0;
     padding: 10px 16px;
     border-radius: 20px;
     text-decoration: none;
@@ -173,19 +176,29 @@ blockquote {
     display: block;
 }
 
-/*menu.html*/
+#menu-main {
+    /* used an id here because there is strictly only one main menu section on this page, making it a unique anchor point */
+}
+
+#order-main {
+    /* used an id here because there is strictly only one main order section on this page */
+}
+
+/* MENU.HTML */
 
 .menu-catalog-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
     margin-top: 25px;
+    /* grid was chosen here over flexbox because it gives strict 2d alignment for cards and lets the first item span across columns easily */
 }
 
 .menu-catalog-section h2,
 .menu-catalog-section p {
     grid-column: 1 / -1;
 }
+
 .menu-card:first-child {
     grid-column: span 2; 
 }
@@ -194,10 +207,10 @@ blockquote {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #ffffff;
+    background-color: #FFF8F0;
     border-radius: 12px;
     padding: 15px;
-    border: 1px solid #E2D0C1;
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .menu-card-img {
@@ -225,21 +238,21 @@ blockquote {
 .menu-card-details h3 {
     font-size: 1.05rem;
     font-weight: 600;
-    color: #222222;
+    color: #4A2E2B;
     margin: 0;
 }
 
 .price-tag {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #000000;
+    color: #4A2E2B;
     margin: 0;
     white-space: nowrap;
 }
 
 .menu-info-section {
     margin-top: 50px;
-    background-color: #ffffff;
+    background-color: #FFF8F0;
     padding: 25px;
     border-radius: 10px;
 }
@@ -256,18 +269,18 @@ blockquote {
 
 .dessert-definitions dd {
     margin-left: 15px;
-    color: #555555;
+    color: #4A2E2B;
 }
-/* ORDER.HTML */
 
+/* order.html */
 
 .order-form-section {
     max-width: 650px;
-    margin: 0 auto 40px auto; /* Centering Technique: margin auto */
-    background-color: #ffffff;
+    margin: 0 auto 40px auto; /* centering technique 1: margin auto */
+    background-color: #FFF8F0;
     padding: 30px;
     border-radius: 12px;
-    border: 1px solid #E2D0C1;
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .order-form-section h2 {
@@ -276,13 +289,13 @@ blockquote {
 }
 
 .form-description {
-    color: #666666;
+    color: #4A2E2B;
     margin-bottom: 25px;
     font-size: 0.95rem;
 }
 
 .form-group {
-    border: 1px solid #E2D0C1;
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 25px;
@@ -304,7 +317,7 @@ blockquote {
     font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: 6px;
-    color: #333333;
+    color: #4A2E2B;
 }
 
 .field-item input[type="text"],
@@ -316,7 +329,7 @@ blockquote {
 .field-item textarea {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #CCCCCC;
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 6px;
     font-size: 0.95rem;
     font-family: inherit;
@@ -327,7 +340,7 @@ blockquote {
 .field-item textarea:focus {
     border-color: #D97724;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(217, 119, 36, 0.15);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
 }
 
 .radio-label {
@@ -346,6 +359,7 @@ blockquote {
     font-weight: normal;
     cursor: pointer;
 }
+
 .form-actions {
     display: flex;
     flex-direction: row;
@@ -364,11 +378,11 @@ blockquote {
 
 .btn-primary {
     background-color: #D97724;
-    color: #ffffff;
+    color: #FFF8F0;
 }
 
 .btn-secondary {
-    background-color: #E2D0C1;
+    background-color: wheat;
     color: #4A2E2B;
 }
 
@@ -382,4 +396,17 @@ blockquote {
     width: 100%;
     height: auto;
     border-radius: 10px;
+}
+
+/* specificity experiment */
+/* rule 1: specificity is 0,1,1 (1 class, 1 type) */
+.order-form-section h2 {
+    color: blue;
+}
+
+/* rule 2: specificity is 0,1,2 (1 class, 2 types). 
+   this rule wins because its specificity (0,1,2) is higher than (0,1,1), 
+   so the h2 text becomes dark brown instead of blue, without needing !important */
+section.order-form-section h2 {
+    color: #4A2E2B; 
 }

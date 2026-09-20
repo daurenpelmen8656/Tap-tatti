@@ -3,7 +3,7 @@
    ========================================== */
 
 .custom-intro-section {
-    background-color: #ffffff;
+    background-color: #FFF8F0;
     padding: 25px;
     border-radius: 10px;
     margin-bottom: 35px;
@@ -17,10 +17,10 @@
 .custom-form-container {
     max-width: 680px;
     margin: 0 auto 40px auto; /* Centering technique: margin auto */
-    background-color: #ffffff;
+    background-color: #FFF8F0;
     padding: 30px;
     border-radius: 12px;
-    border: 1px solid #E2D0C1;
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .custom-form-container h2 {
@@ -28,17 +28,19 @@
     margin-bottom: 8px;
 }
 
+/* Убираем черную тонкую рамку (линию) вокруг fieldset */
 .form-fieldset {
-    border: 1px solid #E2D0C1;
-    border-radius: 8px;
-    padding: 20px;
+    border: none;
+    padding: 0;
     margin-bottom: 25px;
 }
 
 .form-fieldset legend {
     font-weight: bold;
     color: #4A2E2B;
-    padding: 0 8px;
+    padding: 0;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
 }
 
 .radio-group-item .group-title {
@@ -55,37 +57,32 @@
 }
 
 .advice-card {
-    background-color: #FFF2E6;
+    background-color: wheat;
     border-left: 4px solid #D97724;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 30px;
 }
 
+/* Выравнивание и уменьшение картинки в 2 раза */
 .custom-sample-figure {
     text-align: center;
     margin-bottom: 25px;
 }
 
 .custom-sample-figure img {
-    max-width: 100%;
+    max-width: 50%; /* Уменьшено в 2 раза */
     height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-radius: 12px; /* Скругленные края */
+    display: block;
+    margin: 0 auto;
 }
 
 .back-link-p {
     text-align: center;
     margin-bottom: 20px;
 }
-
-
-
-/* ==========================================
-   REVIEWS PAGE STYLES (reviews.html)
-   ========================================== */
-
-/* FLEXBOX REQUIREMENT FOR PAGE 2: flex container, flex-wrap, grow/shrink */
+/*REVIEWS*/
 .reviews-section {
     display: flex;
     flex-direction: row; /* flex-direction requirement */
@@ -194,9 +191,10 @@
 }
 
 .reviews-figure img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
-    border-radius: 10px;
+    margin: 0 auto;
+    border-radius: 12px;
 }
 
 .top-link-p {

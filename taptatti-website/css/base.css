@@ -1,13 +1,11 @@
-/* ==========================================================================
-   PALETTE DEFINITION (Maximum 5 colors used across the site):
+/* 
+   PALETTE DEFINITION
    1. #4A2E2B (RGB: 74, 46, 43)   - Primary Dark Brown: Used for main text & header/footer accents.
    2. #FFF8F0 (RGB: 255, 248, 240) - Soft Cream Background: Provides a warm, bakery-like canvas.
    3. #D97724 (RGB: 217, 119, 36)  - Warm Amber Accent: Highlights, hover states, and active elements.
    4. wheat   (Named Color)       - Header Background: Light golden wheat tone representing pastries.
-   5. rgba(0, 0, 0, 0.08) (RGBA)  - Subtle Shadow Color: Used for card and image elevation effects.
-   ========================================================================== */
+   5. rgba(0, 0, 0, 0.08) (RGBA)  - Subtle Shadow Color: Used for card and image elevation effects.*/
 
-/* Universal Selector (*) */
 * {
     box-sizing: border-box; /* Box Model: border-box prevents width calculation issues */
     margin: 0;
@@ -79,11 +77,6 @@ main {
 }
 
 /* Box Model Demonstration & Margin Collapse Comment */
-/* 
-   MARGIN COLLAPSE EXPLANATION:
-   When section and article have top/bottom margins, their vertical margins collapse 
-   into a single margin equal to the larger of the two instead of adding up.
-*/
 section, article {
     margin-bottom: 40px;
 }

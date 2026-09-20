@@ -18,3 +18,9 @@ Tap Tatti Bakery (Astana, Kazakhstan)
 - `colophon.html` - Technical breakdown of the HTML elements used
 - `checklist.txt` - Complete checklist of required HTML tags with line numbers
 - `ai-log.txt` - Log of AI assistance
+## Stylesheets
+* `css/base.css` — Core base styles, typography resets, and global layout standards.
+* `css/alizhan.css` — Custom styling, Flexbox/Grid layouts, positioning rules, and media adjustments.
+## Design Sketches & Screenshots
+* `Index Page Wireframe: design/sketch_index.jpg`
+* `Menu Page Wireframe: design/sketch_menu.jpg`
