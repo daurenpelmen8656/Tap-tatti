@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Официальный сайт кондитерской Тап Тәтті в Астане. Выпечка, торты и свежий кофе.">
+    <meta name="author" content="Alizhan R.">
+    <title>Тап Тәтті - Главная кондитерская в Астане</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/alizhan.css">
+</head>
+<body>
+    <!-- author: Alizhan R. -->
+    <header id="main-header">
+        <h1 class="brand-title">Кондитерская Тап Тәтті</h1>
+        <!-- nav используется для главного меню навигации по сайту -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="order.html">Заказ</a></li>
+                <li><a href="custom-cakes.html">Торты на заказ</a></li>
+                <li><a href="reviews.html">Отзывы</a></li>
+                <li><a href="colophon.html">О сайте</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <section class="hero-section">
+            <div class="hero-text">
+                <h2>Добро пожаловать в <strong>Тап Тәтті</strong>!</h2>
+                <p>Мы выпекаем <i>самые свежие</i> десерты и торты в Астане каждый день. Наша кондитерская использует только натуральные ингредиенты, такие как <em>настоящее сливочное масло</em> и <b>свежие ягоды</b>.</p>
+                <p>Мы работаем для того, чтобы каждый ваш праздник становился <mark>сладким и запоминающимся</mark>. Заходите к нам на чашку ароматного кофе с свежим круассаном.</p>
+            </div>
+            
+            <figure class="hero-image">    
+                <img src="images/photo7.png" alt="Интерьер кондитерской и витрина с десертами Тап Тәтті">
+            </figure>
+
+        </section>
+
+        <section class="features-section">
+            <h2 class="section-title">Наша философия качества</h2>
+            
+            <div class="features-grid">
+                <article class="feature-card">
+                    <img src="images/image8.svg" alt="Собственное производство" class="feature-icon">
+                    <h3>Собственное производство</h3>
+                    <p>Единственная компания, которая производит и продает товары, учитывающие потребности и вкусы аудитории.</p>
+                </article>
+
+                <article class="feature-card">
+                    <img src="images/image9.svg" alt="Качество и доступность" class="feature-icon">
+                    <h3>Качество и доступность</h3>
+                    <p class="exam1">Наша продукция отличается оптимальным соотношением качества и цены, удовлетворяя высокие требования клиентов.</p>
+                </article>
+
+                <article class="feature-card">
+                    <img src="images/image10.svg" alt="Натуральные продукты" class="feature-icon">
+                    <h3>Натуральные продукты</h3>
+                    <p>Мы используем только натуральные ингредиенты, без искусственных добавок и усилителей вкуса, заботясь о вашем здоровье и благополучии.</p>
+                </article>
+            </div>
+        </section>
+
+        <article class="philosophy-article">
+            <h3>Мастерство наших кондитеров</h3>
+            <img src="images/photo1.jpg" alt="Мастер кондитер за работой" class="float-chef-img">
+            <p>Каждое утро наши мастера создают шедевры кулинарного искусства. Вы можете заказать индивидуальный торт на день рождения или свадьбу. Каждая деталь продумывается до мелочей, чтобы дарить вам искренние эмоции.</p>
+            <div class="clearfix-block"></div>
+
+            <blockquote cite="https://taptatti.kz">
+                <p><q>Нашие свежие медовики выпекаются каждый день с утра.</q></p>
+            </blockquote>
+            <p>— <cite>Айгерим, кондитерша Тап Тәтті (12 сентября 2026)</cite></p>
+        </article>
+
+        <aside class="info-aside">
+            <h3>Полезная информация</h3>
+            <div class="aside-cards-wrapper">
+                <div class="aside-card" style="background-color: #FFF2E6; /* Cascade demo: inline style overrides CSS file */">
+                    <p>При заказе от <small>10 000 ₸</small> доставка по городу — бесплатно!</p>
+                </div>
+                <div class="aside-card">
+                    <p>Наши специальные рецепты самые вкусные!</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <div class="fixed-contact-btn">
+        <a href="tel:+77057551910">📞 Позвонить</a>
+    </div>
+
+    <footer>
+        <!-- footer содержит официальные контакты и копирайт -->
+        <p>Контакты: <a href="tel:+77057551910">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz">info@taptatti.kz</a></p>
+        <p>Наш сайт: <a href="https://2gis.kz/astana/geo/70000001095212344" target="_blank" rel="noopener noreferrer">Мы на карте 2ГИС</a></p>
+        <p>&copy; 2026 Кондитерская Тап Тәтті. Все права защищены &reg; &trade; &emsp;</p>
+    </footer>
+</body>
+</html>

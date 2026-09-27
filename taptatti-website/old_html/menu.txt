@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Меню кондитерской Тап Тәтті в Астане. Фирменные торты и десерты.">
+    <meta name="author" content="Alizhan R.">
+    <title>Тап Тәтті — Меню и Торты</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/alizhan.css">
+</head>
+<body>
+    <!-- author: Alizhan R. -->
+    <header>
+        <h1 id="menu-page-header">Меню кондитерской Тап Тәтті</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="order.html">Заказ</a></li>
+                <li><a href="custom-cakes.html">Торты на заказ</a></li>
+                <li><a href="reviews.html">Отзывы</a></li>
+                <li><a href="colophon.html">О сайте</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="menu-main">
+        <section class="menu-catalog-section">
+            <h2 class="section-title">Наши фирменные торты</h2>
+            <p class="catalog-intro">Выбирайте <i>самые вкусные</i> десерты из <b>натуральных ингредиентов</b> <mark>со свежей выпечкой</mark> каждый день.</p>
+
+            <article class="menu-card featured-card">
+                <figure class="menu-card-img">
+                    <span class="badge-tag">Хит продаж</span>
+                    <img src="images/balhadisha.jpeg" alt="Balhadisha торты">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">«Balhadisha» торты</span>
+                    <strong class="price-tag">8000 ₸</strong>
+                </p>
+            </article>
+
+            <article class="menu-card">
+                <figure class="menu-card-img">
+                    <img src="images/strawberry.jpg" alt="Клубничный торт">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">Клубничный торт</span>
+                    <strong class="price-tag">7000 ₸</strong>
+                </p>
+            </article>
+
+            <article class="menu-card">
+                <figure class="menu-card-img">
+                    <img src="images/strawberry2.jpeg" alt="Таңқурай нәзіктігі торты">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">«Таңқурай нәзіктігі»</span>
+                    <strong class="price-tag">10000 ₸</strong>
+                </p>
+            </article>
+
+            <article class="menu-card">
+                <figure class="menu-card-img">
+                    <img src="images/molochnayadevochka.png" alt="Молочная девочка">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">Молочная девочка</span>
+                    <strong class="price-tag">8500 ₸</strong>
+                </p>
+            </article>
+
+            <article class="menu-card">
+                <figure class="menu-card-img">
+                    <img src="images/whoopiepie.png" alt="Whoopie Pie">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">Whoopie Pie</span>
+                    <strong class="price-tag">8500 ₸</strong>
+                </p>
+            </article>
+
+            <article class="menu-card">
+                <figure class="menu-card-img">
+                    <img src="images/morkovnyi-1.png" alt="Морковный торт">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">Морковный торт</span>
+                    <strong class="price-tag">8500 ₸</strong>
+                </p>
+            </article>
+
+            <article class="menu-card">
+                <figure class="menu-card-img">
+                    <img src="images/medovyi.png" alt="Медовый торт">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">Медовый торт</span>
+                    <strong class="price-tag">6700 ₸</strong>
+                </p>
+            </article>
+
+            <article class="menu-card">
+                <figure class="menu-card-img">
+                    <img src="images/shpinatnyi.png" alt="Шпинатный торт">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">Шпинатный торт</span>
+                    <strong class="price-tag">8500 ₸</strong>
+                </p>
+            </article>
+
+            <article class="menu-card">
+                <figure class="menu-card-img">
+                    <img src="images/tiramisu.png" alt="Тирамису">
+                </figure>
+                <p class="menu-card-details">
+                    <span class="cake-name">Тирамису</span>
+                    <strong class="price-tag">6500 ₸</strong>
+                </p>
+            </article>
+        </section>
+
+        <section class="menu-info-section">
+            <h2>Категории нашей продукции</h2>
+            <ul class="categories-list">
+                <li><strong>Торты и Десерты:</strong> Авторские торты, чизкейки, эклеры, макароны.</li>
+                <li><strong>Свежая выпечка:</strong> Круассаны, бриоши, сытные пироги.</li>
+            </ul>
+
+            <dl class="dessert-definitions">
+                <dt>Эклер</dt>
+                <dd><i>Французский десерт</i> из заварного теста с нежным кремом.</dd>
+                <dt>Макарон</dt>
+                <dd><i>Печенье</i> из яичных белков, сахара и молотого миндаля.</dd>
+            </dl>
+        </section>
+    </main>
+
+    <footer>
+        <p>Контакты: <a href="tel:+77057551910">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz">info@taptatti.kz</a></p>
+        <p>&copy; 2026 Кондитерская Тап Тәтті. Все права защищены &reg; &trade;</p>
+    </footer>
+</body>
+</html>
