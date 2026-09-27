@@ -1,0 +1,9 @@
+# List of Removed Custom CSS Rules and Bootstrap Replacements
+
+1. `display: flex` / `display: grid` -> Replaced by Bootstrap Grid (`row`, `col-12`, `col-md-6`, `col-lg-4`).
+2. Hand-written Navigation CSS (`nav ul`, `nav a`) -> Replaced by Bootstrap `navbar`, `navbar-expand-lg`, `nav-link`.
+3. Custom Card styling (`.menu-card`, `.feature-card`) -> Replaced by Bootstrap `.card`, `.card-body`, `.shadow-sm`.
+4. Custom Form input and group styles -> Replaced by Bootstrap `.form-control`, `.form-select`, `.form-check`.
+5. Custom Button styles (`.btn`, `.btn-primary`) -> Replaced by Bootstrap `.btn`, `.btn-primary`, `.btn-outline-secondary`.
+6. Hand-written Margin and Padding values -> Replaced by Bootstrap spacing utilities (`mb-3`, `my-5`, `p-4`, `g-4`).
+7. Custom Floating and Badge elements -> Replaced by Bootstrap `.badge` and `.position-absolute`.

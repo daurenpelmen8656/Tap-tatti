@@ -1,146 +1,162 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- Bootstrap version used: 5.3.3 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Меню кондитерской Тап Тәтті в Астане. Фирменные торты и десерты.">
     <meta name="author" content="Alizhan R.">
     <title>Тап Тәтті — Меню и Торты</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/alizhan.css">
 </head>
 <body>
-    <!-- author: Alizhan R. -->
-    <header>
-        <h1 id="menu-page-header">Меню кондитерской Тап Тәтті</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="menu.html">Меню</a></li>
-                <li><a href="order.html">Заказ</a></li>
-                <li><a href="custom-cakes.html">Торты на заказ</a></li>
-                <li><a href="reviews.html">Отзывы</a></li>
-                <li><a href="colophon.html">О сайте</a></li>
-            </ul>
-        </nav>
+    <header id="main-header" class="bg-wheat py-4 border-bottom border-dark border-2">
+        <div class="container text-center">
+            <!-- Крупный заголовок по центру -->
+            <h1 class="brand-title display-4 fw-bold mb-3">Кондитерская Тап Тәтті</h1>
+            
+            <!-- Навигация флексом без сжимающих классов navbar -->
+            <nav class="main-nav">
+                <ul class="nav justify-content-center gap-3 fs-5 fw-medium">
+                    <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-2 active fw-bold" href="menu.html">Меню</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-2" href="order.html">Заказ</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-2" href="custom-cakes.html">Торты на заказ</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main id="menu-main">
-        <section class="menu-catalog-section">
-            <h2 class="section-title">Наши фирменные торты</h2>
-            <p class="catalog-intro">Выбирайте <i>самые вкусные</i> десерты из <b>натуральных ингредиентов</b> <mark>со свежей выпечкой</mark> каждый день.</p>
+    <main class="container my-5" id="menu-main">
+        <section class="mb-5">
+            <h1 class="text-center fw-bold mb-3">Наши фирменные торты</h1>
+            <p class="text-center text-muted mb-4 fs-5">Выбирайте <i>самые вкусные</i> десерты из <b>натуральных ингредиентов</b> со свежей выпечкой каждый день.</p>
 
-            <article class="menu-card featured-card">
-                <figure class="menu-card-img">
-                    <span class="badge-tag">Хит продаж</span>
-                    <img src="images/balhadisha.jpeg" alt="Balhadisha торты">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">«Balhadisha» торты</span>
-                    <strong class="price-tag">8000 ₸</strong>
-                </p>
-            </article>
+            <!-- Cards Catalog Grid -->
+            <div class="row g-4">
+                
+                <!-- Bootstrap Component: Card -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="position-relative">
+                            <img src="images/balhadisha.jpeg" class="card-img-top" alt="Balhadisha торты">
+                            <span class="badge bg-danger position-absolute top-0 end-0 m-2">Хит продаж</span>
+                        </div>
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">«Balhadisha» торты</h2>
+                            <span class="fw-bold fs-5 text-brand">8000 ₸</span>
+                        </div>
+                    </div>
+                </div>
 
-            <article class="menu-card">
-                <figure class="menu-card-img">
-                    <img src="images/strawberry.jpg" alt="Клубничный торт">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">Клубничный торт</span>
-                    <strong class="price-tag">7000 ₸</strong>
-                </p>
-            </article>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="images/strawberry.jpg" class="card-img-top" alt="Клубничный торт">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">Клубничный торт</h2>
+                            <span class="fw-bold fs-5 text-brand">7000 ₸</span>
+                        </div>
+                    </div>
+                </div>
 
-            <article class="menu-card">
-                <figure class="menu-card-img">
-                    <img src="images/strawberry2.jpeg" alt="Таңқурай нәзіктігі торты">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">«Таңқурай нәзіктігі»</span>
-                    <strong class="price-tag">10000 ₸</strong>
-                </p>
-            </article>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="images/strawberry2.jpeg" class="card-img-top" alt="Таңқурай нәзіктігі торты">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">«Таңқурай нәзіктігі»</h2>
+                            <span class="fw-bold fs-5 text-brand">10000 ₸</span>
+                        </div>
+                    </div>
+                </div>
 
-            <article class="menu-card">
-                <figure class="menu-card-img">
-                    <img src="images/molochnayadevochka.png" alt="Молочная девочка">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">Молочная девочка</span>
-                    <strong class="price-tag">8500 ₸</strong>
-                </p>
-            </article>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="images/molochnayadevochka.png" class="card-img-top" alt="Молочная девочка">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">Молочная девочка</h2>
+                            <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                        </div>
+                    </div>
+                </div>
 
-            <article class="menu-card">
-                <figure class="menu-card-img">
-                    <img src="images/whoopiepie.png" alt="Whoopie Pie">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">Whoopie Pie</span>
-                    <strong class="price-tag">8500 ₸</strong>
-                </p>
-            </article>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="images/whoopiepie.png" class="card-img-top" alt="Whoopie Pie">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">Whoopie Pie</h2>
+                            <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                        </div>
+                    </div>
+                </div>
 
-            <article class="menu-card">
-                <figure class="menu-card-img">
-                    <img src="images/morkovnyi-1.png" alt="Морковный торт">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">Морковный торт</span>
-                    <strong class="price-tag">8500 ₸</strong>
-                </p>
-            </article>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="images/morkovnyi-1.png" class="card-img-top" alt="Морковный торт">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">Морковный торт</h2>
+                            <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                        </div>
+                    </div>
+                </div>
 
-            <article class="menu-card">
-                <figure class="menu-card-img">
-                    <img src="images/medovyi.png" alt="Медовый торт">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">Медовый торт</span>
-                    <strong class="price-tag">6700 ₸</strong>
-                </p>
-            </article>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="images/medovyi.png" class="card-img-top" alt="Медовый торт">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">Медовый торт</h2>
+                            <span class="fw-bold fs-5 text-brand">6700 ₸</span>
+                        </div>
+                    </div>
+                </div>
 
-            <article class="menu-card">
-                <figure class="menu-card-img">
-                    <img src="images/shpinatnyi.png" alt="Шпинатный торт">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">Шпинатный торт</span>
-                    <strong class="price-tag">8500 ₸</strong>
-                </p>
-            </article>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="images/shpinatnyi.png" class="card-img-top" alt="Шпинатный торт">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">Шпинатный торт</h2>
+                            <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                        </div>
+                    </div>
+                </div>
 
-            <article class="menu-card">
-                <figure class="menu-card-img">
-                    <img src="images/tiramisu.png" alt="Тирамису">
-                </figure>
-                <p class="menu-card-details">
-                    <span class="cake-name">Тирамису</span>
-                    <strong class="price-tag">6500 ₸</strong>
-                </p>
-            </article>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="images/tiramisu.png" class="card-img-top" alt="Тирамису">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h2 class="h5 card-title m-0">Тирамису</h2>
+                            <span class="fw-bold fs-5 text-brand">6500 ₸</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
-        <section class="menu-info-section">
-            <h2>Категории нашей продукции</h2>
-            <ul class="categories-list">
-                <li><strong>Торты и Десерты:</strong> Авторские торты, чизкейки, эклеры, макароны.</li>
-                <li><strong>Свежая выпечка:</strong> Круассаны, бриоши, сытные пироги.</li>
+        <section class="bg-white p-4 rounded shadow-sm">
+            <h2 class="h4 fw-bold mb-3">Категории нашей продукции</h2>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item bg-transparent"><strong>Торты и Десерты:</strong> Авторские торты, чизкейки, эклеры, макароны.</li>
+                <li class="list-group-item bg-transparent"><strong>Свежая выпечка:</strong> Круассаны, бриоши, сытные пироги.</li>
             </ul>
 
-            <dl class="dessert-definitions">
-                <dt>Эклер</dt>
-                <dd><i>Французский десерт</i> из заварного теста с нежным кремом.</dd>
-                <dt>Макарон</dt>
-                <dd><i>Печенье</i> из яичных белков, сахара и молотого миндаля.</dd>
+            <dl class="row mb-0">
+                <dt class="col-sm-3 text-brand">Эклер</dt>
+                <dd class="col-sm-9"><i>Французский десерт</i> из заварного теста с нежным кремом.</dd>
+                <dt class="col-sm-3 text-brand">Макарон</dt>
+                <dd class="col-sm-9"><i>Печенье</i> из яичных белков, сахара и молотого миндаля.</dd>
             </dl>
         </section>
     </main>
 
-    <footer>
-        <p>Контакты: <a href="tel:+77057551910">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz">info@taptatti.kz</a></p>
-        <p>&copy; 2026 Кондитерская Тап Тәтті. Все права защищены &reg; &trade;</p>
+    <footer class="bg-dark text-light text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-1">Контакты: <a href="tel:+77057551910" class="text-light">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz" class="text-light">info@taptatti.kz</a></p>
+            <p class="small text-muted mb-0">&copy; 2026 Кондитерская Тап Тәтті. Все права защищены &reg; &trade;</p>
+        </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

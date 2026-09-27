@@ -1,112 +1,130 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- Bootstrap version used: 5.3.3 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Форма онлайн заказа десертов в Тап Тәтті.">
     <meta name="author" content="Alizhan R.">
     <title>Тап Тәтті — Заказ торта</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/alizhan.css">
 </head>
 <body>
-    <!-- author: Alizhan R. -->
-    <header>
-        <h1>Форма бронирования и заказа</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="menu.html">Меню</a></li>
-                <li><a href="order.html">Заказ</a></li>
-                <li><a href="custom-cakes.html">Торты на заказ</a></li>
-                <li><a href="reviews.html">Отзывы</a></li>
-                <li><a href="colophon.html">О сайте</a></li>
-            </ul>
-        </nav>
+    <header id="main-header" class="bg-wheat py-4 border-bottom border-dark border-2">
+        <div class="container text-center">
+            <h1 class="brand-title display-5 fw-bold mb-3">Кондитерская Тап Тәтті</h1>
+            <!-- nav используется для главного меню навигации по сайту -->
+            <nav class="main-nav">
+                <ul class="nav justify-content-center gap-3 fs-5 fw-medium">
+                    <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-2" href="menu.html">Меню</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-2 active fw-bold" href="order.html">Заказ</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-2" href="custom-cakes.html">Торты на заказ</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main id="order-main">
-        <section class="order-form-section">
-            <h2>Онлайн заявка</h2>
-            <p class="form-description">Заполните все поля формы ниже, чтобы оформить предварительный заказ на торт или выпечку.</p>
+    <main class="container my-5" id="order-main">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <section class="bg-white p-4 p-md-5 rounded shadow-sm mb-5">
+                    <h1 class="h2 fw-bold mb-2">Онлайн заявка</h1>
+                    <p class="text-muted mb-4">Заполните все поля формы ниже, чтобы оформить предварительный заказ на торт или выпечку.</p>
 
-            <form action="order.html" method="post" class="order-form">
-                <fieldset class="form-group">
-                    <legend>Контактные данные</legend>
-                    <p class="field-item">
-                        <label for="username">Имя клиента:</label>
-                        <input type="text" id="username" name="username" placeholder="Алижан" required>
-                    </p>
-                    <p class="field-item">
-                        <label for="useremail">Электронная почта:</label>
-                        <input type="email" id="useremail" name="useremail" placeholder="example@mail.com" required>
-                    </p>
-                    <p class="field-item">
-                        <label for="userphone">Телефон:</label>
-                        <input type="tel" id="userphone" name="userphone" placeholder="+7 (705) 755-19-10" required>
-                    </p>
-                </fieldset>
+                    <form action="order.html" method="post">
+                        <!-- Contact Group -->
+                        <fieldset class="border p-3 rounded mb-4">
+                            <legend class="float-none w-auto px-2 fs-6 fw-bold text-brand">Контактные данные</legend>
+                            
+                            <div class="mb-3">
+                                <label for="username" class="form-label fw-semibold">Имя клиента:</label>
+                                <input type="text" id="username" name="username" class="form-control" placeholder="Алижан" required>
+                            </div>
 
-                <fieldset class="form-group">
-                    <legend>Параметры заказа</legend>
-                    <p class="field-item">
-                        <label for="cake-select">Выберите десерт:</label>
-                        <select id="cake-select" name="cake-select">
-                            <option value="medovik">Медовик</option>
-                            <option value="cheesecake">Чизкейк</option>
-                            <option value="eclair">Эклеры</option>
-                        </select>
-                    </p>
-                    <p class="field-item">
-                        <label for="cake-num">Количество (шт):</label>
-                        <input type="number" id="cake-num" name="cake-num" min="1" max="10" value="1" required>
-                    </p>
-                    <p class="field-item">
-                        <label for="delivery-date">Дата получения:</label>
-                        <input type="date" id="delivery-date" name="delivery-date" required>
-                    </p>
-                    
-                    <p class="field-item">
-                        <span class="group-label">Способ получения:</span>
-                        <label class="radio-label">
-                            <input type="radio" id="pickup" name="deltype" value="pickup" checked>
-                            Самовывоз
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" id="courier" name="deltype" value="courier">
-                            Доставка
-                        </label>
-                    </p>
+                            <div class="mb-3">
+                                <label for="useremail" class="form-label fw-semibold">Электронная почта:</label>
+                                <input type="email" id="useremail" name="useremail" class="form-control" placeholder="example@mail.com" required>
+                            </div>
 
-                    <p class="field-item checkbox-item">
-                        <label for="pack">
-                            <input type="checkbox" id="pack" name="pack" value="yes">
-                            Подарочная коробка
-                        </label>
-                    </p>
+                            <div class="mb-3">
+                                <label for="userphone" class="form-label fw-semibold">Телефон:</label>
+                                <input type="tel" id="userphone" name="userphone" class="form-control" placeholder="+7 (705) 755-19-10" required>
+                            </div>
+                        </fieldset>
 
-                    <p class="field-item">
-                        <label for="notes">Пожелания к заказу:</label>
-                        <textarea id="notes" name="notes" rows="4" placeholder="Надпись на торте или особенности упаковки"></textarea>
-                    </p>
-                </fieldset>
+                        <!-- Order Details Group -->
+                        <fieldset class="border p-3 rounded mb-4">
+                            <legend class="float-none w-auto px-2 fs-6 fw-bold text-brand">Параметры заказа</legend>
 
-                <p class="form-actions">
-                    <input type="submit" value="Отправить заявку" class="btn btn-primary">
-                    <input type="reset" value="Сбросить форму" class="btn btn-secondary">
-                </p>
-            </form>
-        </section>
+                            <div class="mb-3">
+                                <label for="cake-select" class="form-label fw-semibold">Выберите десерт:</label>
+                                <select id="cake-select" name="cake-select" class="form-select">
+                                    <option value="medovik">Медовик</option>
+                                    <option value="cheesecake">Чизкейк</option>
+                                    <option value="eclair">Эклеры</option>
+                                </select>
+                            </div>
 
-        <figure class="order-location-image">
-            <img src="images/photo6.jpg" alt="Интерьер кондитерской Тап Тәтті">
-            <figcaption>Заберите ваш заказ в нашем заведении</figcaption>
-        </figure>
+                            <div class="mb-3">
+                                <label for="cake-num" class="form-label fw-semibold">Количество (шт):</label>
+                                <input type="number" id="cake-num" name="cake-num" class="form-control" min="1" max="10" value="1" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="delivery-date" class="form-label fw-semibold">Дата получения:</label>
+                                <input type="date" id="delivery-date" name="delivery-date" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <span class="form-label d-block fw-semibold">Способ получения:</span>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="pickup" name="deltype" value="pickup" checked>
+                                    <label class="form-check-label" for="pickup">Самовывоз</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="courier" name="deltype" value="courier">
+                                    <label class="form-check-label" for="courier">Доставка</label>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="pack" name="pack" value="yes">
+                                <label class="form-check-label" for="pack">Подарочная коробка</label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="notes" class="form-label fw-semibold">Пожелания к заказу:</label>
+                                <textarea id="notes" name="notes" class="form-control" rows="4" placeholder="Надпись на торте или особенности упаковки"></textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Buttons Demonstrating 4 Different Variants -->
+                        <div class="d-flex gap-2">
+                            <input type="submit" value="Отправить заявку" class="btn btn-primary">
+                            <input type="reset" value="Сбросить" class="btn btn-outline-secondary">
+                            <button type="button" class="btn btn-secondary btn-sm" disabled>Заявки закрыты</button>
+                        </div>
+                    </form>
+                </section>
+
+                <figure class="figure text-center w-100">
+                    <img src="images/photo6.jpg" class="figure-img img-fluid rounded shadow-sm" alt="Интерьер кондитерской Тап Тәтті">
+                    <figcaption class="figure-caption">Заберите ваш заказ в нашем заведении</figcaption>
+                </figure>
+            </div>
+        </div>
     </main>
 
-    <footer>
-        <p>Контакты: <a href="tel:+77057551910">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz">info@taptatti.kz</a></p>
-        <p>&copy; 2026 Кондитерская Тап Тәтті. Все права защищены &reg;</p>
+    <footer class="bg-dark text-light text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-1">Контакты: <a href="tel:+77057551910" class="text-light">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz" class="text-light">info@taptatti.kz</a></p>
+            <p class="small text-muted mb-0">&copy; 2026 Кондитерская Тап Тәтті &reg;</p>
+        </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
