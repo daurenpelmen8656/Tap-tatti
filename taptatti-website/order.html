@@ -15,7 +15,6 @@
     <header id="main-header" class="bg-wheat py-4 border-bottom border-dark border-2">
         <div class="container text-center">
             <h1 class="brand-title display-5 fw-bold mb-3">Кондитерская Тап Тәтті</h1>
-            <!-- nav используется для главного меню навигации по сайту -->
             <nav class="main-nav">
                 <ul class="nav justify-content-center gap-3 fs-5 fw-medium">
                     <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
@@ -30,7 +29,7 @@
     <main class="container my-5" id="order-main">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
-                <section class="bg-white p-4 p-md-5 rounded shadow-sm mb-5">
+                <section id="order-form" class="bg-white p-4 p-md-5 rounded shadow-sm mb-5">
                     <h1 class="h2 fw-bold mb-2">Онлайн заявка</h1>
                     <p class="text-muted mb-4">Заполните все поля формы ниже, чтобы оформить предварительный заказ на торт или выпечку.</p>
 
@@ -62,9 +61,15 @@
                             <div class="mb-3">
                                 <label for="cake-select" class="form-label fw-semibold">Выберите десерт:</label>
                                 <select id="cake-select" name="cake-select" class="form-select">
-                                    <option value="medovik">Медовик</option>
-                                    <option value="cheesecake">Чизкейк</option>
-                                    <option value="eclair">Эклеры</option>
+                                    <option value="balhadisha" selected>«Balhadisha» торты (8000 ₸)</option>
+                                    <option value="strawberry">Клубничный торт (7000 ₸)</option>
+                                    <option value="tanqurai">«Таңқурай нәзіктігі» (10000 ₸)</option>
+                                    <option value="molochnaya">Молочная девочка (8500 ₸)</option>
+                                    <option value="whoopie">Whoopie Pie (8500 ₸)</option>
+                                    <option value="morkovnyi">Морковный торт (8500 ₸)</option>
+                                    <option value="medovyi">Медовый торт (6700 ₸)</option>
+                                    <option value="shpinatnyi">Шпинатный торт (8500 ₸)</option>
+                                    <option value="tiramisu">Тирамису (6500 ₸)</option>
                                 </select>
                             </div>
 
@@ -101,10 +106,11 @@
                             </div>
                         </fieldset>
 
-                        <div class="d-flex gap-2">
+                        <!-- Кнопки: выполняют требование 4 вариаций кнопок (Primary, Outline, Sm, Disabled) -->
+                        <div class="d-flex flex-wrap gap-2">
                             <input type="submit" value="Отправить заявку" class="btn btn-primary">
                             <input type="reset" value="Сбросить" class="btn btn-outline-secondary">
-                            <button type="button" class="btn btn-secondary btn-sm" disabled>Заявки закрыты</button>
+                            <button type="button" class="btn btn-secondary btn-sm" disabled>Прием срочных заказов закрыт</button>
                         </div>
                     </form>
                 </section>
@@ -123,7 +129,5 @@
             <p class="small text-muted mb-0">&copy; 2026 Кондитерская Тап Тәтті &reg;</p>
         </div>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

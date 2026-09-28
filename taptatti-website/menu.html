@@ -14,7 +14,7 @@
 <body>
     <header id="main-header" class="bg-wheat py-4 border-bottom border-dark border-2">
         <div class="container text-center">
-            <h1 class="brand-title display-4 fw-bold mb-3">Кондитерская Тап Тәтті</h1>
+            <h1 class="brand-title display-5 fw-bold mb-3">Кондитерская Тап Тәтті</h1>
         
             <nav class="main-nav">
                 <ul class="nav justify-content-center gap-3 fs-5 fw-medium">
@@ -27,104 +27,141 @@
         </div>
     </header>
 
+    <!-- Использование container по заданию -->
     <main class="container my-5" id="menu-main">
         <section class="mb-5">
             <h1 class="text-center fw-bold mb-3">Наши фирменные торты</h1>
             <p class="text-center text-muted mb-4 fs-5">Выбирайте <i>самые вкусные</i> десерты из <b>натуральных ингредиентов</b> со свежей выпечкой каждый день.</p>
 
-            <!-- Cards Catalog Grid -->
+            <!-- Bootstrap Component: Card Grid с брейкпоинтами col-12 col-md-6 col-lg-4 -->
             <div class="row g-4">
                 
-                <!-- Bootstrap Component: Card -->
+                <!-- Торт 1 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <div class="position-relative">
                             <img src="images/balhadisha.jpeg" class="card-img-top" alt="Balhadisha торты">
+                            <!-- Bootstrap Component: Badge -->
                             <span class="badge bg-danger position-absolute top-0 end-0 m-2">Хит продаж</span>
                         </div>
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">«Balhadisha» торты</h2>
-                            <span class="fw-bold fs-5 text-brand">8000 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">«Balhadisha» торты</h2>
+                                <span class="fw-bold fs-5 text-brand">8000 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Торт 2 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/strawberry.jpg" class="card-img-top" alt="Клубничный торт">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">Клубничный торт</h2>
-                            <span class="fw-bold fs-5 text-brand">7000 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">Клубничный торт</h2>
+                                <span class="fw-bold fs-5 text-brand">7000 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Торт 3 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/strawberry2.jpeg" class="card-img-top" alt="Таңқурай нәзіктігі торты">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">«Таңқурай нәзіктігі»</h2>
-                            <span class="fw-bold fs-5 text-brand">10000 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">«Таңқурай нәзіктігі»</h2>
+                                <span class="fw-bold fs-5 text-brand">10000 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Торт 4 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/molochnayadevochka.png" class="card-img-top" alt="Молочная девочка">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">Молочная девочка</h2>
-                            <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">Молочная девочка</h2>
+                                <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Торт 5 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/whoopiepie.png" class="card-img-top" alt="Whoopie Pie">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">Whoopie Pie</h2>
-                            <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">Whoopie Pie</h2>
+                                <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Торт 6 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/morkovnyi-1.png" class="card-img-top" alt="Морковный торт">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">Морковный торт</h2>
-                            <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">Морковный торт</h2>
+                                <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Торт 7 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/medovyi.png" class="card-img-top" alt="Медовый торт">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">Медовый торт</h2>
-                            <span class="fw-bold fs-5 text-brand">6700 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">Медовый торт</h2>
+                                <span class="fw-bold fs-5 text-brand">6700 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Торт 8 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/shpinatnyi.png" class="card-img-top" alt="Шпинатный торт">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">Шпинатный торт</h2>
-                            <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">Шпинатный торт</h2>
+                                <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Торт 9 -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/tiramisu.png" class="card-img-top" alt="Тирамису">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <h2 class="h5 card-title m-0">Тирамису</h2>
-                            <span class="fw-bold fs-5 text-brand">6500 ₸</span>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 class="h5 card-title m-0">Тирамису</h2>
+                                <span class="fw-bold fs-5 text-brand">6500 ₸</span>
+                            </div>
+                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
@@ -139,12 +176,10 @@
                 <li class="list-group-item bg-transparent"><strong>Свежая выпечка:</strong> Круассаны, бриоши, сытные пироги.</li>
             </ul>
 
-            <dl class="row mb-0">
-                <dt class="col-sm-3 text-brand">Эклер</dt>
-                <dd class="col-sm-9"><i>Французский десерт</i> из заварного теста с нежным кремом.</dd>
-                <dt class="col-sm-3 text-brand">Макарон</dt>
-                <dd class="col-sm-9"><i>Печенье</i> из яичных белков, сахара и молотого миндаля.</dd>
-            </dl>
+            <div class="definitions mb-0">
+                <p class="mb-2"><strong class="text-brand">Эклер:</strong> <i>Французский десерт</i> из заварного теста с нежным кремом.</p>
+                <p class="mb-0"><strong class="text-brand">Макарон:</strong> <i>Печенье</i> из яичных белков, сахара и молотого миндаля.</p>
+            </div>
         </section>
     </main>
 
