@@ -15,24 +15,32 @@
     <header id="main-header" class="bg-wheat py-4 border-bottom border-dark border-2">
         <div class="container text-center">
             <h1 class="brand-title display-5 fw-bold mb-3">Кондитерская Тап Тәтті</h1>
-            <!-- nav используется для главного меню навигации по сайту -->
-            <nav class="main-nav">
-                <ul class="nav justify-content-center gap-3 fs-5 fw-medium">
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="menu.html">Меню</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="order.html">Заказ</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2 active fw-bold" href="custom-cakes.html">Торты на заказ</a></li>
-                </ul>
+            <nav class="navbar navbar-expand-md main-nav p-0" id="primary-navbar">
+                <div class="container-fluid justify-content-center">    
+                    <!-- burger menu -->
+                    <button class="navbar-toggler border-dark ms-auto me-auto mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                        <ul class="navbar-nav gap-3 fs-5 fw-medium">
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="menu.html">Меню</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="order.html">Заказ</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2 active fw-bold" href="custom-cakes.html">Торты на заказ</a></li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
-    <main class="container my-5">
-        <section class="bg-white p-4 rounded shadow-sm mb-5">
+
+    <main class="container my-5" id="custom-main">
+        <section id="custom-info-section" class="bg-white p-4 rounded shadow-sm mb-5">
             <h1 class="h2 fw-bold mb-3">Спецзаказы к вашим праздникам</h1>
             <p>Кондитерская <strong>Тап Тәтті</strong> принимает заявки на изготовление эксклюзивных тортов для юбилеев, свадеб и корпоративных мероприятий.</p>
 
             <h2 class="h5 fw-bold mt-4">Порядок оформления спецзаказа:</h2>
-            <ol class="list-group list-group-numbered list-group-flush">
+            <ol class="list-group list-group-numbered list-group-flush" id="order-steps-list">
                 <li class="list-group-item">Согласование внешнего вида и начинки.</li>
                 <li class="list-group-item">Расчет точного веса изделия.</li>
                 <li class="list-group-item">Внесение предоплаты и фиксация даты.</li>
@@ -43,10 +51,10 @@
             <div class="col-12 col-lg-8">
                 <section id="custom-form-section" class="bg-white p-4 p-md-5 rounded shadow-sm mb-5">
                     <h2 class="h3 fw-bold mb-2">Форма заявки на индивидуальный торт</h2>
-                    <p class="text-muted mb-4">Заполните параметры ниже, чтобы менеджер рассчитал точную стоимость вашего торта.</p>
+                    <p class="text-muted mb-4">Заполните параметры ниже, чтобы рассчитать предварительную стоимость торта. Наш менеджер свяжется с вами в течение 15 минут для подтверждения.</p>
 
-                    <form action="custom-cakes.html" method="post">
-                        <fieldset class="border-0 p-0 mb-4">
+                    <form id="custom-cake-form" action="custom-cakes.html" method="post">
+                        <fieldset class="border-0 p-0 mb-4" id="custom-client-fields">
                             <legend class="fw-bold text-brand fs-5 mb-3">Информация о клиенте</legend>
 
                             <div class="mb-3">
@@ -65,7 +73,7 @@
                             </div>
                         </fieldset>
 
-                        <fieldset class="border-0 p-0 mb-4">
+                        <fieldset class="border-0 p-0 mb-4" id="custom-cake-details">
                             <legend class="fw-bold text-brand fs-5 mb-3">Детали эксклюзивного торта</legend>
 
                             <div class="mb-3">
@@ -115,15 +123,19 @@
                         </fieldset>
 
                         <div class="d-flex gap-2">
-                            <input type="submit" value="Рассчитать стоимость" class="btn btn-primary">
-                            <input type="reset" value="Очистить форму" class="btn btn-outline-secondary">
+                            <input type="submit" id="custom-submit-btn" value="Рассчитать стоимость" class="btn btn-primary">
+                            <input type="reset" id="custom-reset-btn" value="Очистить форму" class="btn btn-outline-secondary">
                         </div>
                     </form>
+
+                    <!-- JS Target Empty Containers for Calculation Result & Errors -->
+                    <div id="custom-calc-result" class="alert alert-success d-none mt-4" role="alert"></div>
+                    <div id="custom-error-message" class="alert alert-danger d-none mt-3" role="alert"></div>
                 </section>
             </div>
         </div>
 
-        <aside class="alert alert-warning border-start border-4 border-amber shadow-sm mb-4">
+        <aside id="custom-tip-aside" class="alert alert-warning border-start border-4 border-amber shadow-sm mb-4">
             <h3 class="h5 fw-bold alert-heading">Полезный совет</h3>
             <p class="mb-0">Рекомендуем делать заказ минимум за <mark class="bg-warning-subtle px-1">3 дня</mark> до даты вашего мероприятия.</p>
         </aside>
@@ -138,7 +150,7 @@
         </p>
     </main>
 
-    <footer class="bg-dark text-light text-center py-4 mt-5">
+    <footer id="main-footer" class="bg-dark text-light text-center py-4 mt-5">
         <div class="container">
             <p class="mb-1">Контакты: <a href="tel:+77057551910" class="text-light">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz" class="text-light">info@taptatti.kz</a></p>
             <p class="small text-muted mb-0">&copy; 2026 Кондитерская Тап Тәтті &reg; &trade;</p>

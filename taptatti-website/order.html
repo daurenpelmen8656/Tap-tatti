@@ -15,13 +15,21 @@
     <header id="main-header" class="bg-wheat py-4 border-bottom border-dark border-2">
         <div class="container text-center">
             <h1 class="brand-title display-5 fw-bold mb-3">Кондитерская Тап Тәтті</h1>
-            <nav class="main-nav">
-                <ul class="nav justify-content-center gap-3 fs-5 fw-medium">
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="menu.html">Меню</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2 active fw-bold" href="order.html">Заказ</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="custom-cakes.html">Торты на заказ</a></li>
-                </ul>
+            <nav class="navbar navbar-expand-md main-nav p-0" id="primary-navbar">
+                <div class="container-fluid justify-content-center">    
+                    <!-- burger menu -->
+                    <button class="navbar-toggler border-dark ms-auto me-auto mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                        <ul class="navbar-nav gap-3 fs-5 fw-medium">
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="menu.html">Меню</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2 active fw-bold" href="order.html">Заказ</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="custom-cakes.html">Торты на заказ</a></li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
@@ -31,11 +39,11 @@
             <div class="col-12 col-lg-8">
                 <section id="order-form" class="bg-white p-4 p-md-5 rounded shadow-sm mb-5">
                     <h1 class="h2 fw-bold mb-2">Онлайн заявка</h1>
-                    <p class="text-muted mb-4">Заполните все поля формы ниже, чтобы оформить предварительный заказ на торт или выпечку.</p>
+                    <p class="text-muted mb-4">Заполните все поля формы ниже, чтобы оформить предварительный заказ на торт или выпечку. Менеджер свяжется с вами для подтверждения.</p>
 
-                    <form action="order.html" method="post">
+                    <form id="order-form-element" action="order.html" method="post">
                         <!-- Contact Group -->
-                        <fieldset class="border p-3 rounded mb-4">
+                        <fieldset class="border p-3 rounded mb-4" id="contact-fields">
                             <legend class="float-none w-auto px-2 fs-6 fw-bold text-brand">Контактные данные</legend>
                             
                             <div class="mb-3">
@@ -55,7 +63,7 @@
                         </fieldset>
 
                         <!-- Order Details Group -->
-                        <fieldset class="border p-3 rounded mb-4">
+                        <fieldset class="border p-3 rounded mb-4" id="details-fields">
                             <legend class="float-none w-auto px-2 fs-6 fw-bold text-brand">Параметры заказа</legend>
 
                             <div class="mb-3">
@@ -106,13 +114,16 @@
                             </div>
                         </fieldset>
 
-                        <!-- Кнопки: выполняют требование 4 вариаций кнопок (Primary, Outline, Sm, Disabled) -->
-                        <div class="d-flex flex-wrap gap-2">
-                            <input type="submit" value="Отправить заявку" class="btn btn-primary">
-                            <input type="reset" value="Сбросить" class="btn btn-outline-secondary">
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <input type="submit" id="order-submit-btn" value="Отправить заявку" class="btn btn-primary">
+                            <input type="reset" id="order-reset-btn" value="Сбросить" class="btn btn-outline-secondary">
                             <button type="button" class="btn btn-secondary btn-sm" disabled>Прием срочных заказов закрыт</button>
                         </div>
                     </form>
+
+                    <!-- JS Target Empty Containers for Confirmation & Errors -->
+                    <div id="order-success-message" class="alert alert-success d-none mt-4" role="alert"></div>
+                    <div id="order-error-message" class="alert alert-danger d-none mt-3" role="alert"></div>
                 </section>
 
                 <figure class="figure text-center w-100">
@@ -123,11 +134,13 @@
         </div>
     </main>
 
-    <footer class="bg-dark text-light text-center py-4 mt-5">
+    <footer id="main-footer" class="bg-dark text-light text-center py-4 mt-5">
         <div class="container">
             <p class="mb-1">Контакты: <a href="tel:+77057551910" class="text-light">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz" class="text-light">info@taptatti.kz</a></p>
             <p class="small text-muted mb-0">&copy; 2026 Кондитерская Тап Тәтті &reg;</p>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

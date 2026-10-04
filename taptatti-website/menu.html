@@ -15,153 +15,161 @@
     <header id="main-header" class="bg-wheat py-4 border-bottom border-dark border-2">
         <div class="container text-center">
             <h1 class="brand-title display-5 fw-bold mb-3">Кондитерская Тап Тәтті</h1>
-        
-            <nav class="main-nav">
-                <ul class="nav justify-content-center gap-3 fs-5 fw-medium">
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2 active fw-bold" href="menu.html">Меню</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="order.html">Заказ</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark px-2" href="custom-cakes.html">Торты на заказ</a></li>
-                </ul>
+            <nav class="navbar navbar-expand-md main-nav p-0" id="primary-navbar">
+                <div class="container-fluid justify-content-center">    
+                    <!-- burger menu -->
+                    <button class="navbar-toggler border-dark ms-auto me-auto mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                        <ul class="navbar-nav gap-3 fs-5 fw-medium">
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="index.html">Главная</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2 active fw-bold" href="menu.html">Меню</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="order.html">Заказ</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark px-2" href="custom-cakes.html">Торты на заказ</a></li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
 
-    <!-- Использование container по заданию -->
     <main class="container my-5" id="menu-main">
-        <section class="mb-5">
+        <section class="mb-5" id="cakes-catalog">
             <h1 class="text-center fw-bold mb-3">Наши фирменные торты</h1>
             <p class="text-center text-muted mb-4 fs-5">Выбирайте <i>самые вкусные</i> десерты из <b>натуральных ингредиентов</b> со свежей выпечкой каждый день.</p>
 
-            <!-- Bootstrap Component: Card Grid с брейкпоинтами col-12 col-md-6 col-lg-4 -->
-            <div class="row g-4">
+            <!-- JS Notification Placeholder Container -->
+            <div id="menu-notification" class="alert alert-info d-none my-3 text-center" role="alert"></div>
+
+            <!-- Card Grid -->
+            <div class="row g-4" id="menu-grid">
                 
                 <!-- Торт 1 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-balhadisha">
                     <div class="card h-100 shadow-sm border-0">
                         <div class="position-relative">
                             <img src="images/balhadisha.jpeg" class="card-img-top" alt="Balhadisha торты">
-                            <!-- Bootstrap Component: Badge -->
                             <span class="badge bg-danger position-absolute top-0 end-0 m-2">Хит продаж</span>
                         </div>
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">«Balhadisha» торты</h2>
-                                <span class="fw-bold fs-5 text-brand">8000 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-balhadisha">8000 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=balhadisha#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-balhadisha">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Торт 2 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-strawberry">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/strawberry.jpg" class="card-img-top" alt="Клубничный торт">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">Клубничный торт</h2>
-                                <span class="fw-bold fs-5 text-brand">7000 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-strawberry">7000 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=strawberry#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-strawberry">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Торт 3 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-tanqurai">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/strawberry2.jpeg" class="card-img-top" alt="Таңқурай нәзіктігі торты">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">«Таңқурай нәзіктігі»</h2>
-                                <span class="fw-bold fs-5 text-brand">10000 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-tanqurai">10000 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=tanqurai#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-tanqurai">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Торт 4 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-molochnaya">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/molochnayadevochka.png" class="card-img-top" alt="Молочная девочка">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">Молочная девочка</h2>
-                                <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-molochnaya">8500 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=molochnaya#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-molochnaya">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Торт 5 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-whoopie">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/whoopiepie.png" class="card-img-top" alt="Whoopie Pie">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">Whoopie Pie</h2>
-                                <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-whoopie">8500 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=whoopie#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-whoopie">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Торт 6 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-morkovnyi">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/morkovnyi-1.png" class="card-img-top" alt="Морковный торт">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">Морковный торт</h2>
-                                <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-morkovnyi">8500 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=morkovnyi#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-morkovnyi">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Торт 7 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-medovyi">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/medovyi.png" class="card-img-top" alt="Медовый торт">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">Медовый торт</h2>
-                                <span class="fw-bold fs-5 text-brand">6700 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-medovyi">6700 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=medovyi#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-medovyi">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Торт 8 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-shpinatnyi">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/shpinatnyi.png" class="card-img-top" alt="Шпинатный торт">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">Шпинатный торт</h2>
-                                <span class="fw-bold fs-5 text-brand">8500 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-shpinatnyi">8500 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=shpinatnyi#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-shpinatnyi">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Торт 9 -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" id="cake-card-tiramisu">
                     <div class="card h-100 shadow-sm border-0">
                         <img src="images/tiramisu.png" class="card-img-top" alt="Тирамису">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="h5 card-title m-0">Тирамису</h2>
-                                <span class="fw-bold fs-5 text-brand">6500 ₸</span>
+                                <span class="fw-bold fs-5 text-brand" id="price-tiramisu">6500 ₸</span>
                             </div>
-                            <a href="order.html#order-form" class="btn btn-outline-dark btn-sm w-100">Перейти к заказу</a>
+                            <a href="order.html?item=tiramisu#order-form" class="btn btn-outline-dark btn-sm w-100 order-btn" id="btn-order-tiramisu">Перейти к заказу</a>
                         </div>
                     </div>
                 </div>
@@ -169,21 +177,21 @@
             </div>
         </section>
 
-        <section class="bg-white p-4 rounded shadow-sm">
+        <section id="menu-categories" class="bg-white p-4 rounded shadow-sm">
             <h2 class="h4 fw-bold mb-3">Категории нашей продукции</h2>
-            <ul class="list-group list-group-flush mb-4">
+            <ul class="list-group list-group-flush mb-4" id="categories-list">
                 <li class="list-group-item bg-transparent"><strong>Торты и Десерты:</strong> Авторские торты, чизкейки, эклеры, макароны.</li>
                 <li class="list-group-item bg-transparent"><strong>Свежая выпечка:</strong> Круассаны, бриоши, сытные пироги.</li>
             </ul>
 
-            <div class="definitions mb-0">
+            <div class="definitions mb-0" id="menu-definitions">
                 <p class="mb-2"><strong class="text-brand">Эклер:</strong> <i>Французский десерт</i> из заварного теста с нежным кремом.</p>
                 <p class="mb-0"><strong class="text-brand">Макарон:</strong> <i>Печенье</i> из яичных белков, сахара и молотого миндаля.</p>
             </div>
         </section>
     </main>
 
-    <footer class="bg-dark text-light text-center py-4 mt-5">
+    <footer id="main-footer" class="bg-dark text-light text-center py-4 mt-5">
         <div class="container">
             <p class="mb-1">Контакты: <a href="tel:+77057551910" class="text-light">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz" class="text-light">info@taptatti.kz</a></p>
             <p class="small text-muted mb-0">&copy; 2026 Кондитерская Тап Тәтті. Все права защищены &reg; &trade;</p>
