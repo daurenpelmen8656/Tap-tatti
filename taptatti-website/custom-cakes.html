@@ -35,128 +35,226 @@
     </header>
 
     <main class="container my-5" id="custom-main">
-        <section id="custom-info-section" class="bg-white p-4 rounded shadow-sm mb-5">
-            <h1 class="h2 fw-bold mb-3">Спецзаказы к вашим праздникам</h1>
-            <p>Кондитерская <strong>Тап Тәтті</strong> принимает заявки на изготовление эксклюзивных тортов для юбилеев, свадеб и корпоративных мероприятий.</p>
-
-            <h2 class="h5 fw-bold mt-4">Порядок оформления спецзаказа:</h2>
-            <ol class="list-group list-group-numbered list-group-flush" id="order-steps-list">
-                <li class="list-group-item">Согласование внешнего вида и начинки.</li>
-                <li class="list-group-item">Расчет точного веса изделия.</li>
-                <li class="list-group-item">Внесение предоплаты и фиксация даты.</li>
-            </ol>
+        <!-- Banner / Hero Section -->
+        <section id="custom-info-section" class="bg-white p-4 p-md-5 rounded shadow-sm mb-5 border-top border-4 border-warning">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1 class="h2 fw-bold mb-3">Эксклюзивные торты к вашим праздникам</h1>
+                    <p class="lead fs-6 text-secondary">Принимаем заявки на изготовление авторских тортов для свадеб, юбилеев и корпоративных мероприятий любой сложности.</p>
+                    
+                    <h2 class="h6 fw-bold text-uppercase text-muted mt-4 mb-3">Как мы работаем:</h2>
+                    <div class="row g-2 text-center text-md-start">
+                        <div class="col-12 col-md-4">
+                            <div class="p-2 border rounded bg-light">
+                                <span class="fw-bold text-primary d-block">01. Заявка</span>
+                                <small class="text-muted">Выбираете вес и начинку</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="p-2 border rounded bg-light">
+                                <span class="fw-bold text-primary d-block">02. Расчет</span>
+                                <small class="text-muted">Уточняем дизайн и стоимость</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="p-2 border rounded bg-light">
+                                <span class="fw-bold text-primary d-block">03. Готово</span>
+                                <small class="text-muted">Доставим к вашему празднику</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 mt-4 mt-lg-0 text-center">
+                    <img src="images/photo5.jpg" class="img-fluid rounded shadow-sm w-75" style="height: 320px; object-fit: cover;" alt="Пример торта на заказ">
+                </div>
+            </div>
         </section>
 
+        <!-- Form Section -->
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
-                <section id="custom-form-section" class="bg-white p-4 p-md-5 rounded shadow-sm mb-5">
-                    <h2 class="h3 fw-bold mb-2">Форма заявки на индивидуальный торт</h2>
-                    <p class="text-muted mb-4">Заполните параметры ниже, чтобы рассчитать предварительную стоимость торта. Наш менеджер свяжется с вами в течение 15 минут для подтверждения.</p>
+                <section id="custom-form-section" class="bg-white p-4 p-md-5 rounded shadow-sm mb-4">
+                    <div class="border-bottom pb-3 mb-4">
+                        <h2 class="h3 fw-bold mb-1">Конструктор индивидуального торта</h2>
+                        <p class="text-muted mb-0 small">Заполните форму ниже, и шеф-кондитер свяжется с вами для подтверждения заказа.</p>
+                    </div>
 
                     <form id="custom-cake-form" action="custom-cakes.html" method="post">
-                        <fieldset class="border-0 p-0 mb-4" id="custom-client-fields">
-                            <legend class="fw-bold text-brand fs-5 mb-3">Информация о клиенте</legend>
-
-                            <div class="mb-3">
-                                <label for="client-name" class="form-label fw-semibold">ФИО заказчика:</label>
-                                <input type="text" id="client-name" name="client-name" class="form-control" placeholder="Даурен Ерланов" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="client-email" class="form-label fw-semibold">Email для связи:</label>
-                                <input type="email" id="client-email" name="client-email" class="form-control" placeholder="client@example.com" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="client-phone" class="form-label fw-semibold">Номер телефона:</label>
-                                <input type="tel" id="client-phone" name="client-phone" class="form-control" placeholder="+7 (705) 755-19-10" required>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="border-0 p-0 mb-4" id="custom-cake-details">
-                            <legend class="fw-bold text-brand fs-5 mb-3">Детали эксклюзивного торта</legend>
-
-                            <div class="mb-3">
-                                <label for="event-date" class="form-label fw-semibold">Дата мероприятия:</label>
-                                <input type="date" id="event-date" name="event-date" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="cake-weight" class="form-label fw-semibold">Примерный вес (в кг):</label>
-                                <input type="number" id="cake-weight" name="cake-weight" class="form-control" min="2" max="15" value="2" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="filling-select" class="form-label fw-semibold">Основная начинка:</label>
-                                <select id="filling-select" name="filling-select" class="form-select">
-                                    <option value="honey">Медово-карамельная</option>
-                                    <option value="berry">Ягодный мусс</option>
-                                    <option value="chocolate">Тёмный шоколад</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <span class="form-label d-block fw-semibold">Ярусность торта:</span>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="tier1" name="tiers" value="1" checked>
-                                    <label class="form-check-label" for="tier1">1 ярус</label>
+                        <!-- Step 1: Client Contacts -->
+                        <div class="card mb-4 border-0 bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold text-brand fs-6 mb-3">1. Контактные данные</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="client-name" class="form-label fw-semibold">Ваше имя:</label>
+                                    <input type="text" id="client-name" name="client-name" class="form-control" placeholder="Имя Фамилия" required>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="tier2" name="tiers" value="2">
-                                    <label class="form-check-label" for="tier2">2 яруса</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="tier3" name="tiers" value="3">
-                                    <label class="form-check-label" for="tier3">3 яруса</label>
+
+                                <div class="row g-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="client-phone" class="form-label fw-semibold">Номер телефона:</label>
+                                        <input type="tel" id="client-phone" name="client-phone" class="form-control" placeholder="+7 (705) 755-19-10" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="client-email" class="form-label fw-semibold">Email:</label>
+                                        <input type="email" id="client-email" name="client-email" class="form-control" placeholder="client@example.com" required>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="topper" name="topper" value="yes">
-                                <label class="form-check-label" for="topper">Нужен индивидуальный топпер с надписью</label>
+                        <!-- Step 2: Cake Options -->
+                        <div class="card mb-4 border-0 bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold text-brand fs-6 mb-3">2. Параметры торта</h5>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label for="event-date" class="form-label fw-semibold">Дата мероприятия:</label>
+                                        <input type="date" id="event-date" name="event-date" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="cake-weight" class="form-label fw-semibold">Примерный вес (кг):</label>
+                                        <input type="number" id="cake-weight" name="cake-weight" class="form-control" min="2" max="20" value="2" required>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label for="filling-select" class="form-label fw-semibold">Основная начинка:</label>
+                                        <select id="filling-select" name="filling-select" class="form-select">
+                                            <option value="honey" selected>Медово-карамельная</option>
+                                            <option value="berry">Ягодный мусс</option>
+                                            <option value="chocolate">Тёмный шоколад</option>
+                                            <option value="pistachio-raspberry">Фисташка-малина</option>
+                                            <option value="vanilla-strawberry">Ваниль-клубника</option>
+                                            <option value="red-velvet">Красный бархат</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="tier-select" class="form-label fw-semibold">Количество ярусов:</label>
+                                        <select id="tier-select" name="tiers" class="form-select">
+                                            <option value="1" selected>1 ярус (до 3-4 кг)</option>
+                                            <option value="2">2 яруса (от 4 до 7 кг)</option>
+                                            <option value="3">3 яруса (от 7 до 12 кг)</option>
+                                            <option value="4">4 яруса и более (для свадеб)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="design-descr" class="form-label fw-semibold">Пожелания к дизайну и оформлению:</label>
+                                    <textarea id="design-descr" name="design-descr" class="form-control" rows="3" placeholder="Опишите цветовую гамму, надписи или тематику события"></textarea>
+                                </div>
+
+                                <div class="d-flex flex-column flex-sm-row gap-3 pt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="custom-topper" name="topper" value="yes">
+                                        <label class="form-check-label" for="custom-topper">Топпер с надписью</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="custom-pack" name="custom-pack" value="yes">
+                                        <label class="form-check-label" for="custom-pack">Подарочная упаковка</label>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="design-descr" class="form-label fw-semibold">Описание желаемого дизайна:</label>
-                                <textarea id="design-descr" name="design-descr" class="form-control" rows="4" placeholder="Укажите цветовую гамму, надписи или персонажей"></textarea>
+                        <!-- Step 3: Delivery & Payment -->
+                        <div class="card mb-4 border-0 bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold text-brand fs-6 mb-3">3. Доставка и оплата</h5>
+
+                                <div class="mb-3">
+                                    <span class="form-label d-block fw-semibold">Способ получения:</span>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="custom-pickup" name="custom-deltype" value="pickup" checked>
+                                        <label class="form-check-label" for="custom-pickup">Самовывоз</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="custom-courier" name="custom-deltype" value="courier">
+                                        <label class="form-check-label" for="custom-courier">Курьерская доставка</label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3" id="custom-pickup-location-group">
+                                    <label for="custom-pickup-address" class="form-label fw-semibold">Адрес кондитерской:</label>
+                                    <select id="custom-pickup-address" name="custom-pickup-address" class="form-select">
+                                        <option value="tole-bi">ул. Толе би 16</option>
+                                        <option value="mangilik-el">пр. Мангилик Ел 51</option>
+                                        <option value="turan">пр. Туран 55</option>
+                                    </select>
+                                </div>
+
+                                <!-- Скрытый по умолчанию блок адреса доставки (готов для управления через JS) -->
+                                <div class="mb-3 d-none" id="custom-delivery-address-group">
+                                    <label for="custom-delivery-address" class="form-label fw-semibold">Укажите адрес доставки:</label>
+                                    <input type="text" id="custom-delivery-address" name="custom-delivery-address" class="form-control" placeholder="Улица, дом, квартира">
+                                </div>
+
+                                <div>
+                                    <span class="form-label d-block fw-semibold">Способ оплаты:</span>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="custom-pay-kaspi" name="custom-paymethod" value="kaspi" checked>
+                                        <label class="form-check-label" for="custom-pay-kaspi">Kaspi QR / Kaspi Red</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="custom-pay-card" name="custom-paymethod" value="card">
+                                        <label class="form-check-label" for="custom-pay-card">Банковская карта</label>
+                                    </div>
+                                </div>
                             </div>
-                        </fieldset>
+                        </div>
 
-                        <div class="d-flex gap-2">
-                            <input type="submit" id="custom-submit-btn" value="Рассчитать стоимость" class="btn btn-primary">
-                            <input type="reset" id="custom-reset-btn" value="Очистить форму" class="btn btn-outline-secondary">
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2 justify-content-end">
+                            <input type="reset" id="custom-reset-btn" value="Очистить" class="btn btn-outline-secondary">
+                            <input type="submit" id="custom-submit-btn" value="Сделать заказ" class="btn btn-primary px-4 fw-semibold">
                         </div>
                     </form>
 
-                    <!-- JS Target Empty Containers for Calculation Result & Errors -->
+                    <!-- JS Containers for Dynamic Calculation Result & Success/Error Messages -->
                     <div id="custom-calc-result" class="alert alert-success d-none mt-4" role="alert"></div>
                     <div id="custom-error-message" class="alert alert-danger d-none mt-3" role="alert"></div>
                 </section>
+
+                <aside id="custom-tip-aside" class="alert alert-warning border-start border-4 border-amber shadow-sm mb-4">
+                    <h3 class="h6 fw-bold alert-heading mb-1">💡 Полезный совет</h3>
+                    <p class="mb-0 small">Рекомендуем оформлять сложные индивидуальные заказы минимум за <mark class="bg-warning-subtle px-1 fw-semibold">3 дня</mark> до даты вашего мероприятия.</p>
+                </aside>
             </div>
         </div>
-
-        <aside id="custom-tip-aside" class="alert alert-warning border-start border-4 border-amber shadow-sm mb-4">
-            <h3 class="h5 fw-bold alert-heading">Полезный совет</h3>
-            <p class="mb-0">Рекомендуем делать заказ минимум за <mark class="bg-warning-subtle px-1">3 дня</mark> до даты вашего мероприятия.</p>
-        </aside>
-
-        <figure class="figure text-center w-100 mb-4">
-            <img src="images/photo5.jpg" class="figure-img img-fluid rounded shadow-sm w-50" alt="Трехъярусный праздничный торт на заказ">
-            <figcaption class="figure-caption">Пример выполненного индивидуального заказа на юбилей</figcaption>
-        </figure>
-
-        <p class="text-center">
-            <a href="#custom-form-section" class="btn btn-link text-decoration-none">К началу формы заявки ↑</a>
-        </p>
     </main>
 
     <footer id="main-footer" class="bg-dark text-light text-center py-4 mt-5">
         <div class="container">
             <p class="mb-1">Контакты: <a href="tel:+77057551910" class="text-light">+7 (705) 755-19-10</a> | Email: <a href="mailto:info@taptatti.kz" class="text-light">info@taptatti.kz</a></p>
-            <p class="small text-muted mb-0">&copy; 2026 Кондитерская Тап Тәтті &reg; &trade;</p>
+            <p class="small text-muted mb-0">&copy; 2026 Кондитерская Тап Тәтті &reg;</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const pickupRadio = document.getElementById("custom-pickup");
+        const courierRadio = document.getElementById("custom-courier");
+        const pickupGroup = document.getElementById("custom-pickup-location-group");
+        const deliveryGroup = document.getElementById("custom-delivery-address-group");
+        function toggleDeliveryFields() {
+            if (courierRadio.checked) {
+                deliveryGroup.classList.remove("d-none");
+                pickupGroup.classList.add("d-none");
+            } else {
+                deliveryGroup.classList.add("d-none");
+                pickupGroup.classList.remove("d-none");
+            }
+        }
+
+        pickupRadio.addEventListener("change", toggleDeliveryFields);
+        courierRadio.addEventListener("change", toggleDeliveryFields);
+
+        toggleDeliveryFields();
+    });
+</script>
 </body>
 </html>
