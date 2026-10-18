@@ -37,8 +37,7 @@ function calcDelivery(subtotal) {
     return DELIVERY_PRICE;
 }
 
-function calcOrderTotal(product, qty, packed, courier) {
-    const subtotal = product.price * qty;
+function calcOrderTotal(subtotal, packed, courier) {
     const packing = packed ? PACK_PRICE : 0;
     const delivery = courier ? calcDelivery(subtotal) : 0;
     return { subtotal, packing, delivery, total: subtotal + packing + delivery };

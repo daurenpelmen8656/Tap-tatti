@@ -9,6 +9,7 @@ const orderError = document.getElementById('order-error-message');
 const pickupGroup = document.getElementById('pickup-location-group');
 const deliveryGroup = document.getElementById('delivery-address-group');
 const orderUi = {};
+const submitKeys = ['name', 'phone', 'email', 'item', 'date', 'address', 'notes'];
 
 const orderFields = {
     name: document.getElementById('username'),
@@ -95,12 +96,23 @@ function validateQty(value) {
     return '';
 }
 
-function validateDate(value, product) {
+function getCartItems() {
+    return calcCart(cart).items;
+}
+
+function getLeadItem(items) {
+    let result;
+    for (const item of items) {
+        if (result === undefined || item.product.leadDays > result.product.leadDays) {
+            result = item;
+        }
+    }
+    return result;
+}
+
+function validateDate(value, items) {
     if (value === '') {
         return 'Укажите дату получения.';
-    }
-    if (product === undefined) {
-        return 'Сначала выберите десерт.';
     }
     const chosen = new Date(`${value}T00:00:00`);
     if (Number.isNaN(chosen.getTime())) {
@@ -110,9 +122,12 @@ function validateDate(value, product) {
     if (chosen < today) {
         return 'Нельзя выбрать прошедшую дату.';
     }
-    const earliest = addDays(today, product.leadDays);
+    const leadItem = getLeadItem(items);
+    const leadDays = leadItem ? leadItem.product.leadDays : 1;
+    const earliest = addDays(today, leadDays);
     if (chosen < earliest) {
-        return `${product.name} готовится минимум ${product.leadDays} дн. — выберите дату не раньше ${formatDate(earliest)}.`;
+        const reason = leadItem ? `${leadItem.product.name} готовится минимум ${leadDays} дн.` : 'Заказ нужно оформить минимум за 1 день';
+        return `${reason} — выберите дату не раньше ${formatDate(earliest)}.`;
     }
     if (chosen > addDays(today, MAX_DAYS_AHEAD)) {
         return `Принимаем заявки не дальше чем на ${MAX_DAYS_AHEAD} дней вперёд.`;
@@ -137,11 +152,11 @@ function getFieldError(key) {
         case 'email':
             return validateEmail(value);
         case 'item':
-            return findProduct(value) === undefined ? 'Выберите десерт из списка.' : '';
+            return getCartItems().length === 0 ? 'Заказ пуст: выберите десерт, количество и нажмите «Добавить в заказ».' : '';
         case 'qty':
             return validateQty(value);
         case 'date':
-            return validateDate(value, findProduct(orderFields.item.value));
+            return validateDate(value, getCartItems());
         case 'address':
             return validateAddress(value, isCourier());
         case 'notes':
@@ -185,7 +200,7 @@ function validateField(key) {
 
 function validateOrderForm() {
     const invalid = [];
-    for (const key of Object.keys(orderFields)) {
+    for (const key of submitKeys) {
         if (key === 'address' && !isCourier()) {
             clearFieldState(orderFields.address);
             continue;
@@ -198,11 +213,10 @@ function validateOrderForm() {
 }
 
 function readOrder() {
-    const product = findProduct(orderFields.item.value);
-    const qty = Number(orderFields.qty.value);
+    const summary = calcCart(cart);
     const packed = orderForm.elements.pack.checked;
     const courier = isCourier();
-    return { product, qty, packed, courier, totals: calcOrderTotal(product, qty, packed, courier) };
+    return { items: summary.items, packed, courier, totals: calcOrderTotal(summary.total, packed, courier) };
 }
 
 function createRow(label, value, bold) {
@@ -212,11 +226,11 @@ function createRow(label, value, bold) {
 }
 
 function createCalcRows(order) {
-    const { product, qty, totals } = order;
-    const rows = [
-        createRow('Десерт', product.name, false),
-        createRow('Стоимость', `${qty} × ${formatPrice(product.price)} = ${formatPrice(totals.subtotal)}`, false)
-    ];
+    const { items, totals } = order;
+    const rows = items.map(item => createRow(`${item.product.name} × ${item.qty}`, formatPrice(item.subtotal), false));
+    if (items.length > 1) {
+        rows.push(createRow('Стоимость десертов', formatPrice(totals.subtotal), false));
+    }
     if (order.packed) {
         rows.push(createRow('Подарочная упаковка', formatPrice(totals.packing), false));
     }
@@ -229,10 +243,8 @@ function createCalcRows(order) {
 }
 
 function updateSummary() {
-    const product = findProduct(orderFields.item.value);
-    const qty = Number(orderFields.qty.value);
-    if (product === undefined || orderFields.qty.value.trim() === '' || !Number.isInteger(qty) || qty < 1 || qty > MAX_QTY) {
-        orderUi.summaryList.replaceChildren(createEl('li', 'text-muted', `Выберите десерт и количество от 1 до ${MAX_QTY}, чтобы увидеть расчёт.`));
+    if (getCartItems().length === 0) {
+        orderUi.summaryList.replaceChildren(createEl('li', 'text-muted', 'В заказе пока нет десертов. Добавьте их кнопкой «Добавить в заказ» или выберите в меню.'));
         return;
     }
     orderUi.summaryList.replaceChildren(...createCalcRows(readOrder()));
@@ -253,9 +265,9 @@ function updateDeliveryGroups() {
 }
 
 function updateDateLimits() {
-    const product = findProduct(orderFields.item.value);
+    const leadItem = getLeadItem(getCartItems());
     const today = startOfToday();
-    const earliest = addDays(today, product ? product.leadDays : 1);
+    const earliest = addDays(today, leadItem ? leadItem.product.leadDays : 1);
     orderFields.date.setAttribute('min', toInputDate(earliest));
     orderFields.date.setAttribute('max', toInputDate(addDays(today, MAX_DAYS_AHEAD)));
 }
@@ -294,10 +306,11 @@ function showSuccess(order) {
         rows.push(createRow('Пожелания', notes, false));
     }
     list.append(...rows, ...createCalcRows(order));
+    const reference = createReference();
 
     orderSuccess.replaceChildren(
         createEl('h2', 'h5 alert-heading', 'Демонстрационная заявка принята'),
-        createEl('p', 'mb-2', `Временный номер: ${createReference()}`),
+        createEl('p', 'mb-2', `Временный номер: ${reference}`),
         list,
         createEl('p', 'small mb-0', 'Это учебная демонстрация: данные не отправляются на сервер, реальный заказ и оплата не создаются, менеджер не свяжется с вами.')
     );
@@ -326,14 +339,8 @@ function handleOrderChange(event) {
     if (target.name === 'deltype') {
         updateDeliveryGroups();
     }
-    if (key !== undefined && (key !== 'address' || isCourier())) {
+    if (key !== undefined && key !== 'item' && (key !== 'address' || isCourier())) {
         validateField(key);
-    }
-    if (key === 'item') {
-        updateDateLimits();
-        if (orderFields.date.value !== '') {
-            validateField('date');
-        }
     }
     updateSummary();
 }
@@ -350,6 +357,7 @@ function handleOrderSubmit(event) {
     }
     orderError.classList.add('d-none');
     showSuccess(readOrder());
+    clearCart();
 }
 
 function handleOrderReset() {
@@ -358,26 +366,64 @@ function handleOrderReset() {
     }
     orderSuccess.classList.add('d-none');
     orderError.classList.add('d-none');
+    orderUi.addMessage.textContent = '';
     window.setTimeout(refreshOrderUi, 0);
+}
+
+function handleAddToOrder() {
+    orderSuccess.classList.add('d-none');
+    if (!validateField('qty')) {
+        orderUi.addMessage.textContent = '';
+        orderFields.qty.focus();
+        return;
+    }
+    const result = addToCart(orderFields.item.value, Number(orderFields.qty.value));
+    orderUi.addMessage.textContent = result.message;
+    orderUi.addMessage.classList.toggle('text-danger', !result.ok);
+}
+
+function handleCartChanged() {
+    updateDateLimits();
+    updateSummary();
+    if (orderFields.item.classList.contains('is-invalid')) {
+        validateField('item');
+    }
+    if (orderFields.date.value !== '' && orderFields.date.classList.contains('is-invalid')) {
+        validateField('date');
+    }
 }
 
 function buildOrderUi() {
     orderUi.counter = createEl('small', 'form-text d-block text-end');
     orderFields.notes.insertAdjacentElement('afterend', orderUi.counter);
 
+    orderUi.addButton = createEl('button', 'btn btn-outline-dark btn-sm mt-2', 'Добавить в заказ');
+    orderUi.addButton.type = 'button';
+    orderUi.addMessage = createEl('p', 'small mt-1 mb-0');
+    orderUi.addMessage.setAttribute('role', 'status');
+    orderFields.qty.parentElement.append(orderUi.addButton, orderUi.addMessage);
+
     const summary = createEl('div', 'alert alert-secondary mb-4');
     summary.setAttribute('role', 'status');
-    summary.append(createEl('h3', 'h6 fw-bold mb-2', 'Предварительный расчёт'));
-    orderUi.summaryList = createEl('ul', 'list-unstyled mb-0');
-    summary.append(orderUi.summaryList);
+    summary.append(createEl('h3', 'h6 fw-bold mb-2', 'Состав заказа и расчёт'));
+    orderUi.summaryList = createEl('ul', 'list-unstyled mb-2');
+    const cartButton = createEl('button', 'btn btn-outline-dark btn-sm', 'Изменить в корзине');
+    cartButton.type = 'button';
+    cartButton.addEventListener('click', openCart);
+    summary.append(orderUi.summaryList, cartButton);
     document.getElementById('order-submit-btn').parentElement.before(summary);
 }
 
 function preselectItem() {
     const requested = new URLSearchParams(window.location.search).get('item');
-    if (requested !== null && findProduct(requested) !== undefined) {
-        orderFields.item.value = requested;
+    if (requested === null || findProduct(requested) === undefined) {
+        return;
     }
+    orderFields.item.value = requested;
+    if (!cart.some(line => line.id === requested)) {
+        orderUi.addMessage.textContent = addToCart(requested, 1).message;
+    }
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.hash}`);
 }
 
 function initOrderPage() {
@@ -389,6 +435,8 @@ function initOrderPage() {
     orderForm.addEventListener('change', handleOrderChange);
     orderForm.addEventListener('submit', handleOrderSubmit);
     orderForm.addEventListener('reset', handleOrderReset);
+    orderUi.addButton.addEventListener('click', handleAddToOrder);
+    document.addEventListener('cart:changed', handleCartChanged);
 }
 
 initOrderPage();

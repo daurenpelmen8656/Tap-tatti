@@ -170,6 +170,11 @@ function createCartRow(item) {
 }
 
 function renderCart() {
+    renderCartPanel();
+    document.dispatchEvent(new CustomEvent('cart:changed'));
+}
+
+function renderCartPanel() {
     const summary = calcCart(cart);
     if (cartUi.badge === undefined) {
         return;
@@ -183,51 +188,24 @@ function renderCart() {
     cartUi.clear.disabled = summary.totalQty === 0;
 }
 
-function showCartConfirmation(summary) {
-    const reference = createReference();
-    const box = cartUi.confirmBox;
-    box.replaceChildren();
-    const list = createEl('ul', 'list-group list-group-flush mb-3');
-    for (const item of summary.items) {
-        list.append(createEl('li', 'list-group-item px-0', `${item.product.name} × ${item.qty} — ${formatPrice(item.subtotal)}`));
-    }
-    const actions = createEl('div', 'd-flex flex-wrap gap-2');
-    const orderLink = createEl('a', 'btn btn-primary btn-sm', 'Перейти к форме заказа');
-    orderLink.href = 'order.html#order-form';
-    const closeButton = createEl('button', 'btn btn-outline-secondary btn-sm', 'Закрыть');
-    closeButton.type = 'button';
-    closeButton.setAttribute('data-bs-dismiss', 'modal');
-    actions.append(orderLink, closeButton);
-
-    box.append(
-        createEl('h3', 'h5 fw-bold', 'Демонстрационная заявка сформирована'),
-        createEl('p', 'mb-2', `Временный номер: ${reference}`),
-        list,
-        createEl('p', 'fw-bold', `Итого: ${formatPrice(summary.total)}`),
-        createEl('p', 'small text-muted', 'Это демонстрация: данные не отправляются на сервер, реальный заказ и оплата не создаются. Для настоящего заказа позвоните по номеру +7 (705) 755-19-10.'),
-        actions
-    );
-    cartUi.itemsBox.classList.add('d-none');
-    cartUi.footer.classList.add('d-none');
-    box.classList.remove('d-none');
+function openCart() {
+    setCartMessage('');
+    renderCart();
+    cartUi.modal.show();
 }
 
 function checkoutCart() {
-    const summary = calcCart(cart);
-    if (summary.totalQty === 0) {
+    if (calcCart(cart).totalQty === 0) {
         setCartMessage('Корзина пуста — добавьте десерты из меню.');
         return;
     }
-    clearCart();
-    showCartConfirmation(summary);
-}
-
-function resetCartView() {
-    cartUi.confirmBox.classList.add('d-none');
-    cartUi.itemsBox.classList.remove('d-none');
-    cartUi.footer.classList.remove('d-none');
-    setCartMessage('');
-    renderCart();
+    const orderSection = document.getElementById('order-form');
+    if (document.getElementById('order-form-element') !== null && orderSection !== null) {
+        cartUi.modal.hide();
+        orderSection.scrollIntoView({ behavior: 'smooth' });
+        return;
+    }
+    window.location.href = 'order.html#order-form';
 }
 
 function handleCartClick(event) {
@@ -282,8 +260,7 @@ function buildCartModal() {
     emptyLink.href = 'menu.html';
     cartUi.empty.append(createEl('p', 'mb-1', 'Корзина пуста. Добавьте десерты из меню.'), emptyLink);
     cartUi.itemsBox.append(cartUi.message, cartUi.list, cartUi.empty);
-    cartUi.confirmBox = createEl('div', 'd-none');
-    body.append(cartUi.itemsBox, cartUi.confirmBox);
+    body.append(cartUi.itemsBox);
 
     cartUi.footer = createEl('div', 'modal-footer justify-content-between');
     const totals = createEl('div');
@@ -293,7 +270,7 @@ function buildCartModal() {
     const actions = createEl('div', 'd-flex gap-2');
     cartUi.clear = createEl('button', 'btn btn-outline-secondary', 'Очистить');
     cartUi.clear.type = 'button';
-    cartUi.checkout = createEl('button', 'btn btn-primary fw-semibold', 'Оформить');
+    cartUi.checkout = createEl('button', 'btn btn-primary fw-semibold', 'Оформить заказ');
     cartUi.checkout.type = 'button';
     actions.append(cartUi.clear, cartUi.checkout);
     cartUi.footer.append(totals, actions);
@@ -322,16 +299,13 @@ function buildCartUi() {
     const modalElement = buildCartModal();
     cartUi.modal = new bootstrap.Modal(modalElement);
 
-    openButton.addEventListener('click', () => {
-        resetCartView();
-        cartUi.modal.show();
-    });
+    openButton.addEventListener('click', openCart);
     cartUi.list.addEventListener('click', handleCartClick);
     cartUi.clear.addEventListener('click', () => {
         setCartMessage(clearCart().message);
     });
     cartUi.checkout.addEventListener('click', checkoutCart);
-    modalElement.addEventListener('hidden.bs.modal', resetCartView);
+    modalElement.addEventListener('hidden.bs.modal', () => setCartMessage(''));
 }
 
 buildCartUi();
