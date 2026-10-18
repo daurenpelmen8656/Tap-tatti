@@ -366,7 +366,9 @@ function handleOrderReset() {
     }
     orderSuccess.classList.add('d-none');
     orderError.classList.add('d-none');
-    orderUi.addMessage.textContent = '';
+    clearCart();
+    orderUi.addMessage.classList.remove('text-danger');
+    orderUi.addMessage.textContent = 'Форма и состав заказа сброшены.';
     window.setTimeout(refreshOrderUi, 0);
 }
 
