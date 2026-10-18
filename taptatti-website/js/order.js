@@ -1,0 +1,394 @@
+'use strict';
+
+const NOTES_LIMIT = 200;
+const MAX_DAYS_AHEAD = 60;
+
+const orderForm = document.getElementById('order-form-element');
+const orderSuccess = document.getElementById('order-success-message');
+const orderError = document.getElementById('order-error-message');
+const pickupGroup = document.getElementById('pickup-location-group');
+const deliveryGroup = document.getElementById('delivery-address-group');
+const orderUi = {};
+
+const orderFields = {
+    name: document.getElementById('username'),
+    phone: document.getElementById('userphone'),
+    email: document.getElementById('useremail'),
+    item: document.getElementById('cake-select'),
+    qty: document.getElementById('cake-num'),
+    date: document.getElementById('delivery-date'),
+    address: document.getElementById('delivery-address'),
+    notes: document.getElementById('notes')
+};
+
+function startOfToday() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
+}
+
+function addDays(date, days) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
+function toInputDate(date) {
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${date.getFullYear()}-${month}-${day}`;
+}
+
+function formatDate(date) {
+    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function isCourier() {
+    return orderForm.elements.deltype.value === 'courier';
+}
+
+function validateName(value) {
+    const text = value.trim();
+    if (text === '') {
+        return 'Введите имя.';
+    }
+    if (text.length < 2 || text.length > 50) {
+        return 'Имя должно содержать от 2 до 50 символов.';
+    }
+    if (!/^[\p{L}\s'-]+$/u.test(text)) {
+        return 'Имя может содержать только буквы, пробел и дефис.';
+    }
+    return '';
+}
+
+function validatePhone(value) {
+    const text = value.trim();
+    if (text === '') {
+        return 'Введите номер телефона.';
+    }
+    const digits = text.replace(/\D/g, '');
+    if (!/^[\d\s()+-]+$/.test(text) || !/^[78]\d{10}$/.test(digits)) {
+        return 'Введите номер в формате +7 (705) 755-19-10.';
+    }
+    return '';
+}
+
+function validateEmail(value) {
+    const text = value.trim();
+    if (text === '') {
+        return 'Введите электронную почту.';
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(text)) {
+        return 'Введите почту в формате example@mail.com.';
+    }
+    return '';
+}
+
+function validateQty(value) {
+    if (value.trim() === '') {
+        return 'Укажите количество.';
+    }
+    const qty = Number(value);
+    if (!Number.isInteger(qty) || qty < 1 || qty > MAX_QTY) {
+        return `Количество — целое число от 1 до ${MAX_QTY}.`;
+    }
+    return '';
+}
+
+function validateDate(value, product) {
+    if (value === '') {
+        return 'Укажите дату получения.';
+    }
+    if (product === undefined) {
+        return 'Сначала выберите десерт.';
+    }
+    const chosen = new Date(`${value}T00:00:00`);
+    if (Number.isNaN(chosen.getTime())) {
+        return 'Некорректная дата.';
+    }
+    const today = startOfToday();
+    if (chosen < today) {
+        return 'Нельзя выбрать прошедшую дату.';
+    }
+    const earliest = addDays(today, product.leadDays);
+    if (chosen < earliest) {
+        return `${product.name} готовится минимум ${product.leadDays} дн. — выберите дату не раньше ${formatDate(earliest)}.`;
+    }
+    if (chosen > addDays(today, MAX_DAYS_AHEAD)) {
+        return `Принимаем заявки не дальше чем на ${MAX_DAYS_AHEAD} дней вперёд.`;
+    }
+    return '';
+}
+
+function validateAddress(value, courier) {
+    if (courier && value.trim().length < 5) {
+        return 'Укажите адрес доставки: улица, дом, квартира (не короче 5 символов).';
+    }
+    return '';
+}
+
+function getFieldError(key) {
+    const value = orderFields[key].value;
+    switch (key) {
+        case 'name':
+            return validateName(value);
+        case 'phone':
+            return validatePhone(value);
+        case 'email':
+            return validateEmail(value);
+        case 'item':
+            return findProduct(value) === undefined ? 'Выберите десерт из списка.' : '';
+        case 'qty':
+            return validateQty(value);
+        case 'date':
+            return validateDate(value, findProduct(orderFields.item.value));
+        case 'address':
+            return validateAddress(value, isCourier());
+        case 'notes':
+            return value.length > NOTES_LIMIT ? `Пожелания не длиннее ${NOTES_LIMIT} символов.` : '';
+        default:
+            return '';
+    }
+}
+
+function clearFieldState(field) {
+    const old = document.getElementById(`${field.id}-error`);
+    if (old !== null) {
+        old.remove();
+    }
+    field.classList.remove('is-invalid', 'is-valid');
+    field.removeAttribute('aria-invalid');
+    field.removeAttribute('aria-describedby');
+}
+
+function setFieldState(field, message) {
+    clearFieldState(field);
+    if (message === '') {
+        if (field.value.trim() !== '') {
+            field.classList.add('is-valid');
+        }
+        return;
+    }
+    const feedback = createEl('div', 'invalid-feedback', message);
+    feedback.id = `${field.id}-error`;
+    field.classList.add('is-invalid');
+    field.setAttribute('aria-invalid', 'true');
+    field.setAttribute('aria-describedby', feedback.id);
+    field.insertAdjacentElement('afterend', feedback);
+}
+
+function validateField(key) {
+    const message = getFieldError(key);
+    setFieldState(orderFields[key], message);
+    return message === '';
+}
+
+function validateOrderForm() {
+    const invalid = [];
+    for (const key of Object.keys(orderFields)) {
+        if (key === 'address' && !isCourier()) {
+            clearFieldState(orderFields.address);
+            continue;
+        }
+        if (!validateField(key)) {
+            invalid.push(orderFields[key]);
+        }
+    }
+    return invalid;
+}
+
+function readOrder() {
+    const product = findProduct(orderFields.item.value);
+    const qty = Number(orderFields.qty.value);
+    const packed = orderForm.elements.pack.checked;
+    const courier = isCourier();
+    return { product, qty, packed, courier, totals: calcOrderTotal(product, qty, packed, courier) };
+}
+
+function createRow(label, value, bold) {
+    const row = createEl('li', bold ? 'd-flex flex-wrap justify-content-between gap-2 fw-bold border-top pt-2 mt-1' : 'd-flex flex-wrap justify-content-between gap-2');
+    row.append(createEl('span', '', label), createEl('span', 'text-end', value));
+    return row;
+}
+
+function createCalcRows(order) {
+    const { product, qty, totals } = order;
+    const rows = [
+        createRow('Десерт', product.name, false),
+        createRow('Стоимость', `${qty} × ${formatPrice(product.price)} = ${formatPrice(totals.subtotal)}`, false)
+    ];
+    if (order.packed) {
+        rows.push(createRow('Подарочная упаковка', formatPrice(totals.packing), false));
+    }
+    if (order.courier) {
+        const note = totals.delivery === 0 ? 'бесплатно' : `${formatPrice(totals.delivery)} (бесплатно от ${formatPrice(FREE_DELIVERY_FROM)})`;
+        rows.push(createRow('Доставка', note, false));
+    }
+    rows.push(createRow('Итого', formatPrice(totals.total), true));
+    return rows;
+}
+
+function updateSummary() {
+    const product = findProduct(orderFields.item.value);
+    const qty = Number(orderFields.qty.value);
+    if (product === undefined || orderFields.qty.value.trim() === '' || !Number.isInteger(qty) || qty < 1 || qty > MAX_QTY) {
+        orderUi.summaryList.replaceChildren(createEl('li', 'text-muted', `Выберите десерт и количество от 1 до ${MAX_QTY}, чтобы увидеть расчёт.`));
+        return;
+    }
+    orderUi.summaryList.replaceChildren(...createCalcRows(readOrder()));
+}
+
+function updateNotesCounter() {
+    const length = orderFields.notes.value.length;
+    orderUi.counter.textContent = `${length} / ${NOTES_LIMIT}`;
+}
+
+function updateDeliveryGroups() {
+    const courier = isCourier();
+    pickupGroup.classList.toggle('d-none', courier);
+    deliveryGroup.classList.toggle('d-none', !courier);
+    if (!courier) {
+        clearFieldState(orderFields.address);
+    }
+}
+
+function updateDateLimits() {
+    const product = findProduct(orderFields.item.value);
+    const today = startOfToday();
+    const earliest = addDays(today, product ? product.leadDays : 1);
+    orderFields.date.setAttribute('min', toInputDate(earliest));
+    orderFields.date.setAttribute('max', toInputDate(addDays(today, MAX_DAYS_AHEAD)));
+}
+
+function refreshOrderUi() {
+    updateDeliveryGroups();
+    updateDateLimits();
+    updateNotesCounter();
+    updateSummary();
+}
+
+function getPaymentLabel() {
+    switch (orderForm.elements.paymethod.value) {
+        case 'kaspi':
+            return 'Kaspi QR / Kaspi Red';
+        case 'card':
+            return 'Оплата картой';
+        default:
+            return '—';
+    }
+}
+
+function showSuccess(order) {
+    const list = createEl('ul', 'list-unstyled mb-3');
+    const address = order.courier ? orderFields.address.value.trim() : orderForm.elements['pickup-address'].selectedOptions[0].textContent;
+    const rows = [
+        createRow('Имя', orderFields.name.value.trim(), false),
+        createRow('Телефон', orderFields.phone.value.trim(), false),
+        createRow('Почта', orderFields.email.value.trim(), false),
+        createRow('Дата получения', formatDate(new Date(`${orderFields.date.value}T00:00:00`)), false),
+        createRow(order.courier ? 'Адрес доставки' : 'Самовывоз', address, false),
+        createRow('Способ оплаты', getPaymentLabel(), false)
+    ];
+    const notes = orderFields.notes.value.trim();
+    if (notes !== '') {
+        rows.push(createRow('Пожелания', notes, false));
+    }
+    list.append(...rows, ...createCalcRows(order));
+
+    orderSuccess.replaceChildren(
+        createEl('h2', 'h5 alert-heading', 'Демонстрационная заявка принята'),
+        createEl('p', 'mb-2', `Временный номер: ${createReference()}`),
+        list,
+        createEl('p', 'small mb-0', 'Это учебная демонстрация: данные не отправляются на сервер, реальный заказ и оплата не создаются, менеджер не свяжется с вами.')
+    );
+    orderSuccess.classList.remove('d-none');
+    orderSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function findFieldKey(element) {
+    return Object.keys(orderFields).find(key => orderFields[key] === element);
+}
+
+function handleOrderInput(event) {
+    const key = findFieldKey(event.target);
+    orderSuccess.classList.add('d-none');
+    if (key !== undefined && event.target.classList.contains('is-invalid')) {
+        validateField(key);
+    }
+    updateNotesCounter();
+    updateSummary();
+}
+
+function handleOrderChange(event) {
+    const target = event.target;
+    const key = findFieldKey(target);
+    orderSuccess.classList.add('d-none');
+    if (target.name === 'deltype') {
+        updateDeliveryGroups();
+    }
+    if (key !== undefined && (key !== 'address' || isCourier())) {
+        validateField(key);
+    }
+    if (key === 'item') {
+        updateDateLimits();
+        if (orderFields.date.value !== '') {
+            validateField('date');
+        }
+    }
+    updateSummary();
+}
+
+function handleOrderSubmit(event) {
+    event.preventDefault();
+    const invalid = validateOrderForm();
+    if (invalid.length > 0) {
+        orderSuccess.classList.add('d-none');
+        orderError.textContent = `Заявка не отправлена: исправьте поля, отмеченные ошибкой (${invalid.length}).`;
+        orderError.classList.remove('d-none');
+        invalid[0].focus();
+        return;
+    }
+    orderError.classList.add('d-none');
+    showSuccess(readOrder());
+}
+
+function handleOrderReset() {
+    for (const field of Object.values(orderFields)) {
+        clearFieldState(field);
+    }
+    orderSuccess.classList.add('d-none');
+    orderError.classList.add('d-none');
+    window.setTimeout(refreshOrderUi, 0);
+}
+
+function buildOrderUi() {
+    orderUi.counter = createEl('small', 'form-text d-block text-end');
+    orderFields.notes.insertAdjacentElement('afterend', orderUi.counter);
+
+    const summary = createEl('div', 'alert alert-secondary mb-4');
+    summary.setAttribute('role', 'status');
+    summary.append(createEl('h3', 'h6 fw-bold mb-2', 'Предварительный расчёт'));
+    orderUi.summaryList = createEl('ul', 'list-unstyled mb-0');
+    summary.append(orderUi.summaryList);
+    document.getElementById('order-submit-btn').parentElement.before(summary);
+}
+
+function preselectItem() {
+    const requested = new URLSearchParams(window.location.search).get('item');
+    if (requested !== null && findProduct(requested) !== undefined) {
+        orderFields.item.value = requested;
+    }
+}
+
+function initOrderPage() {
+    orderForm.noValidate = true;
+    buildOrderUi();
+    preselectItem();
+    refreshOrderUi();
+    orderForm.addEventListener('input', handleOrderInput);
+    orderForm.addEventListener('change', handleOrderChange);
+    orderForm.addEventListener('submit', handleOrderSubmit);
+    orderForm.addEventListener('reset', handleOrderReset);
+}
+
+initOrderPage();

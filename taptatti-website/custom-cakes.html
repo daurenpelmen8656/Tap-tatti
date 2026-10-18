@@ -186,13 +186,13 @@
                                     </select>
                                 </div>
 
-                                <!-- Скрытый по умолчанию блок адреса доставки (готов для управления через JS) -->
+                                <!-- Скрытый по умолчанию блок адреса доставки -->
                                 <div class="mb-3 d-none" id="custom-delivery-address-group">
                                     <label for="custom-delivery-address" class="form-label fw-semibold">Укажите адрес доставки:</label>
                                     <input type="text" id="custom-delivery-address" name="custom-delivery-address" class="form-control" placeholder="Улица, дом, квартира">
                                 </div>
 
-                                <div>
+                                <div class="mb-3">
                                     <span class="form-label d-block fw-semibold">Способ оплаты:</span>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" id="custom-pay-kaspi" name="custom-paymethod" value="kaspi" checked>
@@ -202,6 +202,12 @@
                                         <input class="form-check-input" type="radio" id="custom-pay-card" name="custom-paymethod" value="card">
                                         <label class="form-check-label" for="custom-pay-card">Банковская карта</label>
                                     </div>
+                                </div>
+
+                                <!-- Скрытый по умолчанию инпут для ввода номера карты -->
+                                <div class="mb-3 d-none" id="custom-card-input-group">
+                                    <label for="custom-card-number" class="form-label fw-semibold">Номер банковской карты:</label>
+                                    <input type="text" id="custom-card-number" name="custom-card-number" class="form-control" placeholder="0000 0000 0000 0000">
                                 </div>
                             </div>
                         </div>
@@ -213,7 +219,7 @@
                         </div>
                     </form>
 
-                    <!-- JS Containers for Dynamic Calculation Result & Success/Error Messages -->
+                    <!-- JS Containers -->
                     <div id="custom-calc-result" class="alert alert-success d-none mt-4" role="alert"></div>
                     <div id="custom-error-message" class="alert alert-danger d-none mt-3" role="alert"></div>
                 </section>
@@ -234,27 +240,53 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js" defer></script>
+    <script src="js/main.js" defer></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const pickupRadio = document.getElementById("custom-pickup");
-        const courierRadio = document.getElementById("custom-courier");
-        const pickupGroup = document.getElementById("custom-pickup-location-group");
-        const deliveryGroup = document.getElementById("custom-delivery-address-group");
-        function toggleDeliveryFields() {
-            if (courierRadio.checked) {
-                deliveryGroup.classList.remove("d-none");
-                pickupGroup.classList.add("d-none");
-            } else {
-                deliveryGroup.classList.add("d-none");
-                pickupGroup.classList.remove("d-none");
+        // Скрипты переключения полей (доставка и оплата картой)
+        (function() {
+            // Логика доставки
+            const pickupRadio = document.getElementById("custom-pickup");
+            const courierRadio = document.getElementById("custom-courier");
+            const pickupGroup = document.getElementById("custom-pickup-location-group");
+            const deliveryGroup = document.getElementById("custom-delivery-address-group");
+
+            function updateDeliveryVisibility() {
+                if (!courierRadio || !pickupRadio || !pickupGroup || !deliveryGroup) return;
+                if (courierRadio.checked) {
+                    deliveryGroup.classList.remove("d-none");
+                    pickupGroup.classList.add("d-none");
+                } else {
+                    deliveryGroup.classList.add("d-none");
+                    pickupGroup.classList.remove("d-none");
+                }
             }
-        }
 
-        pickupRadio.addEventListener("change", toggleDeliveryFields);
-        courierRadio.addEventListener("change", toggleDeliveryFields);
+            if (pickupRadio && courierRadio) {
+                pickupRadio.addEventListener("change", updateDeliveryVisibility);
+                courierRadio.addEventListener("change", updateDeliveryVisibility);
+                updateDeliveryVisibility();
+            }
 
-        toggleDeliveryFields();
-    });
-</script>
+            const kaspiRadio = document.getElementById("custom-pay-kaspi");
+            const cardRadio = document.getElementById("custom-pay-card");
+            const cardGroup = document.getElementById("custom-card-input-group");
+
+            function updatePaymentVisibility() {
+                if (!kaspiRadio || !cardRadio || !cardGroup) return;
+                if (cardRadio.checked) {
+                    cardGroup.classList.remove("d-none");
+                } else {
+                    cardGroup.classList.add("d-none");
+                }
+            }
+
+            if (kaspiRadio && cardRadio) {
+                kaspiRadio.addEventListener("change", updatePaymentVisibility);
+                cardRadio.addEventListener("change", updatePaymentVisibility);
+                updatePaymentVisibility();
+            }
+        })();
+    </script>
 </body>
 </html>
