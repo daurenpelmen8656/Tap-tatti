@@ -9,7 +9,7 @@ const orderError = document.getElementById('order-error-message');
 const pickupGroup = document.getElementById('pickup-location-group');
 const deliveryGroup = document.getElementById('delivery-address-group');
 const orderUi = {};
-const submitKeys = ['name', 'phone', 'email', 'item', 'date', 'address', 'notes'];
+const submitKeys = ['name', 'phone', 'email', 'item', 'date', 'address', 'flat', 'cardNumber', 'cardExpiry', 'cardCvc', 'notes'];
 
 const orderFields = {
     name: document.getElementById('username'),
@@ -135,11 +135,88 @@ function validateDate(value, items) {
     return '';
 }
 
+function isCard() {
+    return orderForm.elements.paymethod.value === 'card';
+}
+
+function isKeyActive(key) {
+    switch (key) {
+        case 'address':
+        case 'flat':
+            return isCourier();
+        case 'cardNumber':
+        case 'cardExpiry':
+        case 'cardCvc':
+            return isCard();
+        default:
+            return true;
+    }
+}
+
 function validateAddress(value, courier) {
     if (courier && value.trim().length < 5) {
-        return 'Укажите адрес доставки: улица, дом, квартира (не короче 5 символов).';
+        return 'Укажите улицу и дом (не короче 5 символов).';
     }
     return '';
+}
+
+function validateFlat(value) {
+    const text = value.trim();
+    if (text === '') {
+        return 'Укажите квартиру или офис.';
+    }
+    if (text.length > 10 || !/^[\p{L}\d\s/-]+$/u.test(text)) {
+        return 'Квартира или офис: до 10 символов, буквы, цифры, дефис.';
+    }
+    return '';
+}
+
+function validateCardNumber(value) {
+    const digits = value.replace(/\D/g, '');
+    if (digits === '') {
+        return 'Введите номер карты.';
+    }
+    if (digits.length !== 16) {
+        return 'Номер карты состоит из 16 цифр.';
+    }
+    return '';
+}
+
+function validateCardExpiry(value) {
+    const text = value.trim();
+    if (text === '') {
+        return 'Введите срок действия в формате ММ/ГГ.';
+    }
+    const match = /^(\d{2})\/(\d{2})$/.exec(text);
+    if (match === null) {
+        return 'Срок действия указывается как ММ/ГГ, например 08/28.';
+    }
+    const month = Number(match[1]);
+    const year = 2000 + Number(match[2]);
+    if (month < 1 || month > 12) {
+        return 'Месяц должен быть от 01 до 12.';
+    }
+    const now = new Date();
+    if (year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1)) {
+        return 'Срок действия карты истёк.';
+    }
+    return '';
+}
+
+function validateCardCvc(value) {
+    if (!/^\d{3}$/.test(value)) {
+        return 'CVC — три цифры с обратной стороны карты.';
+    }
+    return '';
+}
+
+function formatCardNumber(value) {
+    return value.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
+}
+
+function formatCardExpiry(value) {
+    const digits = value.replace(/\D/g, '').slice(0, 4);
+    return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
 }
 
 function getFieldError(key) {
@@ -159,6 +236,14 @@ function getFieldError(key) {
             return validateDate(value, getCartItems());
         case 'address':
             return validateAddress(value, isCourier());
+        case 'flat':
+            return validateFlat(value);
+        case 'cardNumber':
+            return validateCardNumber(value);
+        case 'cardExpiry':
+            return validateCardExpiry(value);
+        case 'cardCvc':
+            return validateCardCvc(value);
         case 'notes':
             return value.length > NOTES_LIMIT ? `Пожелания не длиннее ${NOTES_LIMIT} символов.` : '';
         default:
@@ -201,8 +286,8 @@ function validateField(key) {
 function validateOrderForm() {
     const invalid = [];
     for (const key of submitKeys) {
-        if (key === 'address' && !isCourier()) {
-            clearFieldState(orderFields.address);
+        if (!isKeyActive(key)) {
+            clearFieldState(orderFields[key]);
             continue;
         }
         if (!validateField(key)) {
@@ -259,8 +344,25 @@ function updateDeliveryGroups() {
     const courier = isCourier();
     pickupGroup.classList.toggle('d-none', courier);
     deliveryGroup.classList.toggle('d-none', !courier);
+    orderUi.flatGroup.classList.toggle('d-none', !courier);
     if (!courier) {
         clearFieldState(orderFields.address);
+        clearFieldState(orderFields.flat);
+    }
+}
+
+function clearCardFields() {
+    for (const key of ['cardNumber', 'cardExpiry', 'cardCvc']) {
+        orderFields[key].value = '';
+        clearFieldState(orderFields[key]);
+    }
+}
+
+function updatePaymentGroup() {
+    const card = isCard();
+    orderUi.cardGroup.classList.toggle('d-none', !card);
+    if (!card) {
+        clearCardFields();
     }
 }
 
@@ -274,6 +376,7 @@ function updateDateLimits() {
 
 function refreshOrderUi() {
     updateDeliveryGroups();
+    updatePaymentGroup();
     updateDateLimits();
     updateNotesCounter();
     updateSummary();
@@ -284,7 +387,7 @@ function getPaymentLabel() {
         case 'kaspi':
             return 'Kaspi QR / Kaspi Red';
         case 'card':
-            return 'Оплата картой';
+            return 'Оплата картой (данные карты не сохраняются)';
         default:
             return '—';
     }
@@ -292,7 +395,7 @@ function getPaymentLabel() {
 
 function showSuccess(order) {
     const list = createEl('ul', 'list-unstyled mb-3');
-    const address = order.courier ? orderFields.address.value.trim() : orderForm.elements['pickup-address'].selectedOptions[0].textContent;
+    const address = order.courier ? `${orderFields.address.value.trim()}, кв./офис ${orderFields.flat.value.trim()}` : orderForm.elements['pickup-address'].selectedOptions[0].textContent;
     const rows = [
         createRow('Имя', orderFields.name.value.trim(), false),
         createRow('Телефон', orderFields.phone.value.trim(), false),
@@ -314,6 +417,7 @@ function showSuccess(order) {
         list,
         createEl('p', 'small mb-0', 'Это учебная демонстрация: данные не отправляются на сервер, реальный заказ и оплата не создаются, менеджер не свяжется с вами.')
     );
+    clearCardFields();
     orderSuccess.classList.remove('d-none');
     orderSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -325,6 +429,15 @@ function findFieldKey(element) {
 function handleOrderInput(event) {
     const key = findFieldKey(event.target);
     orderSuccess.classList.add('d-none');
+    if (key === 'cardNumber') {
+        event.target.value = formatCardNumber(event.target.value);
+    }
+    if (key === 'cardExpiry') {
+        event.target.value = formatCardExpiry(event.target.value);
+    }
+    if (key === 'cardCvc') {
+        event.target.value = event.target.value.replace(/\D/g, '').slice(0, 3);
+    }
     if (key !== undefined && event.target.classList.contains('is-invalid')) {
         validateField(key);
     }
@@ -339,7 +452,10 @@ function handleOrderChange(event) {
     if (target.name === 'deltype') {
         updateDeliveryGroups();
     }
-    if (key !== undefined && key !== 'item' && (key !== 'address' || isCourier())) {
+    if (target.name === 'paymethod') {
+        updatePaymentGroup();
+    }
+    if (key !== undefined && key !== 'item' && isKeyActive(key)) {
         validateField(key);
     }
     updateSummary();
@@ -395,7 +511,53 @@ function handleCartChanged() {
     }
 }
 
+function createTextInput(id, placeholder, inputMode, autocomplete, maxLength) {
+    const input = createEl('input', 'form-control');
+    input.type = 'text';
+    input.id = id;
+    input.name = id;
+    input.placeholder = placeholder;
+    input.inputMode = inputMode;
+    input.autocomplete = autocomplete;
+    input.maxLength = maxLength;
+    return input;
+}
+
+function createInputGroup(columnClasses, labelText, input) {
+    const column = createEl('div', columnClasses);
+    const label = createEl('label', 'form-label fw-semibold', labelText);
+    label.htmlFor = input.id;
+    column.append(label, input);
+    return column;
+}
+
+function buildDeliveryFlat() {
+    document.querySelector('label[for="delivery-address"]').textContent = 'Улица и дом:';
+    orderFields.address.setAttribute('placeholder', 'Например: ул. Достык 10');
+    orderFields.flat = createTextInput('delivery-flat', 'Например: 15', 'text', 'off', 10);
+    orderUi.flatGroup = createInputGroup('mb-3 d-none', 'Квартира / офис:', orderFields.flat);
+    deliveryGroup.after(orderUi.flatGroup);
+}
+
+function buildCardGroup() {
+    orderFields.cardNumber = createTextInput('card-number', '0000 0000 0000 0000', 'numeric', 'off', 19);
+    orderFields.cardExpiry = createTextInput('card-expiry', 'ММ/ГГ', 'numeric', 'off', 5);
+    orderFields.cardCvc = createTextInput('card-cvc', '000', 'numeric', 'off', 3);
+
+    const row = createEl('div', 'row g-3');
+    row.append(
+        createInputGroup('col-12', 'Номер карты:', orderFields.cardNumber),
+        createInputGroup('col-6', 'Срок действия (ММ/ГГ):', orderFields.cardExpiry),
+        createInputGroup('col-6', 'CVC:', orderFields.cardCvc)
+    );
+    orderUi.cardGroup = createEl('div', 'mt-3 d-none');
+    orderUi.cardGroup.append(row);
+    document.getElementById('pay-card').closest('.form-check').parentElement.after(orderUi.cardGroup);
+}
+
 function buildOrderUi() {
+    buildDeliveryFlat();
+    buildCardGroup();
     orderUi.counter = createEl('small', 'form-text d-block text-end');
     orderFields.notes.insertAdjacentElement('afterend', orderUi.counter);
 
