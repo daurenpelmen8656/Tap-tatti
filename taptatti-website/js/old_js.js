@@ -1,8 +1,5 @@
 'use strict';
-// Старая версия на чистом JavaScript (без jQuery) для сравнения.
-// Файл НЕ подключён ни к одной странице.
 
-// ===== 1. Валидация формы заказа (order.js) =====
 function validateName(value) {
     const text = value.trim();
     if (text === '') {
