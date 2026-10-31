@@ -240,53 +240,9 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
     <script src="js/data.js" defer></script>
     <script src="js/main.js" defer></script>
-    <script>
-        // Скрипты переключения полей (доставка и оплата картой)
-        (function() {
-            // Логика доставки
-            const pickupRadio = document.getElementById("custom-pickup");
-            const courierRadio = document.getElementById("custom-courier");
-            const pickupGroup = document.getElementById("custom-pickup-location-group");
-            const deliveryGroup = document.getElementById("custom-delivery-address-group");
-
-            function updateDeliveryVisibility() {
-                if (!courierRadio || !pickupRadio || !pickupGroup || !deliveryGroup) return;
-                if (courierRadio.checked) {
-                    deliveryGroup.classList.remove("d-none");
-                    pickupGroup.classList.add("d-none");
-                } else {
-                    deliveryGroup.classList.add("d-none");
-                    pickupGroup.classList.remove("d-none");
-                }
-            }
-
-            if (pickupRadio && courierRadio) {
-                pickupRadio.addEventListener("change", updateDeliveryVisibility);
-                courierRadio.addEventListener("change", updateDeliveryVisibility);
-                updateDeliveryVisibility();
-            }
-
-            const kaspiRadio = document.getElementById("custom-pay-kaspi");
-            const cardRadio = document.getElementById("custom-pay-card");
-            const cardGroup = document.getElementById("custom-card-input-group");
-
-            function updatePaymentVisibility() {
-                if (!kaspiRadio || !cardRadio || !cardGroup) return;
-                if (cardRadio.checked) {
-                    cardGroup.classList.remove("d-none");
-                } else {
-                    cardGroup.classList.add("d-none");
-                }
-            }
-
-            if (kaspiRadio && cardRadio) {
-                kaspiRadio.addEventListener("change", updatePaymentVisibility);
-                cardRadio.addEventListener("change", updatePaymentVisibility);
-                updatePaymentVisibility();
-            }
-        })();
-    </script>
+    <script src="js/custom-cakes.js" defer></script>
 </body>
 </html>

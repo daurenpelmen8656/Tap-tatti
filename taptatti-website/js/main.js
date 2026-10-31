@@ -1,312 +1,298 @@
 'use strict';
 
-const CART_KEY = 'taptatti-cart';
-const cartUi = {};
-let cart = loadCart();
+// jQuery 3.7.1 (подключён с CDN в HTML перед этим файлом). Эта строка нужна, потому что
+// весь код ниже использует $: выбор элементов, события .on(), эффекты и создание элементов.
+// app — общий объект: другие файлы берут из него функции корзины.
+const app = {};
 
-function createEl(tag, classNames, text) {
-    const element = document.createElement(tag);
-    if (classNames) {
-        element.classList.add(...classNames.split(' '));
+$(function () {
+    const CART_KEY = 'taptatti-cart';
+    const ui = {};
+    let cart = loadCart();
+
+    function createEl(tag, classNames, text) {
+        const $element = $(`<${tag}>`);
+        if (classNames) {
+            $element.addClass(classNames);
+        }
+        if (text !== undefined) {
+            $element.text(text);
+        }
+        return $element;
     }
-    if (text !== undefined) {
-        element.textContent = text;
+
+    function createReference() {
+        return `TT-${Math.floor(Math.random() * 900000) + 100000}`;
     }
-    return element;
-}
 
-function createReference() {
-    return `TT-${Math.floor(Math.random() * 900000) + 100000}`;
-}
+    function flashButton($button, text) {
+        const original = $button.data('label') || $button.text();
+        $button.data('label', original).text(text);
+        window.setTimeout(function () {
+            $button.text(original);
+        }, 1200);
+    }
 
-function flashButton(button, text) {
-    const original = button.dataset.label || button.textContent;
-    button.dataset.label = original;
-    button.textContent = text;
-    window.setTimeout(() => {
-        button.textContent = original;
-    }, 1200);
-}
-
-function loadCart() {
-    try {
-        const raw = localStorage.getItem(CART_KEY);
-        const parsed = raw ? JSON.parse(raw) : [];
-        if (!Array.isArray(parsed)) {
+    function loadCart() {
+        try {
+            const raw = localStorage.getItem(CART_KEY);
+            const parsed = raw ? JSON.parse(raw) : [];
+            if (!Array.isArray(parsed)) {
+                return [];
+            }
+            return parsed.filter(line => findProduct(line.id) !== undefined && Number.isInteger(line.qty) && line.qty > 0 && line.qty <= MAX_QTY);
+        } catch (error) {
             return [];
         }
-        return parsed.filter(line => findProduct(line.id) !== undefined && Number.isInteger(line.qty) && line.qty > 0 && line.qty <= MAX_QTY);
-    } catch (error) {
-        return [];
     }
-}
 
-function saveCart() {
-    try {
-        localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    } catch (error) {
-        return;
-    }
-}
-
-function calcCart(lines) {
-    const items = [];
-    let totalQty = 0;
-    let total = 0;
-    for (const line of lines) {
-        const product = findProduct(line.id);
-        if (product === undefined) {
-            continue;
-        }
-        const subtotal = product.price * line.qty;
-        items.push({ product, qty: line.qty, subtotal });
-        totalQty += line.qty;
-        total += subtotal;
-    }
-    return { items, totalQty, total };
-}
-
-function getDeliveryNote(total) {
-    if (total === 0) {
-        return '';
-    }
-    if (total >= FREE_DELIVERY_FROM) {
-        return 'Доставка по городу бесплатна.';
-    }
-    return `До бесплатной доставки не хватает ${formatPrice(FREE_DELIVERY_FROM - total)}.`;
-}
-
-function addToCart(id, qty) {
-    const product = findProduct(id);
-    if (product === undefined) {
-        return { ok: false, message: 'Десерт не найден.' };
-    }
-    const line = cart.find(item => item.id === id);
-    const current = line ? line.qty : 0;
-    if (current + qty > MAX_QTY) {
-        return { ok: false, message: `В заказе не более ${MAX_QTY} шт. одного десерта.` };
-    }
-    if (line) {
-        line.qty = current + qty;
-    } else {
-        cart.push({ id, qty });
-    }
-    saveCart();
-    renderCart();
-    return { ok: true, message: `${product.name} добавлен в корзину (${current + qty} шт.).` };
-}
-
-function removeFromCart(id) {
-    const product = findProduct(id);
-    cart = cart.filter(item => item.id !== id);
-    saveCart();
-    renderCart();
-    return { ok: true, message: `${product.name} удалён из корзины.` };
-}
-
-function changeQty(id, delta) {
-    const line = cart.find(item => item.id === id);
-    if (line === undefined) {
-        return { ok: false, message: 'Позиции нет в корзине.' };
-    }
-    const next = line.qty + delta;
-    if (next > MAX_QTY) {
-        return { ok: false, message: `В заказе не более ${MAX_QTY} шт. одного десерта.` };
-    }
-    if (next < 1) {
-        return removeFromCart(id);
-    }
-    line.qty = next;
-    saveCart();
-    renderCart();
-    return { ok: true, message: 'Количество изменено.' };
-}
-
-function clearCart() {
-    cart = [];
-    saveCart();
-    renderCart();
-    return { ok: true, message: 'Корзина очищена.' };
-}
-
-function setCartMessage(text) {
-    if (text === '') {
-        cartUi.message.classList.add('d-none');
-        return;
-    }
-    cartUi.message.textContent = text;
-    cartUi.message.classList.remove('d-none');
-}
-
-function createCartButton(label, action, id, className, ariaLabel) {
-    const button = createEl('button', className, label);
-    button.type = 'button';
-    button.dataset.action = action;
-    button.dataset.id = id;
-    button.setAttribute('aria-label', ariaLabel);
-    return button;
-}
-
-function createCartRow(item) {
-    const row = createEl('li', 'list-group-item px-0');
-    const wrap = createEl('div', 'd-flex flex-wrap align-items-center justify-content-between gap-2');
-
-    const info = createEl('div');
-    info.append(createEl('strong', '', item.product.name), createEl('small', 'text-muted d-block', `${formatPrice(item.product.price)} за шт.`));
-
-    const controls = createEl('div', 'd-flex align-items-center gap-2');
-    const minus = createCartButton('−', 'dec', item.product.id, 'btn btn-outline-dark btn-sm', `Уменьшить количество: ${item.product.name}`);
-    const plus = createCartButton('+', 'inc', item.product.id, 'btn btn-outline-dark btn-sm', `Увеличить количество: ${item.product.name}`);
-    minus.disabled = item.qty === 1;
-    plus.disabled = item.qty === MAX_QTY;
-    controls.append(minus, createEl('span', 'fw-semibold px-1', `${item.qty} шт.`), plus);
-
-    const subtotal = createEl('span', 'fw-bold', formatPrice(item.subtotal));
-    const remove = createCartButton('Удалить', 'remove', item.product.id, 'btn btn-outline-danger btn-sm', `Удалить из корзины: ${item.product.name}`);
-
-    wrap.append(info, controls, subtotal, remove);
-    row.append(wrap);
-    return row;
-}
-
-function renderCart() {
-    renderCartPanel();
-    document.dispatchEvent(new CustomEvent('cart:changed'));
-}
-
-function renderCartPanel() {
-    const summary = calcCart(cart);
-    if (cartUi.badge === undefined) {
-        return;
-    }
-    cartUi.badge.textContent = String(summary.totalQty);
-    cartUi.list.replaceChildren(...summary.items.map(createCartRow));
-    cartUi.empty.classList.toggle('d-none', summary.items.length > 0);
-    cartUi.total.textContent = `Позиций: ${summary.totalQty} шт. · Итого: ${formatPrice(summary.total)}`;
-    cartUi.note.textContent = getDeliveryNote(summary.total);
-    cartUi.checkout.disabled = summary.totalQty === 0;
-    cartUi.clear.disabled = summary.totalQty === 0;
-}
-
-function openCart() {
-    setCartMessage('');
-    renderCart();
-    cartUi.modal.show();
-}
-
-function checkoutCart() {
-    if (calcCart(cart).totalQty === 0) {
-        setCartMessage('Корзина пуста — добавьте десерты из меню.');
-        return;
-    }
-    const orderSection = document.getElementById('order-form');
-    if (document.getElementById('order-form-element') !== null && orderSection !== null) {
-        cartUi.modal.hide();
-        orderSection.scrollIntoView({ behavior: 'smooth' });
-        return;
-    }
-    window.location.href = 'order.html#order-form';
-}
-
-function handleCartClick(event) {
-    const button = event.target.closest('button[data-action]');
-    if (button === null) {
-        return;
-    }
-    const id = button.dataset.id;
-    let result;
-    switch (button.dataset.action) {
-        case 'inc':
-            result = changeQty(id, 1);
-            break;
-        case 'dec':
-            result = changeQty(id, -1);
-            break;
-        case 'remove':
-            result = removeFromCart(id);
-            break;
-        default:
+    function saveCart() {
+        try {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        } catch (error) {
             return;
+        }
     }
-    setCartMessage(result.ok && button.dataset.action === 'inc' ? '' : result.message);
-}
 
-function buildCartModal() {
-    const modal = createEl('div', 'modal fade');
-    modal.id = 'cart-modal';
-    modal.tabIndex = -1;
-    modal.setAttribute('aria-labelledby', 'cart-title');
-    modal.setAttribute('aria-hidden', 'true');
-
-    const dialog = createEl('div', 'modal-dialog modal-dialog-scrollable modal-dialog-centered');
-    const content = createEl('div', 'modal-content');
-
-    const header = createEl('div', 'modal-header');
-    const title = createEl('h2', 'modal-title h5', 'Корзина');
-    title.id = 'cart-title';
-    const closeIcon = createEl('button', 'btn-close');
-    closeIcon.type = 'button';
-    closeIcon.setAttribute('data-bs-dismiss', 'modal');
-    closeIcon.setAttribute('aria-label', 'Закрыть');
-    header.append(title, closeIcon);
-
-    const body = createEl('div', 'modal-body');
-    cartUi.itemsBox = createEl('div');
-    cartUi.message = createEl('div', 'alert alert-warning py-2 small d-none');
-    cartUi.message.setAttribute('role', 'status');
-    cartUi.list = createEl('ul', 'list-group list-group-flush');
-    cartUi.empty = createEl('div', 'text-center text-muted py-3');
-    const emptyLink = createEl('a', 'btn btn-outline-dark btn-sm mt-2', 'Перейти в меню');
-    emptyLink.href = 'menu.html';
-    cartUi.empty.append(createEl('p', 'mb-1', 'Корзина пуста. Добавьте десерты из меню.'), emptyLink);
-    cartUi.itemsBox.append(cartUi.message, cartUi.list, cartUi.empty);
-    body.append(cartUi.itemsBox);
-
-    cartUi.footer = createEl('div', 'modal-footer justify-content-between');
-    const totals = createEl('div');
-    cartUi.total = createEl('p', 'fw-semibold mb-0');
-    cartUi.note = createEl('small', 'text-muted d-block');
-    totals.append(cartUi.total, cartUi.note);
-    const actions = createEl('div', 'd-flex gap-2');
-    cartUi.clear = createEl('button', 'btn btn-outline-secondary', 'Очистить');
-    cartUi.clear.type = 'button';
-    cartUi.checkout = createEl('button', 'btn btn-primary fw-semibold', 'Оформить заказ');
-    cartUi.checkout.type = 'button';
-    actions.append(cartUi.clear, cartUi.checkout);
-    cartUi.footer.append(totals, actions);
-
-    content.append(header, body, cartUi.footer);
-    dialog.append(content);
-    modal.append(dialog);
-    document.body.append(modal);
-    return modal;
-}
-
-function buildCartUi() {
-    const navList = document.querySelector('#navbarNav .navbar-nav');
-    if (navList === null) {
-        return;
+    function calcCart(lines) {
+        const items = [];
+        let totalQty = 0;
+        let total = 0;
+        $.each(lines, function (index, line) {
+            const product = findProduct(line.id);
+            if (product === undefined) {
+                return;
+            }
+            const subtotal = product.price * line.qty;
+            items.push({ product, qty: line.qty, subtotal });
+            totalQty += line.qty;
+            total += subtotal;
+        });
+        return { items, totalQty, total };
     }
-    const navItem = createEl('li', 'nav-item');
-    const openButton = createEl('button', 'nav-link text-dark px-2', 'Корзина');
-    openButton.type = 'button';
-    openButton.id = 'cart-open-btn';
-    cartUi.badge = createEl('span', 'badge bg-warning text-dark ms-1', '0');
-    openButton.append(cartUi.badge);
-    navItem.append(openButton);
-    navList.append(navItem);
 
-    const modalElement = buildCartModal();
-    cartUi.modal = new bootstrap.Modal(modalElement);
+    function getDeliveryNote(total) {
+        if (total === 0) {
+            return '';
+        }
+        if (total >= FREE_DELIVERY_FROM) {
+            return 'Доставка по городу бесплатна.';
+        }
+        return `До бесплатной доставки не хватает ${formatPrice(FREE_DELIVERY_FROM - total)}.`;
+    }
 
-    openButton.addEventListener('click', openCart);
-    cartUi.list.addEventListener('click', handleCartClick);
-    cartUi.clear.addEventListener('click', () => {
-        setCartMessage(clearCart().message);
-    });
-    cartUi.checkout.addEventListener('click', checkoutCart);
-    modalElement.addEventListener('hidden.bs.modal', () => setCartMessage(''));
-}
+    function addToCart(id, qty) {
+        const product = findProduct(id);
+        if (product === undefined) {
+            return { ok: false, message: 'Десерт не найден.' };
+        }
+        const line = cart.find(item => item.id === id);
+        const current = line ? line.qty : 0;
+        if (current + qty > MAX_QTY) {
+            return { ok: false, message: `В заказе не более ${MAX_QTY} шт. одного десерта.` };
+        }
+        if (line) {
+            line.qty = current + qty;
+        } else {
+            cart.push({ id, qty });
+        }
+        saveCart();
+        renderCart();
+        return { ok: true, message: `${product.name} добавлен в корзину (${current + qty} шт.).` };
+    }
 
-buildCartUi();
-renderCart();
+    function removeFromCart(id) {
+        const product = findProduct(id);
+        cart = cart.filter(item => item.id !== id);
+        saveCart();
+        renderCart();
+        return { ok: true, message: `${product.name} удалён из корзины.` };
+    }
+
+    function changeQty(id, delta) {
+        const line = cart.find(item => item.id === id);
+        if (line === undefined) {
+            return { ok: false, message: 'Позиции нет в корзине.' };
+        }
+        const next = line.qty + delta;
+        if (next > MAX_QTY) {
+            return { ok: false, message: `В заказе не более ${MAX_QTY} шт. одного десерта.` };
+        }
+        if (next < 1) {
+            return removeFromCart(id);
+        }
+        line.qty = next;
+        saveCart();
+        renderCart();
+        return { ok: true, message: 'Количество изменено.' };
+    }
+
+    function clearCart() {
+        cart = [];
+        saveCart();
+        renderCart();
+        return { ok: true, message: 'Корзина очищена.' };
+    }
+
+    function setCartMessage(text) {
+        if (text === '') {
+            ui.message.addClass('d-none');
+            return;
+        }
+        ui.message.text(text).removeClass('d-none');
+    }
+
+    function createCartButton(label, action, id, className, ariaLabel) {
+        return createEl('button', className, label).attr({
+            type: 'button',
+            'data-action': action,
+            'data-id': id,
+            'aria-label': ariaLabel
+        });
+    }
+
+    function createCartRow(item) {
+        const $info = createEl('div').append(
+            createEl('strong', '', item.product.name),
+            createEl('small', 'text-muted d-block', `${formatPrice(item.product.price)} за шт.`)
+        );
+        const $minus = createCartButton('−', 'dec', item.product.id, 'btn btn-outline-dark btn-sm', `Уменьшить количество: ${item.product.name}`)
+            .prop('disabled', item.qty === 1);
+        const $plus = createCartButton('+', 'inc', item.product.id, 'btn btn-outline-dark btn-sm', `Увеличить количество: ${item.product.name}`)
+            .prop('disabled', item.qty === MAX_QTY);
+        const $controls = createEl('div', 'd-flex align-items-center gap-2')
+            .append($minus, createEl('span', 'fw-semibold px-1', `${item.qty} шт.`), $plus);
+        const $subtotal = createEl('span', 'fw-bold', formatPrice(item.subtotal));
+        const $remove = createCartButton('Удалить', 'remove', item.product.id, 'btn btn-outline-danger btn-sm', `Удалить из корзины: ${item.product.name}`);
+        const $wrap = createEl('div', 'd-flex flex-wrap align-items-center justify-content-between gap-2')
+            .append($info, $controls, $subtotal, $remove);
+        return createEl('li', 'list-group-item px-0').append($wrap);
+    }
+
+    function renderCart() {
+        renderCartPanel();
+        $(document).trigger('cart:changed');
+    }
+
+    function renderCartPanel() {
+        if (!ui.badge) {
+            return;
+        }
+        const summary = calcCart(cart);
+        ui.badge.text(summary.totalQty);
+        ui.list.empty();
+        $.each(summary.items, function (index, item) {
+            createCartRow(item).appendTo(ui.list);
+        });
+        ui.empty.toggleClass('d-none', summary.items.length > 0);
+        ui.total.text(`Позиций: ${summary.totalQty} шт. · Итого: ${formatPrice(summary.total)}`);
+        ui.note.text(getDeliveryNote(summary.total));
+        ui.checkout.prop('disabled', summary.totalQty === 0);
+        ui.clear.prop('disabled', summary.totalQty === 0);
+    }
+
+    function openCart() {
+        setCartMessage('');
+        renderCart();
+        ui.modal.show();
+    }
+
+    function checkoutCart() {
+        if (calcCart(cart).totalQty === 0) {
+            setCartMessage('Корзина пуста — добавьте десерты из меню.');
+            return;
+        }
+        if ($('#order-form-element').length > 0) {
+            ui.modal.hide();
+            $('html, body').animate({ scrollTop: $('#order-form').offset().top }, 300);
+            return;
+        }
+        window.location.href = 'order.html#order-form';
+    }
+
+    // Делегирование: обработчик висит на списке #cart-list, который есть всегда,
+    // а строки корзины создаются заново после каждого изменения. Если повесить .on('click')
+    // прямо на кнопку, новые строки остались бы без обработчика.
+    function handleCartClick() {
+        const $button = $(this);
+        const id = $button.data('id');
+        const action = $button.data('action');
+        if (action === 'remove') {
+            $button.closest('li').fadeOut(200, function () {
+                setCartMessage(removeFromCart(id).message);
+            });
+            return;
+        }
+        const result = changeQty(id, action === 'inc' ? 1 : -1);
+        setCartMessage(result.ok && action === 'inc' ? '' : result.message);
+    }
+
+    function buildCartModal() {
+        const $modal = createEl('div', 'modal fade').attr({
+            id: 'cart-modal',
+            tabindex: '-1',
+            'aria-labelledby': 'cart-title',
+            'aria-hidden': 'true'
+        });
+        const $header = createEl('div', 'modal-header').append(
+            createEl('h2', 'modal-title h5', 'Корзина').attr('id', 'cart-title'),
+            createEl('button', 'btn-close').attr({ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Закрыть' })
+        );
+
+        ui.message = createEl('div', 'alert alert-warning py-2 small d-none').attr('role', 'status');
+        ui.list = createEl('ul', 'list-group list-group-flush').attr('id', 'cart-list');
+        ui.empty = createEl('div', 'text-center text-muted py-3').append(
+            createEl('p', 'mb-1', 'Корзина пуста. Добавьте десерты из меню.'),
+            createEl('a', 'btn btn-outline-dark btn-sm mt-2', 'Перейти в меню').attr('href', 'menu.html')
+        );
+        const $body = createEl('div', 'modal-body').append(ui.message, ui.list, ui.empty);
+
+        ui.total = createEl('p', 'fw-semibold mb-0');
+        ui.note = createEl('small', 'text-muted d-block');
+        ui.clear = createEl('button', 'btn btn-outline-secondary', 'Очистить').attr('type', 'button');
+        ui.checkout = createEl('button', 'btn btn-primary fw-semibold', 'Оформить заказ').attr('type', 'button');
+        const $footer = createEl('div', 'modal-footer justify-content-between').append(
+            createEl('div').append(ui.total, ui.note),
+            createEl('div', 'd-flex gap-2').append(ui.clear, ui.checkout)
+        );
+
+        const $content = createEl('div', 'modal-content').append($header, $body, $footer);
+        createEl('div', 'modal-dialog modal-dialog-scrollable modal-dialog-centered').append($content).appendTo($modal);
+        return $modal.appendTo('body');
+    }
+
+    function buildCartUi() {
+        const $lastNavItem = $('#navbarNav .nav-item:last');
+        if ($lastNavItem.length === 0) {
+            return;
+        }
+        const $openButton = createEl('button', 'nav-link text-dark px-2', 'Корзина').attr({ type: 'button', id: 'cart-open-btn' });
+        ui.badge = createEl('span', 'badge bg-warning text-dark ms-1', '0').appendTo($openButton);
+        createEl('li', 'nav-item').append($openButton).insertAfter($lastNavItem);
+
+        ui.modal = new bootstrap.Modal(buildCartModal()[0]);
+
+        $openButton.on('click', openCart);
+        ui.list.on('click', 'button[data-action]', handleCartClick);
+        ui.clear.on('click', function () {
+            setCartMessage(clearCart().message);
+        });
+        ui.checkout.on('click', checkoutCart);
+    }
+
+    app.createEl = createEl;
+    app.createReference = createReference;
+    app.flashButton = flashButton;
+    app.addToCart = addToCart;
+    app.clearCart = clearCart;
+    app.openCart = openCart;
+    app.cartSummary = function () {
+        return calcCart(cart);
+    };
+    app.inCart = function (id) {
+        return cart.some(line => line.id === id);
+    };
+
+    buildCartUi();
+    renderCart();
+});
