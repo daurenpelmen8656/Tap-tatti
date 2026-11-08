@@ -1,7 +1,7 @@
 'use strict';
 
 $(function () {
-    const createEl = app.createEl;
+    const createEl = jq.createEl;
     const $wrapper = $('.aside-cards-wrapper');
     const state = { product: null, $message: null };
 
@@ -10,8 +10,6 @@ $(function () {
         return pool[Math.floor(Math.random() * pool.length)];
     }
 
-    // .html() здесь безопасен: это фиксированная разметка из кода, без данных пользователя.
-    // Название и цену вставляем через .text(), чтобы они всегда оставались просто текстом.
     function renderFeatured($card, product) {
         const $title = createEl('p', 'mb-1').html('Попробуйте сегодня: <strong class="featured-name"></strong> — <span class="featured-price"></span>');
         $title.find('.featured-name').text(product.name);
@@ -58,7 +56,35 @@ $(function () {
         });
     }
 
+    function buildFaq() {
+        const $list = createEl('div', 'accordion accordion-flush').attr('id', 'faq-list');
+        $.each(faqItems, function (index, item) {
+            const $button = createEl('button', 'accordion-button collapsed fw-semibold', item.question)
+                .attr({ type: 'button', 'aria-expanded': 'false' });
+            const $header = createEl('h4', 'accordion-header').append($button);
+            const $answer = createEl('div', 'accordion-body text-secondary', item.answer).hide();
+            createEl('div', 'accordion-item').append($header, $answer).appendTo($list);
+        });
+        createEl('section', 'bg-white p-4 rounded shadow-sm mb-5')
+            .attr('id', 'faq-section')
+            .append(createEl('h3', 'fw-bold mb-3', 'Частые вопросы'), $list)
+            .insertAfter('#info-aside');
+
+        // Делегирование: кнопки вопросов создаёт код после загрузки страницы, поэтому обработчик
+        // стоит на #faq-list. Привязанный прямо к .accordion-button он бы на них не сработал.
+        $list.on('click', '.accordion-button', function () {
+            const $button = $(this);
+            const $item = $button.closest('.accordion-item');
+            const $others = $item.siblings();
+            $others.find('.accordion-body').slideUp(200);
+            $others.find('.accordion-button').addClass('collapsed').attr('aria-expanded', 'false');
+            $button.toggleClass('collapsed').attr('aria-expanded', String(!$button.hasClass('collapsed')));
+            $item.find('.accordion-body').slideToggle(200);
+        });
+    }
+
     if ($wrapper.length > 0) {
         initFeatured();
     }
+    buildFaq();
 });

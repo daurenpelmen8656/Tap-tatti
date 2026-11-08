@@ -1,7 +1,7 @@
 'use strict';
 
 $(function () {
-    const createEl = app.createEl;
+    const createEl = jq.createEl;
     const NOTES_LIMIT = 200;
     const MAX_DAYS_AHEAD = 60;
 
@@ -11,6 +11,7 @@ $(function () {
     const $pickupGroup = $('#pickup-location-group');
     const $deliveryGroup = $('#delivery-address-group');
     const ui = {};
+    const LAST_ORDER_KEY = 'taptatti-last-order';
     let keepSuccess = false;
 
     const submitKeys = ['name', 'phone', 'email', 'item', 'date', 'address', 'flat', 'cardNumber', 'cardExpiry', 'cardCvc', 'notes'];
@@ -24,28 +25,6 @@ $(function () {
         address: $('#delivery-address'),
         notes: $('#notes')
     };
-
-    function startOfToday() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return today;
-    }
-
-    function addDays(date, days) {
-        const result = new Date(date);
-        result.setDate(result.getDate() + days);
-        return result;
-    }
-
-    function toInputDate(date) {
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${date.getFullYear()}-${month}-${day}`;
-    }
-
-    function formatDate(date) {
-        return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-    }
 
     function isCourier() {
         return $('input[name="deltype"]:checked').val() === 'courier';
@@ -81,43 +60,6 @@ $(function () {
             }
         });
         return result;
-    }
-
-    function validateName(value) {
-        const text = value.trim();
-        if (text === '') {
-            return 'Введите имя.';
-        }
-        if (text.length < 2 || text.length > 50) {
-            return 'Имя должно содержать от 2 до 50 символов.';
-        }
-        if (!/^[\p{L}\s'-]+$/u.test(text)) {
-            return 'Имя может содержать только буквы, пробел и дефис.';
-        }
-        return '';
-    }
-
-    function validatePhone(value) {
-        const text = value.trim();
-        if (text === '') {
-            return 'Введите номер телефона.';
-        }
-        const digits = text.replace(/\D/g, '');
-        if (!/^[\d\s()+-]+$/.test(text) || !/^[78]\d{10}$/.test(digits)) {
-            return 'Введите номер в формате +7 (705) 755-19-10.';
-        }
-        return '';
-    }
-
-    function validateEmail(value) {
-        const text = value.trim();
-        if (text === '') {
-            return 'Введите электронную почту.';
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(text)) {
-            return 'Введите почту в формате example@mail.com.';
-        }
-        return '';
     }
 
     function validateQty(value) {
@@ -174,17 +116,6 @@ $(function () {
         return '';
     }
 
-    function validateCardNumber(value) {
-        const digits = value.replace(/\D/g, '');
-        if (digits === '') {
-            return 'Введите номер карты.';
-        }
-        if (digits.length !== 16) {
-            return 'Номер карты состоит из 16 цифр.';
-        }
-        return '';
-    }
-
     function validateCardExpiry(value) {
         const text = value.trim();
         if (text === '') {
@@ -213,10 +144,6 @@ $(function () {
         return '';
     }
 
-    function formatCardNumber(value) {
-        return value.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
-    }
-
     function formatCardExpiry(value) {
         const digits = value.replace(/\D/g, '').slice(0, 4);
         return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
@@ -226,11 +153,11 @@ $(function () {
         const value = fields[key].val();
         switch (key) {
             case 'name':
-                return validateName(value);
+                return jq.validate.name(value);
             case 'phone':
-                return validatePhone(value);
+                return jq.validate.phone(value);
             case 'email':
-                return validateEmail(value);
+                return jq.validate.email(value);
             case 'item':
                 return getCartItems().length === 0 ? 'Заказ пуст: выберите десерт, количество и нажмите «Добавить в заказ».' : '';
             case 'qty':
@@ -242,7 +169,7 @@ $(function () {
             case 'flat':
                 return validateFlat(value);
             case 'cardNumber':
-                return validateCardNumber(value);
+                return jq.validate.cardNumber(value);
             case 'cardExpiry':
                 return validateCardExpiry(value);
             case 'cardCvc':
@@ -254,36 +181,9 @@ $(function () {
         }
     }
 
-    // ===== Функция 1 из 3: валидация формы =====
-    // Было (old-js-version.js): classList.remove/add, getElementById(`${id}-error`).remove(),
-    // insertAdjacentElement, setAttribute/removeAttribute, element.value.trim() — по строке на каждое действие.
-    // Стало: .val(), .addClass()/.removeClass(), .attr()/.removeAttr(), .siblings().remove(), .insertAfter().
-    // Код стал короче примерно на треть, и поиск сообщения через .siblings() убрал поиск по id.
-    // Цепочка в clearFieldState, по звеньям:
-    // .removeClass('is-invalid is-valid') — убирает красную и зелёную рамки;
-    // .removeAttr('aria-invalid aria-describedby') — убирает атрибуты для скринридера;
-    // .siblings('.invalid-feedback') — берёт соседей поля с текстом ошибки;
-    // .remove() — удаляет старое сообщение из страницы.
-    function clearFieldState($field) {
-        $field.removeClass('is-invalid is-valid').removeAttr('aria-invalid aria-describedby').siblings('.invalid-feedback').remove();
-    }
-
-    function setFieldState($field, message) {
-        clearFieldState($field);
-        if (message === '') {
-            if ($field.val().trim() !== '') {
-                $field.addClass('is-valid');
-            }
-            return;
-        }
-        const errorId = `${$field.attr('id')}-error`;
-        $field.addClass('is-invalid').attr({ 'aria-invalid': 'true', 'aria-describedby': errorId });
-        createEl('div', 'invalid-feedback', message).attr('id', errorId).insertAfter($field);
-    }
-
     function validateField(key) {
         const message = getFieldError(key);
-        setFieldState(fields[key], message);
+        jq.setFieldState(fields[key], message);
         return message === '';
     }
 
@@ -291,7 +191,7 @@ $(function () {
         let invalidCount = 0;
         $.each(submitKeys, function (index, key) {
             if (!isKeyActive(key)) {
-                clearFieldState(fields[key]);
+                jq.clearFieldState(fields[key]);
                 return;
             }
             if (!validateField(key)) {
@@ -352,40 +252,27 @@ $(function () {
         ui.counter.text(`${fields.notes.val().length} / ${NOTES_LIMIT}`);
     }
 
-    // ===== Функция 2 из 3: показ и скрытие блоков (доставка, карта) =====
-    // Было (old-js-version.js): classList.toggle('d-none', ...) для каждой группы — одна строка, мгновенно.
-    // Стало: .slideDown()/.slideUp() с плавной анимацией. Короче не стало: нужна функция setVisible
-    // с if/else, зато блок плавно выезжает и посетитель видит, что форма изменилась.
-    function setVisible($group, visible, speed) {
-        $group.stop(true, true);
-        if (visible) {
-            $group.slideDown(speed);
-        } else {
-            $group.slideUp(speed);
-        }
-    }
-
     function updateDeliveryGroups(speed) {
         const courier = isCourier();
-        setVisible($pickupGroup, !courier, speed);
-        setVisible($deliveryGroup, courier, speed);
-        setVisible(ui.flatGroup, courier, speed);
+        jq.setVisible($pickupGroup, !courier, speed);
+        jq.setVisible($deliveryGroup, courier, speed);
+        jq.setVisible(ui.flatGroup, courier, speed);
         if (!courier) {
-            clearFieldState(fields.address);
-            clearFieldState(fields.flat);
+            jq.clearFieldState(fields.address);
+            jq.clearFieldState(fields.flat);
         }
     }
 
     function clearCardFields() {
         $.each(['cardNumber', 'cardExpiry', 'cardCvc'], function (index, key) {
             fields[key].val('');
-            clearFieldState(fields[key]);
+            jq.clearFieldState(fields[key]);
         });
     }
 
     function updatePaymentGroup(speed) {
         const card = isCard();
-        setVisible(ui.cardGroup, card, speed);
+        jq.setVisible(ui.cardGroup, card, speed);
         if (!card) {
             clearCardFields();
         }
@@ -396,6 +283,7 @@ $(function () {
         const today = startOfToday();
         const earliest = addDays(today, leadItem ? leadItem.product.leadDays : 1);
         fields.date.attr('min', toInputDate(earliest)).attr('max', toInputDate(addDays(today, MAX_DAYS_AHEAD)));
+        ui.dateHint.text(getCartItems().length === 0 ? '' : `Ближайшая дата получения: ${formatDate(earliest)}.`);
     }
 
     function refreshOrderUi(speed) {
@@ -444,14 +332,49 @@ $(function () {
             $row.appendTo($list);
         });
 
+        const reference = app.createReference();
         $success.empty().append(
             createEl('h2', 'h5 alert-heading', 'Демонстрационная заявка принята'),
-            createEl('p', 'mb-2', `Временный номер: ${app.createReference()}`),
+            createEl('p', 'mb-2', `Временный номер: ${reference}`),
             $list,
             createEl('p', 'small mb-0', 'Это учебная демонстрация: данные не отправляются на сервер, реальный заказ и оплата не создаются, менеджер не свяжется с вами.')
         );
-        $success.stop(true, true).hide().removeClass('d-none').fadeIn(300);
+        jq.showBlock($success, 300);
         $('html, body').animate({ scrollTop: $success.offset().top - 100 }, 300);
+        return reference;
+    }
+
+    function loadLastOrder() {
+        try {
+            return JSON.parse(localStorage.getItem(LAST_ORDER_KEY));
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function saveLastOrder(order, reference) {
+        const lines = order.items.map(item => ({ id: item.product.id, qty: item.qty }));
+        const record = { reference, lines, total: order.totals.total, date: formatDate(new Date()) };
+        try {
+            localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(record));
+        } catch (error) {
+            return;
+        }
+    }
+
+    function renderLastOrder() {
+        const record = loadLastOrder();
+        if (!record || !Array.isArray(record.lines) || record.lines.length === 0) {
+            ui.lastOrder.addClass('d-none');
+            return;
+        }
+        const names = record.lines.map(line => {
+            const product = findProduct(line.id);
+            return product ? `${product.name} × ${line.qty}` : '';
+        }).filter(text => text !== '');
+        ui.lastOrderText.text(`Прошлая заявка ${record.reference} от ${record.date}: ${names.join(', ')} — ${formatPrice(record.total)}.`);
+        ui.lastOrderMessage.text('');
+        jq.showBlock(ui.lastOrder, 300);
     }
 
     function findFieldKey(element) {
@@ -506,6 +429,7 @@ $(function () {
         ui.addButton = createEl('button', 'btn btn-outline-dark btn-sm mt-2', 'Добавить в заказ').attr('type', 'button');
         ui.addMessage = createEl('p', 'small mt-1 mb-0').attr('role', 'status');
         fields.qty.parent().append(ui.addButton, ui.addMessage);
+        ui.dateHint = createEl('small', 'form-text d-block').insertAfter(fields.date);
 
         ui.summaryList = createEl('ul', 'list-unstyled mb-2');
         ui.cartButton = createEl('button', 'btn btn-outline-dark btn-sm', 'Изменить в корзине').attr('type', 'button');
@@ -515,6 +439,17 @@ $(function () {
             ui.cartButton
         );
         $('#order-submit-btn').parent().before($summary);
+
+        ui.lastOrderText = createEl('p', 'mb-2 small');
+        ui.lastOrderMessage = createEl('p', 'small mb-0 mt-2').attr('role', 'status');
+        ui.repeatButton = createEl('button', 'btn btn-outline-dark btn-sm', 'Повторить заказ').attr('type', 'button');
+        ui.lastOrder = createEl('div', 'alert alert-light border d-none mb-4').append(
+            createEl('h3', 'h6 fw-bold mb-2', 'Ваш последний заказ'),
+            ui.lastOrderText,
+            ui.repeatButton,
+            ui.lastOrderMessage
+        );
+        $form.before(ui.lastOrder);
     }
 
     function preselectItem() {
@@ -537,7 +472,7 @@ $(function () {
         const key = findFieldKey(this);
         hideSuccess();
         if (key === 'cardNumber') {
-            $field.val(formatCardNumber($field.val()));
+            $field.val(jq.formatCardNumber($field.val()));
         }
         if (key === 'cardExpiry') {
             $field.val(formatCardExpiry($field.val()));
@@ -586,7 +521,9 @@ $(function () {
             return;
         }
         $error.addClass('d-none');
-        showSuccess(readOrder());
+        const order = readOrder();
+        saveLastOrder(order, showSuccess(order));
+        renderLastOrder();
         app.clearCart();
         keepSuccess = true;
         $form[0].reset();
@@ -595,7 +532,7 @@ $(function () {
 
     $form.on('reset', function () {
         $.each(fields, function (key, $field) {
-            clearFieldState($field);
+            jq.clearFieldState($field);
         });
         $error.addClass('d-none');
         app.clearCart();
@@ -627,6 +564,16 @@ $(function () {
     });
 
     ui.cartButton.on('click', app.openCart);
+
+    ui.repeatButton.on('click', function () {
+        const record = loadLastOrder();
+        const result = app.addMany(record ? record.lines : []);
+        const text = result.added === 0
+            ? 'Не удалось добавить позиции: проверьте лимит количества в корзине.'
+            : `Добавлено позиций в заказ: ${result.added}.${result.skipped > 0 ? ` Пропущено: ${result.skipped}.` : ''}`;
+        ui.lastOrderMessage.text(text);
+    });
+    renderLastOrder();
 
     $(document).on('cart:changed', function () {
         updateDateLimits();
